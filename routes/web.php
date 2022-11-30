@@ -22,8 +22,7 @@ Route::get('/home', function () {
     return view('home');
 });
 Route::get('/show', [\App\Http\Livewire\ShowUsers::class, 'render']);
-Route::post('/judges-reg', [UserController::class, 'store']);
-Route::post('/candidate-reg', [UserController::class, 'store']);
+Route::post('/reg-{reg}', [UserController::class, 'store']);
 
 Route::get('/candidate-reg', function () {
     return view('candidate_reg');

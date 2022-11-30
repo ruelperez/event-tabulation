@@ -1,4 +1,4 @@
-<div wire:ignore.self class="modal fade" id="reg_tModal" tabindex="-1" aria-labelledby="insertModalLabel" aria-hidden="true">
+<div class="modal fade" id="reg_tModal" tabindex="-1" aria-labelledby="insertModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -6,7 +6,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form action="/judges-reg" method="post">
+                <form action="/reg-judges" method="post">
                     @csrf
                     <div class="mb-3">
                         <input type="text" class="form-control" name="name" placeholder="Name" required>
@@ -23,9 +23,9 @@
                     <div class="mb-3">
                         <label> Is Chairman:</label>
                         <label style="margin-left: 10px;">Yes</label>
-                        <input type="radio" name="is_chairman" value=1>
+                        <input type="radio" name="user_type" value="chairman">
                         <label style="margin-left: 10px;">No</label>
-                        <input type="radio" name="is_chairman" value=0>
+                        <input type="radio" name="user_type" value="judge">
 
                     </div>
                     <div class="mb-3">

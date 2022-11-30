@@ -2,9 +2,9 @@
 <div class="container-fluid" style="background-color: darkblue; height: 70px; text-align: center; padding: 10px;">
     <h1 style="color: white">Event Tabulation</h1>
 </div>
-
-<div class="row mt-4">
-    <div class="col border border-primary">
+<div class="container-fluid">
+<div class="row mt-4 ">
+    <div class="col border">
         <div class="bg-primary text-center pt-2" style="width:106%; height: 50px; margin: auto;"><h4>Judges Registration</h4></div>
         <p class="text-center"><b class="btn text-danger" data-bs-toggle="modal" data-bs-target="#reg_tModal">Click here</b></p>
 
@@ -12,9 +12,12 @@
 
         @include('livewire.modal_insert')
 
+
     <div class="col border border-primary">
         <div class="bg-primary text-center pt-2" style="width:106%; height: 50px; margin: auto;"><h4>Candidate Registration</h4></div>
         <p class="text-center"><b class="btn text-danger" data-bs-toggle="modal" data-bs-target="#can_reg">Click here</b></p>
+
+        @livewire('show-candidate')
 
         <div class="modal fade" id="can_reg" tabindex="-1" aria-labelledby="insertModalLabel" aria-hidden="true">
             <div class="modal-dialog">
@@ -24,27 +27,19 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <form action="/candidate-reg" method="POST">
+                        <form action="/reg-candidate" method="POST">
                             @csrf
                             <div class="mb-3">
-                                <input type="text" class="form-control" name="name" placeholder="Name" required>
+                                <input type="text" class="form-control" name="first_name" placeholder="First Name" required>
                             </div>
                             <div class="mb-3">
-                                <input type="text" class="form-control" name="username" placeholder="Username" required>
+                                <input type="text" class="form-control" name="last_name" placeholder="Last Name" required>
                             </div>
                             <div class="mb-3">
-                                <input type="password" class="form-control" name="password" placeholder="Password" required>
+                                <input type="text" class="form-control" name="team_name" placeholder="Team Name" required>
                             </div>
                             <div class="mb-3">
-                                <input type="password" class="form-control" name="password_confirmation" placeholder="Confirm Password" required>
-                            </div>
-                            <div class="mb-3">
-                                <label> Is Chairman:</label>
-                                <label style="margin-left: 10px;">Yes</label>
-                                <input type="radio" name="is_chairman" value=1>
-                                <label style="margin-left: 10px;">No</label>
-                                <input type="radio" name="is_chairman" value=0>
-
+                                <input type="text" class="form-control" name="address" placeholder="Address" required>
                             </div>
                             <div class="mb-3">
                                 <label>Photo</label>
@@ -63,6 +58,7 @@
     </div>
     <div class="col border border-primary"> <div class="bg-primary text-center pt-2" style="width:103%; height: 50px; margin: auto;"><h4>Criteria</h4></div></div>
 
+</div>
 </div>
 
 
