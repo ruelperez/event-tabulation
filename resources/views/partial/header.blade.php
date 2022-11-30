@@ -8,5 +8,6 @@
     <link rel="stylesheet" href="/styles.css">
     <title>
     </title>
+    @livewireStyles
 </head>
 <body>

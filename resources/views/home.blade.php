@@ -3,20 +3,67 @@
     <h1 style="color: white">Event Tabulation</h1>
 </div>
 
+<div class="row mt-4">
+    <div class="col border border-primary">
+        <div class="bg-primary text-center pt-2" style="width:106%; height: 50px; margin: auto;"><h4>Judges Registration</h4></div>
+        <p class="text-center"><b class="btn text-danger" data-bs-toggle="modal" data-bs-target="#reg_tModal">Click here</b></p>
 
-<div class="container justify-content-between d-flex" style="margin-top: 50px">
+        @livewire('show-users')
 
-    <div class="my-auto " style="height: 50px; width: 50px;" ><a class="btn btn-primary py-1" href="/judges-reg" target = '_blank' role="button" style="height: clamp(23px,3vw,10rem); width: clamp(85px,15vw,20rem);"><h3 class="text-center" style="font-size: clamp(11px,1.2vw,2.5rem);"  >Judges Registration</h3></a></div>
-    <div class="my-auto"><a class="btn btn-primary py-1" href="/candidate-reg" target = '_blank' role="button" style="height: clamp(23px,3vw,10rem); width: clamp(85px,15vw,20rem);"><h3 class="text-center" style="font-size: clamp(11px,1.2vw,2.5rem);">Candidate Registration</h3></a></div>
-    <div class="my-auto">
-        <a class="btn btn-primary py-1" href="/criteria" target = '_blank' role="button" style="height: clamp(23px,3vw,10rem); width: clamp(85px,15vw,20rem);"><h3 class="text-center" style="font-size: clamp(11px,1.2vw,2.5rem);">Criteria</h3></a>
+        @include('livewire.modal_insert')
+
+    <div class="col border border-primary">
+        <div class="bg-primary text-center pt-2" style="width:106%; height: 50px; margin: auto;"><h4>Candidate Registration</h4></div>
+        <p class="text-center"><b class="btn text-danger" data-bs-toggle="modal" data-bs-target="#can_reg">Click here</b></p>
+
+        <div class="modal fade" id="can_reg" tabindex="-1" aria-labelledby="insertModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="insertModalLabel" >Fill Up Form</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="/candidate-reg" method="POST">
+                            @csrf
+                            <div class="mb-3">
+                                <input type="text" class="form-control" name="name" placeholder="Name" required>
+                            </div>
+                            <div class="mb-3">
+                                <input type="text" class="form-control" name="username" placeholder="Username" required>
+                            </div>
+                            <div class="mb-3">
+                                <input type="password" class="form-control" name="password" placeholder="Password" required>
+                            </div>
+                            <div class="mb-3">
+                                <input type="password" class="form-control" name="password_confirmation" placeholder="Confirm Password" required>
+                            </div>
+                            <div class="mb-3">
+                                <label> Is Chairman:</label>
+                                <label style="margin-left: 10px;">Yes</label>
+                                <input type="radio" name="is_chairman" value=1>
+                                <label style="margin-left: 10px;">No</label>
+                                <input type="radio" name="is_chairman" value=0>
+
+                            </div>
+                            <div class="mb-3">
+                                <label>Photo</label>
+                                <input type="file" name="photos" class="form-control">
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary" >Submit</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
+    </div>
+    <div class="col border border-primary"> <div class="bg-primary text-center pt-2" style="width:103%; height: 50px; margin: auto;"><h4>Criteria</h4></div></div>
+
 </div>
-
-
-
-
-
 
 
 @include('partial.footer')

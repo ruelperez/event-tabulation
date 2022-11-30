@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -20,10 +21,9 @@ Route::get('/', function () {
 Route::get('/home', function () {
     return view('home');
 });
-
-Route::get('/judges-reg', function () {
-    return view('judges_reg');
-});
+Route::get('/show', [\App\Http\Livewire\ShowUsers::class, 'render']);
+Route::post('/judges-reg', [UserController::class, 'store']);
+Route::post('/candidate-reg', [UserController::class, 'store']);
 
 Route::get('/candidate-reg', function () {
     return view('candidate_reg');
