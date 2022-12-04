@@ -1,16 +1,45 @@
-<div>
-    @foreach($show as $shows)
+{{--@if(session()->has('success'))--}}
+{{--    <div class="alert alert-success" role="alert">--}}
+{{--        {{ session()->get('success') }}--}}
+{{--    </div>--}}
 
-        <table class="table mx-auto" style="width: 30%;">
-            <tr>
+{{--@elseif(session()->has('error'))--}}
+{{--    <div class="alert alert-danger" role="alert">--}}
+{{--        {{ session()->get('error') }}--}}
+{{--    </div>--}}
+{{--@endif--}}
+@if(count($show) > 0)
+    <div>
+        @foreach($show as $shows)
+
+            <ul class="list-group">
                 @if($shows->user_type == "chairman")
-                <td>{{$shows->name}}</td>
-                <td>{{$shows->user_type}}</td>
+                    <li class="list-group-item">
+                        <button onclick="deleteJudge({{$shows->id}})" type="button" class="btn btn-danger py-1"
+                                style="margin-right: 13%;">Delete
+                        </button>{{ucfirst($shows->name)}} - {{$shows->user_type}}  </li>
                 @else
-                    <td>{{$shows->name}}</td>
+                    <li class="list-group-item">
+                        <button onclick="deleteJudge({{$shows->id}})" type="button" class="btn btn-danger py-1"
+                                style="margin-right: 13%;">Delete
+                        </button>{{$shows->name}}</li>
                 @endif
-            </tr>
-        </table>
+            </ul>
+        @endforeach
+    </div>
 
-    @endforeach
-</div>
+@else
+    <div> No Data Found</div>
+
+@endif
+
+@include('components.modal_judges_reg')
+
+<script>
+    function deleteJudge(id) {
+        if (confirm("Are you sure to delete this record???"))
+            window.livewire.emit('deleteJudge', id);
+    }
+
+
+</script>

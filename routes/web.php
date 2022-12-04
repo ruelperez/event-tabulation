@@ -21,16 +21,15 @@ Route::get('/', function () {
 Route::get('/home', function () {
     return view('home');
 });
-Route::get('/show', [\App\Http\Livewire\ShowUsers::class, 'render']);
-Route::post('/reg-{reg}', [UserController::class, 'store']);
+
+Route::post('/reg-judges', [UserController::class, 'store']);
+Route::post('/reg-candidate-{candidate}', [\App\Http\Controllers\CandidateController::class, 'store']);
 
 Route::get('/candidate-reg', function () {
     return view('candidate_reg');
 });
 
-Route::get('/criteria', function () {
-    return view('criteria');
-});
+Route::post('/criteria', [\App\Http\Controllers\CriteriaController::class, 'store']);
 
 
 

@@ -5,13 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Candidate extends Model
+class Criteria extends Model
 {
     protected $fillable = [
-        'fullname',
-        'address',
-        'photo',
-        'team_name'
+        'name',
+        'percentage'
     ];
+
     use HasFactory;
 }

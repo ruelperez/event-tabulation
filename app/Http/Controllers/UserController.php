@@ -9,9 +9,8 @@ use Illuminate\Validation\Rule;
 
 class UserController extends Controller
 {
-    public function store(Request $request, $reg ){
+    public function store(Request $request){
 
-        if ($reg == "judges"){
             $validated = $request->validate([
                 "name" => 'required',
                 "username" =>['required', Rule::unique('users','username')],
@@ -25,26 +24,7 @@ class UserController extends Controller
 
             auth()->login($user);
 
-            return view('home');
+            return redirect('/home')->with('message_jud', 'Data Save!!!');
+
         }
-
-        elseif ($reg == "candidate"){
-            $validated = $request->validate([
-                "first_name" => 'required',
-                "last_name" => 'required',
-                "team_name" => '',
-                "address" => 'required',
-                "photos" =>''
-            ]);
-
-            Candidate::create($validated);
-
-            $candidate = Candidate::all();
-
-            return view('home', ['candidate' => $candidate]);
-        }
-
-
-
-    }
 }
