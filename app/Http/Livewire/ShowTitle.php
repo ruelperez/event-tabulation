@@ -2,26 +2,27 @@
 
 namespace App\Http\Livewire;
 
-use App\Models\Criteria;
+
+use App\Models\Title;
 use Livewire\Component;
 
-class ShowCriteria extends Component
+class ShowTitle extends Component
 {
     public $show;
 
     public function render()
     {
-        $this->show = Criteria::all();
-        return view('livewire.show-criteria');
+        $this->show = Title::all();
+        return view('livewire.show-title');
     }
 
     protected $listeners = [
-        'deleteCriteria' => 'destroy'
+        'deleteTitle' => 'destroy'
     ];
 
     public function destroy($id){
         try {
-            Criteria::find($id)->delete();
+            Title::find($id)->delete();
             session()->flash('success',"Deleted Successfully!!");
         }
         catch(\Exception $e){
