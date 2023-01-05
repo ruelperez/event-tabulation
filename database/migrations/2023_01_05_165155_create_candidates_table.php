@@ -14,12 +14,13 @@ return new class extends Migration
     public function up()
     {
         Schema::create('candidates', function (Blueprint $table) {
-            $table->id();
-            $table->string('fullname');
-            $table->string('team_name');
-            $table->string('address');
+            $table->smallIncrements('id');
+            $table->unsignedSmallInteger('event_id');
+            $table->string('full_name');
+            $table->string('origin');
             $table->string('photo');
-            $table->timestamps();
+            $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
+            $table->timestamp('updated_at')->default(DB::raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'));
         });
     }
 
