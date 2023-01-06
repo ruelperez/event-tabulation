@@ -1,17 +1,48 @@
 @if(count($show) > 0)
 
+{{--    <div>--}}
+{{--        @foreach($show as $shows)--}}
+{{--            <ul class="list-group">--}}
+{{--                <li class="list-group-item"><button onclick="deleteCriteria({{$shows->id}})" type="button" class="btn btn-danger py-1" style="margin-right: 13%;">Delete--}}
+{{--                    </button>--}}
+{{--                    @foreach($show_portion as $show_portions)--}}
+{{--                        @if($show_portions->id === $shows->portion_id)--}}
+{{--                            {{$show_portions->title}} ---}}
+{{--                        @endif--}}
+{{--                    @endforeach--}}
+{{--                        {{ucfirst($shows->title)}} - {{ucfirst($shows->percentage.'%')}}--}}
+
+
+
+{{--                </li>--}}
+{{--            </ul>--}}
+{{--        @endforeach--}}
+{{--    </div>--}}
+
     <div>
-        @foreach($show as $shows)
-            <ul class="list-group">
-                <li class="list-group-item"><button onclick="deleteCriteria({{$shows->id}})" type="button" class="btn btn-danger py-1" style="margin-right: 13%;">Delete
-                    </button>
-                        {{ucfirst($shows->name)}} - {{ucfirst($shows->percentage.'%')}}
+        <table class="table table-bordered border-primary">
+            <tr>
+                <th></th>
+                <th><b>Portion</b></th>
+                <th><b>Criteria</b></th>
+            </tr>
+                @foreach($show as $shows)
+
+                <tr>
+                    <td><button onclick="deleteCriteria({{$shows->id}})" type="button" class="btn btn-danger py-1" style="margin-right: 13%;">Delete</button></td>
+                    @foreach($show_portion as $show_portions)
+                        @if($show_portions->id === $shows->portion_id)
+                           <td>{{ucfirst($show_portions->title)}}</td>
+                        @endif
+                    @endforeach
+                   <td>{{ucfirst($shows->title)}} - {{ucfirst($shows->percentage.'%')}}</td>
 
 
 
-                </li>
-            </ul>
-        @endforeach
+                </tr>
+            @endforeach
+            </table>
+
     </div>
 
 

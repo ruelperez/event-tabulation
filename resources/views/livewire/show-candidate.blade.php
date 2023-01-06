@@ -16,11 +16,11 @@
     @foreach($show as $shows)
         <ul class="list-group">
             <li class="list-group-item"><button onclick="deleteCandidate({{$shows->id}})" type="button" class="btn btn-danger py-1" style="margin-right: 13%;">Delete
-                        </button> #{{$shows->id}} - @if($shows->fullname == "null")
+                        </button> #{{$shows->id}} - @if($shows->full_name == "null")
                                                            {{ucfirst($shows->team_name)}}
                                                 @else
 
-                                                         {{ucfirst($shows->fullname)}}
+                                                         {{ucfirst($shows->full_name)}}
                                                 @endif
 
 

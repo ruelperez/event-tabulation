@@ -14,14 +14,16 @@
                 <form action="/reg-candidate-individual" method="POST" x-show="show" style="margin-top: 10px;">
                     @csrf
                     <div class="mb-3">
-                        <input type="text" class="form-control" name="fullname" placeholder="Full Name"
-                               required>
+                        <input type="text" class="form-control" name="event_id" placeholder="Event Title Number" required>
+                    </div>
+                    <div class="mb-3">
+                        <input type="text" class="form-control" name="full_name" placeholder="Full Name" required>
                     </div>
                     <div class="mb-3" hidden>
                         <input type="text" class="form-control" name="team_name" value="null" placeholder="Team Name">
                     </div>
                     <div class="mb-3">
-                        <input type="text" class="form-control" name="address" placeholder="Address" required>
+                        <input type="text" class="form-control" name="origin" placeholder="Address" required>
                     </div>
                     <div class="mb-3">
                         <label>Photo</label>
@@ -36,15 +38,17 @@
 
                 <form action="/reg-candidate-group" method="POST" x-show="appear" style="margin-top: 10px;">
                     @csrf
+                    <div class="mb-3">
+                        <input type="text" class="form-control" name="event_id" placeholder="Event Title Number" required>
+                    </div>
                     <div class="mb-3" hidden>
-                        <input type="text" class="form-control" name="fullname" value="null" placeholder="Full Name"
-                               required>
+                        <input type="text" class="form-control" name="full_name" value="null" placeholder="Full Name" required>
                     </div>
                     <div class="mb-3">
                         <input type="text" class="form-control" name="team_name" placeholder="Team Name">
                     </div>
                     <div class="mb-3">
-                        <input type="text" class="form-control" name="address" placeholder="Address" required>
+                        <input type="text" class="form-control" name="origin" placeholder="Address" required>
                     </div>
                     <div class="mb-3">
                         <label>Photo</label>

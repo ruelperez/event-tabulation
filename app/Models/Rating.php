@@ -7,5 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class Rating extends Model
 {
+    protected $fillable = [
+        'judge_id',
+        'candidate_id',
+        'criteria_id',
+        'rating',
+    ];
+
     use HasFactory;
 }

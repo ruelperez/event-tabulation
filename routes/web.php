@@ -18,16 +18,20 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+//Route::get('/x', function () {
+//    $event = \App\Models\Event::find(1)->judge;
+//    dd($event);
+//});
+
 Route::get('/home', function () {
     return view('home');
 });
 
-
-Route::post('/reg-judges', [UserController::class, 'store']);
+Route::post('/reg-portion', [\App\Http\Controllers\PortionController::class, 'store']);
+Route::post('/reg-title', [\App\Http\Controllers\TitleController::class, 'store']);
+Route::post('/reg-judges', [\App\Http\Controllers\JudgeController::class, 'store']);
 Route::post('/reg-candidate-{candidate}', [\App\Http\Controllers\CandidateController::class, 'store']);
 Route::post('/criteria', [\App\Http\Controllers\CriteriaController::class, 'store']);
-
-Route::get('/input-score',[\App\Http\Controllers\ScoringController::class, 'render']);
 
 Route::get('/n', function (){
     return view('nono');

@@ -12,9 +12,10 @@ class CandidateController extends Controller
         if($candidate == "individual"){
 
             Candidate::create([
-                'fullname' => $request->fullname,
+                'event_id' => $request->event_id,
+                'full_name' => $request->full_name,
                 'team_name' => $request->team_name,
-                'address' => $request->address,
+                'origin' => $request->origin,
                 'photo' => $request->photo
             ]);
 
@@ -22,9 +23,10 @@ class CandidateController extends Controller
         }
         else{
             Candidate::create([
-                'fullname' => $request->fullname,
+                'event_id' => $request->event_id,
+                'full_name' => $request->full_name,
                 'team_name' => $request->team_name,
-                'address' => $request->address,
+                'origin' => $request->origin,
                 'photo' => $request->photo
             ]);
 

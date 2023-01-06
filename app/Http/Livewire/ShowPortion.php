@@ -2,27 +2,26 @@
 
 namespace App\Http\Livewire;
 
-
-use App\Models\Event;
+use App\Models\Portion;
 use Livewire\Component;
 
-class ShowTitle extends Component
+class ShowPortion extends Component
 {
     public $show;
 
     public function render()
     {
-        $this->show = Event::all();
-        return view('livewire.show-title');
+        $this->show = Portion::all();
+        return view('livewire.show-portion');
     }
 
     protected $listeners = [
-        'deleteTitle' => 'destroy'
+        'deleteTitles' => 'destroy'
     ];
 
     public function destroy($id){
         try {
-            Event::find($id)->delete();
+            Portion::find($id)->delete();
             session()->flash('success',"Deleted Successfully!!");
         }
         catch(\Exception $e){

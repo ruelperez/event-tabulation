@@ -8,10 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class Candidate extends Model
 {
     protected $fillable = [
-        'fullname',
-        'address',
-        'photo',
-        'team_name'
+        'event_id',
+        'full_name',
+        'team_name',
+        'origin',
+        'photo'
     ];
     use HasFactory;
 }

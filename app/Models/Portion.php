@@ -7,5 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Portion extends Model
 {
+    protected $fillable = [
+        'event_id',
+        'title',
+        'description'
+    ];
+
     use HasFactory;
 }

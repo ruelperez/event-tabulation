@@ -5,7 +5,7 @@
 </div>
 
 <div class="row mt-4 ">
-    <div class="col-3 border border-primary">
+    <div class="col-4 border border-primary">
         <div class="bg-primary text-center pt-2" style="width:97%; height: 50px; margin-left: 3%;"><h4>Event Title</h4></div>
         <p class="text-center"><b class="btn text-danger" data-bs-toggle="modal" data-bs-target="#title_modal">Click
                 here</b></p>
@@ -15,7 +15,7 @@
 
     </div>
 
-    <div class="col-3 border border-primary">
+    <div class="col-4 border border-primary">
         <div class="bg-primary text-center pt-2" style="width:100%; height: 50px;"><h4>Judges
                 Registration</h4></div>
         <p class="text-center"><b class="btn text-danger" data-bs-toggle="modal" data-bs-target="#reg_modal">Click
@@ -25,19 +25,29 @@
         @enderror
         @include('components.message_judges')
 
-        @livewire('show-users')
+        @livewire('show-judge')
 
     </div>
 
-    <div class="col-3 border border-primary">
+    <div class="col-4 border border-primary">
         <div class="bg-primary text-center pt-2" style="width:100%; height: 50px;"><h4>Candidate Registration</h4></div>
         <p class="text-center"><b class="btn text-danger" data-bs-toggle="modal" data-bs-target="#can_reg">Click
                 here</b></p>
         @include('components.message_candidate')
         @livewire('show-candidate')
 
+    <div class="col-4 border border-primary" style="margin-top: 30px;">
+        <div class="bg-primary text-center pt-2" style="width:97%; height: 50px; margin-left: 3%;"><h4>Portion</h4></div>
+        <p class="text-center"><b class="btn text-danger" data-bs-toggle="modal" data-bs-target="#portion_modal">Click
+                here</b></p>
+        @include('components.message_portion')
 
-    <div class="col-3 border border-primary">
+        @livewire('show-portion')
+
+    </div>
+
+
+    <div class="col-4 border border-primary" style="margin-top: 30px;">
         <div class="bg-primary text-center pt-2" style="width:97%; height: 50px;"><h4>Criteria</h4></div>
         <p class="text-center"><b class="btn text-danger" data-bs-toggle="modal" data-bs-target="#criteria">Click
                 here</b></p>

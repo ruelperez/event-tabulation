@@ -8,7 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Criteria extends Model
 {
     protected $fillable = [
-        'name',
+        'portion_id',
+        'title',
         'percentage'
     ];
 

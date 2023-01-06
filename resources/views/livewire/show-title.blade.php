@@ -5,7 +5,7 @@
             <ul class="list-group">
                 <li class="list-group-item"><button onclick="deleteTitle({{$shows->id}})" type="button" class="btn btn-danger py-1" style="margin-right: 13%;">Delete
                     </button>
-                    {{strtoupper($shows->name)}}
+                     #{{$shows->id}} - {{strtoupper($shows->title)}}
 
 
 

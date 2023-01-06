@@ -17,6 +17,7 @@ return new class extends Migration
             $table->smallIncrements('id');
             $table->unsignedSmallInteger('event_id');
             $table->string('full_name');
+            $table->string('team_name');
             $table->string('origin');
             $table->string('photo');
             $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));

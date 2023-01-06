@@ -21,7 +21,8 @@ class CriteriaController extends Controller
         $cri_data =clean($request->percentage);
 
             Criteria::create([
-            'name' => $request->name,
+            'portion_id' => $request->portion_id,
+            'title' => $request->title,
             'percentage' => $cri_data
         ]);
 

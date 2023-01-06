@@ -3,15 +3,17 @@
 namespace App\Http\Livewire;
 
 use App\Models\Criteria;
+use App\Models\Portion;
 use Livewire\Component;
 
 class ShowCriteria extends Component
 {
-    public $show;
+    public $show, $show_portion;
 
     public function render()
     {
         $this->show = Criteria::all();
+        $this->show_portion = Portion::all();
         return view('livewire.show-criteria');
     }
 

@@ -10,7 +10,10 @@
                 <form action="/reg-judges" method="post">
                 @csrf
                     <div class="mb-3">
-                        <input type="text" class="form-control" id="id_name" placeholder="Name" name="name" required>
+                        <input type="text" class="form-control" id="id_name" placeholder="Event Title Number" name="event_id" required>
+                    </div>
+                    <div class="mb-3">
+                        <input type="text" class="form-control" id="id_name" placeholder="Full Name" name="full_name" required>
                     </div>
                     <div class="mb-3">
                         <input type="text" class="form-control" id="id_username" name="username" placeholder="Username" required>
@@ -24,14 +27,14 @@
                     <div class="mb-3">
                         <label> Is Chairman:</label>
                         <label style="margin-left: 10px;">Yes</label>
-                        <input type="radio" name="user_type" value="chairman" required>
+                        <input type="radio" name="is_chairman" value="1" required>
                         <label style="margin-left: 10px;">No</label>
-                        <input type="radio" name="user_type" value="judge" required>
+                        <input type="radio" name="is_chairman" value="0" required>
 
                     </div>
                     <div class="mb-3">
                         <label>Photo</label>
-                        <input type="file" name="photos" class="form-control">
+                        <input type="file" name="photo" class="form-control">
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
