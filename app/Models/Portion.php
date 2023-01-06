@@ -13,5 +13,9 @@ class Portion extends Model
         'description'
     ];
 
+    public function criteria(){
+        return $this->hasMany(Criteria::class);
+    }
+
     use HasFactory;
 }

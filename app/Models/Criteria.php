@@ -13,5 +13,9 @@ class Criteria extends Model
         'percentage'
     ];
 
+    public function portion(){
+        return $this->belongsTo(Portion::class);
+    }
+
     use HasFactory;
 }

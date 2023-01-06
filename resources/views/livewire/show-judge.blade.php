@@ -17,12 +17,14 @@
                     <li class="list-group-item">
                         <button onclick="deleteJudge({{$shows->id}})" type="button" class="btn btn-danger py-1"
                                 style="margin-right: 13%;">Delete
-                        </button>{{ucfirst($shows->full_name)}} - <b>chairman</b>  </li>
+                        </button>
+                        #{{$shows->id}} - {{ucfirst($shows->full_name)}} - <b>chairman</b>  </li>
                 @else
                     <li class="list-group-item">
                         <button onclick="deleteJudge({{$shows->id}})" type="button" class="btn btn-danger py-1"
                                 style="margin-right: 13%;">Delete
-                        </button>{{$shows->full_name}}</li>
+                        </button>
+                        #{{$shows->id}} - {{$shows->full_name}}</li>
                 @endif
             </ul>
         @endforeach

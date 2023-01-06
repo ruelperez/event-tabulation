@@ -57,7 +57,7 @@
     </div>
 
 </div>
-    <button type="button" class="btn btn-outline-success" onclick="location.href='/home';" style="margin-top: 50px;margin-left: 40%; width: 20%; height: 50px;">Finished</button>
+    <button type="button" class="btn btn-outline-success" onclick="location.href='/home';" style="margin-top: 20px;margin-left: 40%; width: 20%; height: 50px;">Finished</button>
 
 
 @include('partial.footer')
