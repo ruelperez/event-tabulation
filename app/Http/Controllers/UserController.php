@@ -24,7 +24,7 @@ class UserController extends Controller
 
             auth()->login($user);
 
-            return redirect('/home')->with('message_user', 'welcome!!!');
+            return redirect('/admin/home')->with('message_user', 'welcome!!!');
 
         }
 
@@ -38,7 +38,7 @@ class UserController extends Controller
             if(auth()->attempt($validated)){
                 $request->session()->regenerate();
 
-                return redirect('/home');
+                return redirect('/admin/home');
             }
             return back()->withErrors(['username' => 'login failed']);
         }

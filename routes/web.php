@@ -17,20 +17,19 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+//['auth','isAdmin']
+Route::prefix('admin')->middleware(['auth','isAdmin'])->group(function (){
+    Route::get('/home', [\App\Http\Controllers\HomeController::class, 'home']);
+});
 
-//Route::get('/x', function () {
-//    $event = \App\Models\Event::find(1)->judge;
-//    dd($event);
-//});
+Route::prefix('judge')->middleware('auth')->group(function (){
+    Route::get('/scoring-page', function () {
+        return view('scoring');
+    });
+});
 
-//Route::get('/home', function () {
-//    return view('home');
-//})->middleware('auth');
-
-Route::get('/home', [\App\Http\Controllers\HomeController::class, 'home'])->middleware('auth');;
-
-Route::get('/scoring-page', function () {
-    return view('scoring');
+Route::get('/judge/login', function () {
+    return view('user.judge.login');
 });
 
 Route::get('/admin/register', function () {
@@ -41,6 +40,8 @@ Route::get('/admin/login', function () {
     return view('user.admin.login');
 })->name('login')->middleware('guest');
 
+
+Route::post('/judge/login-process', [\App\Http\Controllers\JudgeController::class, 'process']);
 Route::post('/admin/logout', [UserController::class, 'logout']);
 Route::post('/admin/login-process', [UserController::class, 'login']);
 Route::post('/admin/store', [UserController::class, 'store']);

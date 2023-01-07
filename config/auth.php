@@ -41,6 +41,11 @@ return [
             'provider' => 'users',
         ],
 
+        'webjudge' => [
+            'driver' => 'session',
+            'provider' => 'judges',
+        ],
+
     ],
 
     /*
@@ -66,10 +71,10 @@ return [
             'model' => App\Models\User::class,
         ],
 
-        // 'users' => [
-        //     'driver' => 'database',
-        //     'table' => 'users',
-        // ],
+         'judges' => [
+             'driver' => 'eloquent',
+             'model' => \App\Models\Judge::class,
+         ],
     ],
 
     /*

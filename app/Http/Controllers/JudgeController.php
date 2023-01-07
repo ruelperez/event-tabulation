@@ -25,7 +25,31 @@ class JudgeController extends Controller
 
         auth()->login($judge);
 
-        return redirect('/home')->with('message_jud', 'Data Save!!!');
+        return redirect('/admin/home')->with('message_jud', 'Data Save!!!');
 
     }
+
+    public function process(Request $request){
+        $validated = $request->validate([
+            "username" => 'required',
+            "password" => 'required'
+        ]);
+
+        if(auth()->attempt($validated)){
+            $request->session()->regenerate();
+
+            return redirect('/scoring-page');
+        }
+        return back()->withErrors(['username' => 'login failed']);
+    }
+
+//    public function logout(Request $request){
+//        auth()->logout();
+//
+//        $request->session()->invalidate();
+//        $request->session()->regenerateToken();
+//
+//        return redirect('/judge/login');
+//    }
+
 }

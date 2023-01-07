@@ -1,13 +1,4 @@
-{{--@if(session()->has('success'))--}}
-{{--    <div class="alert alert-success" role="alert">--}}
-{{--        {{ session()->get('success') }}--}}
-{{--    </div>--}}
 
-{{--@elseif(session()->has('error'))--}}
-{{--    <div class="alert alert-danger" role="alert">--}}
-{{--        {{ session()->get('error') }}--}}
-{{--    </div>--}}
-{{--@endif--}}
 @if(count($show) > 0)
     <div>
         @foreach($show as $shows)

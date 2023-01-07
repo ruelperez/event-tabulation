@@ -46,8 +46,15 @@
 
                 <form action="/reg-candidate-group" method="POST" x-show="appear" style="margin-top: 10px;">
                     @csrf
-                    <div class="mb-3">
-                        <input type="text" class="form-control" name="event_id" placeholder="Event Title Number" required>
+                    <div class="mb-3" hidden>
+                        <input type="text" class="form-control" name="event_id" placeholder="Event Title Number"
+                               @if(isset($eventID))
+                                   value="{{$eventID}}"
+                               @endif
+                               required>
+                    </div>
+                    <div class="mb-3" hidden>
+                        <input type="text" class="form-control" value="{{auth()->user()->id}}" name="user_id"  required>
                     </div>
                     <div class="mb-3" hidden>
                         <input type="text" class="form-control" name="full_name" value="null" placeholder="Full Name" required>
