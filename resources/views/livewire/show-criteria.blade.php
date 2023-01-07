@@ -1,24 +1,5 @@
 @if(count($show) > 0)
 
-{{--    <div>--}}
-{{--        @foreach($show as $shows)--}}
-{{--            <ul class="list-group">--}}
-{{--                <li class="list-group-item"><button onclick="deleteCriteria({{$shows->id}})" type="button" class="btn btn-danger py-1" style="margin-right: 13%;">Delete--}}
-{{--                    </button>--}}
-{{--                    @foreach($show_portion as $show_portions)--}}
-{{--                        @if($show_portions->id === $shows->portion_id)--}}
-{{--                            {{$show_portions->title}} ---}}
-{{--                        @endif--}}
-{{--                    @endforeach--}}
-{{--                        {{ucfirst($shows->title)}} - {{ucfirst($shows->percentage.'%')}}--}}
-
-
-
-{{--                </li>--}}
-{{--            </ul>--}}
-{{--        @endforeach--}}
-{{--    </div>--}}
-
     <div>
         <table class="table table-bordered border-primary">
             <tr>

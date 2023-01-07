@@ -7,8 +7,8 @@
             </div>
             <div class="modal-body" x-data="{show : false, appear : false}">
                 <div class="row text-center" style="height: 40px;" >
-                    <div class="divs col border border-primary" @click="show = true, appear = false" style="padding-top: 5px; ">Individual</div>
-                    <div class="col border border-primary" @click="appear = true, show = false" style="padding-top: 5px; ">Group</div>
+                    <div class="divs col border border-primary btn"  @click="show = true, appear = false" style="padding-top: 5px; ">Individual</div>
+                    <div class="col border border-primary btn" @click="appear = true, show = false" style="padding-top: 5px; ">Group</div>
                 </div>
 
                 <form action="/reg-candidate-individual" method="POST" x-show="show" style="margin-top: 10px;">

@@ -12,10 +12,10 @@ class UserController extends Controller
     public function store(Request $request){
 
             $validated = $request->validate([
+                "role" => 'required',
                 "name" => 'required',
                 "username" =>['required', Rule::unique('users','username')],
-                "password" => 'required|confirmed|min:5',
-                "user_type" => 'required'
+                "password" => 'required|confirmed|min:5'
             ]);
 
             //$validated['password'] = bcrypt($validated['password']);

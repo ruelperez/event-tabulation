@@ -9,8 +9,8 @@
             <div class="modal-body">
                 <form action="/reg-judges" method="post">
                 @csrf
-                    <div class="mb-3" hidden>
-                        <input type="text" class="form-control" id="id_name" value="1"  placeholder="Event Title Number" name="event_id" required>
+                    <div class="mb-3">
+                        <input type="text" class="form-control" id="id_name" placeholder="Event Title Number" name="event_id" required>
                     </div>
                     <div class="mb-3">
                         <input type="text" class="form-control" id="id_name" placeholder="Full Name" name="full_name" required>

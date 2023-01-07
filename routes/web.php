@@ -31,6 +31,15 @@ Route::get('/scoring-page', function () {
     return view('scoring');
 });
 
+Route::get('/admin/register', function () {
+    return view('user.admin.register');
+});
+
+Route::get('/admin/login', function () {
+    return view('user.admin.login');
+});
+
+Route::post('/admin/store', [UserController::class, 'store']);
 Route::post('/reg-portion', [\App\Http\Controllers\PortionController::class, 'store']);
 Route::post('/reg-title', [\App\Http\Controllers\TitleController::class, 'store']);
 Route::post('/reg-judges', [\App\Http\Controllers\JudgeController::class, 'store']);
