@@ -9,6 +9,9 @@
             <div class="modal-body">
                 <form action="/criteria" method="post">
                     @csrf
+                    <div class="mb-3" hidden>
+                        <input type="text" class="form-control" value="{{auth()->user()->id}}" name="user_id" required>
+                    </div>
                     <div class="mb-3 d-flex">
                         <input style="margin-left: 5%; width: 800px;" type="text" class="form-control" placeholder="Portion Number" name="portion_id" required>
                     </div>

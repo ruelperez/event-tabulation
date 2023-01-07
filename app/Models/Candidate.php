@@ -9,6 +9,7 @@ class Candidate extends Model
 {
     protected $fillable = [
         'event_id',
+        'user_id',
         'full_name',
         'team_name',
         'origin',

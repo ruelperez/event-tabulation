@@ -3,6 +3,7 @@
 namespace App\Http\Livewire;
 
 use App\Models\Portion;
+use App\Models\User;
 use Livewire\Component;
 
 class ShowPortion extends Component
@@ -11,7 +12,7 @@ class ShowPortion extends Component
 
     public function render()
     {
-        $this->show = Portion::all();
+        $this->show = User::find(auth()->user()->id)->portion;
         return view('livewire.show-portion');
     }
 

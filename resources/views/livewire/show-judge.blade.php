@@ -35,8 +35,6 @@
 
 @endif
 
-@include('components.modal_judges_reg')
-
 <script>
     function deleteJudge(id) {
         if (confirm("Are you sure to delete this record???"))

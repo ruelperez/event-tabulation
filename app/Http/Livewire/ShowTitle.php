@@ -4,6 +4,7 @@ namespace App\Http\Livewire;
 
 
 use App\Models\Event;
+use App\Models\User;
 use Livewire\Component;
 
 class ShowTitle extends Component
@@ -12,7 +13,7 @@ class ShowTitle extends Component
 
     public function render()
     {
-        $this->show = Event::all();
+        $this->show = User::find(auth()->user()->id)->event;
         return view('livewire.show-title');
     }
 

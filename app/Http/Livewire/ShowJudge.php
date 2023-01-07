@@ -3,23 +3,26 @@
 namespace App\Http\Livewire;
 
 use App\Models\Judge;
+use App\Models\User;
 use http\Env\Request;
 use Livewire\Component;
 
 class ShowJudge extends Component
 {
 
-    public $show, $name, $username, $password, $is_chairman, $password_confirmation;
-
-    protected $listeners = [
-        'deleteJudge' => 'destroy'
-        ];
+    public $show, $name, $username, $password;
 
     public function render()
     {
-        $this->show = Judge::all();
+
+        $this->show = User::find(auth()->user()->id)->judge;
         return view('livewire.show-judge');
+
     }
+
+    protected $listeners = [
+        'deleteJudge' => 'destroy'
+    ];
 
     public function destroy($id){
         try {

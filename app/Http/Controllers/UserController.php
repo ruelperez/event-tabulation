@@ -18,13 +18,37 @@ class UserController extends Controller
                 "password" => 'required|confirmed|min:5'
             ]);
 
-            //$validated['password'] = bcrypt($validated['password']);
+            $validated['password'] = bcrypt($validated['password']);
 
             $user = User::create($validated);
 
             auth()->login($user);
 
-            return redirect('/home')->with('message_jud', 'Data Save!!!');
+            return redirect('/home')->with('message_user', 'welcome!!!');
 
+        }
+
+        public function login(Request $request){
+
+            $validated = $request->validate([
+                "username" => 'required',
+                "password" => 'required'
+            ]);
+
+            if(auth()->attempt($validated)){
+                $request->session()->regenerate();
+
+                return redirect('/home');
+            }
+            return back()->withErrors(['username' => 'login failed']);
+        }
+
+        public function logout(Request $request){
+            auth()->logout();
+
+            $request->session()->invalidate();
+            $request->session()->regenerateToken();
+
+            return redirect('/admin/login');
         }
 }

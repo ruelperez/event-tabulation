@@ -1,15 +1,4 @@
 
-{{--@if(session()->has('success'))--}}
-{{--    <div x-data="{show:true}" x-show="show" x-init="setTimeout(()=> show = false, 1000)" class="alert alert-success" role="alert">--}}
-{{--        {{ session()->get('success') }}--}}
-{{--    </div>--}}
-{{--@endif--}}
-{{--@if(session()->has('error'))--}}
-{{--    <div class="alert alert-danger" role="alert">--}}
-{{--        {{ session()->get('error') }}--}}
-{{--    </div>--}}
-{{--@endif--}}
-
 @if(count($show) > 0)
 
 <div>
@@ -31,10 +20,8 @@
 
 
 @else
-    No Data Found
+ No data
 @endif
-
-@include('components.modal_candidate_reg')
 
 <script>
     function deleteCandidate(id) {

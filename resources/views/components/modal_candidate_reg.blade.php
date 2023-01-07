@@ -1,3 +1,4 @@
+
 <div class="modal fade" id="can_reg" tabindex="-1" aria-labelledby="insertModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -13,8 +14,15 @@
 
                 <form action="/reg-candidate-individual" method="POST" x-show="show" style="margin-top: 10px;">
                     @csrf
-                    <div class="mb-3">
-                        <input type="text" class="form-control" name="event_id" placeholder="Event Title Number" required>
+                    <div class="mb-3" hidden>
+                        <input type="text" class="form-control" name="event_id" placeholder="Event Title Number"
+                               @if(isset($eventID))
+                                   value="{{$eventID}}"
+                               @endif
+                             required>
+                    </div>
+                    <div class="mb-3" hidden>
+                        <input type="text" class="form-control" value="{{auth()->user()->id}}" name="user_id"  required>
                     </div>
                     <div class="mb-3">
                         <input type="text" class="form-control" name="full_name" placeholder="Full Name" required>

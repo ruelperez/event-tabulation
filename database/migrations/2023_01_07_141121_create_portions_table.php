@@ -13,8 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('events', function (Blueprint $table) {
-            $table->smallIncrements('id');
+        Schema::create('portions', function (Blueprint $table) {
+            $table->mediumIncrements('id');
+            $table->unsignedSmallInteger('event_id');
+            $table->unsignedSmallInteger('user_id');
             $table->string('title');
             $table->text('description')->nullable();
             $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
@@ -29,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('events');
+        Schema::dropIfExists('portions');
     }
 };

@@ -9,6 +9,7 @@ class Judge extends Model
 {
     protected $fillable = [
         'event_id',
+        'user_id',
         'full_name',
         'is_chairman',
         'photo',

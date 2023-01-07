@@ -18,28 +18,28 @@
                                 </div>
 
                                 <div class="form-outline mb-4">
-                                    <input type="text" id="form3Example1cg" placeholder="Your Full Name" name="name" class="form-control form-control-lg" />
+                                    <input type="text" id="form3Example1cg" placeholder="Your Full Name" name="name" class="form-control form-control-lg" value={{old('name')}} >
                                     @error('name')
                                     <p class="text-red-500 text-xs p-1">{{$message}}</p>
                                     @enderror
                                 </div>
 
                                 <div class="form-outline mb-4">
-                                    <input type="text" id="form3Example3cg" name="username" placeholder="Your Username" class="form-control form-control-lg" />
+                                    <input type="text" id="form3Example3cg" name="username" placeholder="Your Username" class="form-control form-control-lg" value={{old('username')}}>
                                     @error('username')
                                     <p class="text-red-500 text-xs p-1">{{$message}}</p>
                                     @enderror
                                 </div>
 
                                 <div class="form-outline mb-4">
-                                    <input type="password" id="form3Example4cg" name="password" placeholder="Password" class="form-control form-control-lg" />
+                                    <input type="password" id="form3Example4cg" name="password" placeholder="Password" class="form-control form-control-lg">
                                     @error('password')
                                     <p style="color: red">{{$message}}</p>
                                     @enderror
                                 </div>
 
                                 <div class="form-outline mb-4">
-                                    <input type="password" name="password_confirmation" placeholder="Repeat your password" id="form3Example4cdg" class="form-control form-control-lg" />
+                                    <input type="password" name="password_confirmation" placeholder="Repeat your password" id="form3Example4cdg" class="form-control form-control-lg">
                                     @error('password_confirmation')
                                     <p style="color: red">{{$message}}</p>
                                     @enderror

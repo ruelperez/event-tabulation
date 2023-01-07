@@ -9,6 +9,9 @@
             <div class="modal-body">
                 <form action="/reg-title" method="post">
                     @csrf
+                    <div class="mb-3" hidden>
+                        <input type="text" class="form-control" id="id_admin" value="{{auth()->user()->id}}" name="user_id" required>
+                    </div>
                     <div class="mb-3">
                         <input type="text" class="form-control" id="id_title" placeholder="Title" name="name" required>
                     </div>

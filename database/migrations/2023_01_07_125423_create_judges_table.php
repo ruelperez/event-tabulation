@@ -13,13 +13,15 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('candidates', function (Blueprint $table) {
+        Schema::create('judges', function (Blueprint $table) {
             $table->smallIncrements('id');
             $table->unsignedSmallInteger('event_id');
+            $table->unsignedSmallInteger('user_id');
             $table->string('full_name');
-            $table->string('team_name');
-            $table->string('origin');
+            $table->boolean('is_chairman')->default(0);
             $table->string('photo');
+            $table->string('username');
+            $table->string('password');
             $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->timestamp('updated_at')->default(DB::raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'));
         });
@@ -32,6 +34,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('candidates');
+        Schema::dropIfExists('judges');
     }
 };

@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('criterias', function (Blueprint $table) {
             $table->mediumIncrements('id');
             $table->unsignedMediumInteger('portion_id');
+            $table->unsignedMediumInteger('user_id');
             $table->string('title');
             $table->double('percentage');
             $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));

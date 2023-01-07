@@ -19,7 +19,7 @@
     No Data Found
 @endif
 
-@include('components.modal_portion')
+
 
 <script>
     function deleteTitles(id) {

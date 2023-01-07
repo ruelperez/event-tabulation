@@ -13,6 +13,7 @@ class CandidateController extends Controller
 
             Candidate::create([
                 'event_id' => $request->event_id,
+                'user_id' => $request->user_id,
                 'full_name' => $request->full_name,
                 'team_name' => $request->team_name,
                 'origin' => $request->origin,
@@ -24,6 +25,7 @@ class CandidateController extends Controller
         else{
             Candidate::create([
                 'event_id' => $request->event_id,
+                'user_id' => $request->event_id,
                 'full_name' => $request->full_name,
                 'team_name' => $request->team_name,
                 'origin' => $request->origin,

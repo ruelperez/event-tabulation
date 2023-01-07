@@ -23,9 +23,11 @@ Route::get('/', function () {
 //    dd($event);
 //});
 
-Route::get('/home', function () {
-    return view('home');
-});
+//Route::get('/home', function () {
+//    return view('home');
+//})->middleware('auth');
+
+Route::get('/home', [\App\Http\Controllers\HomeController::class, 'home'])->middleware('auth');;
 
 Route::get('/scoring-page', function () {
     return view('scoring');
@@ -37,8 +39,10 @@ Route::get('/admin/register', function () {
 
 Route::get('/admin/login', function () {
     return view('user.admin.login');
-});
+})->name('login')->middleware('guest');
 
+Route::post('/admin/logout', [UserController::class, 'logout']);
+Route::post('/admin/login-process', [UserController::class, 'login']);
 Route::post('/admin/store', [UserController::class, 'store']);
 Route::post('/reg-portion', [\App\Http\Controllers\PortionController::class, 'store']);
 Route::post('/reg-title', [\App\Http\Controllers\TitleController::class, 'store']);

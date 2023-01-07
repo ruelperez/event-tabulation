@@ -22,6 +22,7 @@ class CriteriaController extends Controller
 
             Criteria::create([
             'portion_id' => $request->portion_id,
+            'user_id' => $request->user_id,
             'title' => $request->title,
             'percentage' => $cri_data
         ]);

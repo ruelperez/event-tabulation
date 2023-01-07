@@ -11,6 +11,7 @@ class PortionController extends Controller
 
         Portion::create([
             'event_id' => $request->event_id,
+            'user_id' => $request->user_id,
             'title' => $request->title
         ]);
 

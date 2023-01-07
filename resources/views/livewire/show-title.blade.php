@@ -1,3 +1,4 @@
+
 @if(count($show) > 0)
 
     <div>
@@ -6,8 +7,6 @@
                 <li class="list-group-item"><button onclick="deleteTitle({{$shows->id}})" type="button" class="btn btn-danger py-1" style="margin-right: 13%;">Delete
                     </button>
                      #{{$shows->id}} - {{strtoupper($shows->title)}}
-
-
 
                 </li>
             </ul>
@@ -18,8 +17,6 @@
 @else
     No Data Found
 @endif
-
-@include('components.modal_title')
 
 <script>
     function deleteTitle(id) {

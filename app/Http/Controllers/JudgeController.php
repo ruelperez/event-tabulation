@@ -9,9 +9,9 @@ use Illuminate\Validation\Rule;
 class JudgeController extends Controller
 {
     public function store(Request $request){
-
         $validated = $request->validate([
             "event_id" => 'required',
+            "user_id" => 'required',
             "full_name" => 'required',
             "username" =>['required', Rule::unique('judges','username')],
             "password" => 'required|confirmed|min:5',
@@ -19,11 +19,11 @@ class JudgeController extends Controller
             "photo" => 'required'
         ]);
 
-        //$validated['password'] = bcrypt($validated['password']);
+        $validated['password'] = bcrypt($validated['password']);
 
         $judge = Judge::create($validated);
 
-//        auth()->login($user);
+        auth()->login($judge);
 
         return redirect('/home')->with('message_jud', 'Data Save!!!');
 

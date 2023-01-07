@@ -13,11 +13,14 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('portions', function (Blueprint $table) {
-            $table->mediumIncrements('id');
+        Schema::create('candidates', function (Blueprint $table) {
+            $table->smallIncrements('id');
             $table->unsignedSmallInteger('event_id');
-            $table->string('title');
-            $table->text('description')->nullable();
+            $table->unsignedSmallInteger('user_id');
+            $table->string('full_name');
+            $table->string('team_name');
+            $table->string('origin');
+            $table->string('photo');
             $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->timestamp('updated_at')->default(DB::raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'));
         });
@@ -30,6 +33,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('portions');
+        Schema::dropIfExists('candidates');
     }
 };

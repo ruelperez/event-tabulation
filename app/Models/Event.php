@@ -10,10 +10,19 @@ class Event extends Model
     protected $fillable = [
         'title',
         'description',
+        'user_id',
     ];
 
     public function judge(){
         return $this->hasMany(Judge::class);
+    }
+
+    public function user(){
+        return $this->belongsTo(User::class);
+    }
+
+    public function candidate(){
+        return $this->hasMany(Candidate::class);
     }
 
     use HasFactory;

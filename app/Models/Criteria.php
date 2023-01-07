@@ -9,6 +9,7 @@ class Criteria extends Model
 {
     protected $fillable = [
         'portion_id',
+        'user_id',
         'title',
         'percentage'
     ];
