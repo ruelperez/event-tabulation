@@ -17,9 +17,7 @@ class ShowScoring extends Component
 
     public function render()
     {
-
         $auth = Auth::guard('webjudge')->user()->user_id;
-
         $this->event = User::find($auth)->event;
         $this->candidate = User::find($auth)->candidate;
         $this->portion = User::find($auth)->portion;

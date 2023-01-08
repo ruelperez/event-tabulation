@@ -9,15 +9,16 @@
             <div class="modal-body">
                 <form action="/reg-judges" method="post">
                 @csrf
-                    <div class="mb-3" hidden>
+                    <div class="mb-3" hidden >
                         <input type="text" class="form-control" value="{{auth()->user()->id}}" name="user_id" required>
                     </div>
-                    <div class="mb-3" hidden>
+                    <div class="mb-3" hidden >
                         <input type="text" class="form-control" name="event_id" placeholder="Event Title Number"
                                @if(isset($eventID))
                                    value="{{$eventID}}"
-                               @endif
-                               required>
+                               @else
+                                   value="null"
+                               @endif >
                     </div>
                     <div class="mb-3">
                         <input type="text" class="form-control" id="id_name" placeholder="Full Name" name="full_name" required>

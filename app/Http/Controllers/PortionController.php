@@ -8,6 +8,9 @@ use Illuminate\Http\Request;
 class PortionController extends Controller
 {
     public function store(Request $request){
+        if ($request->event_id == "null"){
+            return redirect('/admin/home')->with('portion_error','Register first an Event Title');
+        }
 
         Portion::create([
             'event_id' => $request->event_id,

@@ -10,6 +10,9 @@ use Illuminate\Validation\Rule;
 class JudgeController extends Controller
 {
     public function store(Request $request){
+        if ($request->event_id == "null"){
+            return redirect('/admin/home')->with('judge_error','Register first an Event Title');
+        }
         $validated = $request->validate([
             "event_id" => 'required',
             "user_id" => 'required',
@@ -44,13 +47,13 @@ class JudgeController extends Controller
         return back()->withErrors(['username' => 'login failed']);
     }
 
-//    public function logout(Request $request){
-//        auth()->logout();
-//
-//        $request->session()->invalidate();
-//        $request->session()->regenerateToken();
-//
-//        return redirect('/judge/login');
-//    }
+    public function logout(Request $request){
+        auth()->logout();
+
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        return redirect('/judge/login');
+    }
 
 }

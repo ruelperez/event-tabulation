@@ -12,17 +12,21 @@
                     <div class="col border border-primary btn" @click="appear = true, show = false" style="padding-top: 5px; ">Group</div>
                 </div>
 
-                <form action="/reg-candidate-individual" method="POST" x-show="show" style="margin-top: 10px;">
+                <form action="/reg-candidate" method="POST" x-show="show" style="margin-top: 10px;">
                     @csrf
                     <div class="mb-3" hidden>
                         <input type="text" class="form-control" name="event_id" placeholder="Event Title Number"
                                @if(isset($eventID))
                                    value="{{$eventID}}"
-                               @endif
-                             required>
+                                @else
+                                    value="null"
+                               @endif  >
                     </div>
                     <div class="mb-3" hidden>
                         <input type="text" class="form-control" value="{{auth()->user()->id}}" name="user_id"  required>
+                    </div>
+                    <div class="mb-3">
+                        <input type="text" class="form-control" name="candidate_num" placeholder="Candidate No." required>
                     </div>
                     <div class="mb-3">
                         <input type="text" class="form-control" name="full_name" placeholder="Full Name" required>
@@ -44,14 +48,15 @@
                 </form>
 
 
-                <form action="/reg-candidate-group" method="POST" x-show="appear" style="margin-top: 10px;">
+                <form action="/reg-candidate" method="POST" x-show="appear" style="margin-top: 10px;">
                     @csrf
                     <div class="mb-3" hidden>
                         <input type="text" class="form-control" name="event_id" placeholder="Event Title Number"
                                @if(isset($eventID))
                                    value="{{$eventID}}"
-                               @endif
-                               required>
+                               @else
+                                   value="null"
+                                @endif >
                     </div>
                     <div class="mb-3" hidden>
                         <input type="text" class="form-control" value="{{auth()->user()->id}}" name="user_id"  required>

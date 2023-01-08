@@ -13,8 +13,9 @@
                         <input type="text" class="form-control" name="event_id" placeholder="Event Title Number"
                                @if(isset($eventID))
                                    value="{{$eventID}}"
-                               @endif
-                               required>
+                               @else
+                                   value="null"
+                               @endif >
                     </div>
                     <div class="mb-3" hidden>
                         <input type="text" class="form-control" value="{{auth()->user()->id}}" name="user_id" required>

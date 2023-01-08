@@ -1,6 +1,6 @@
 @include('partial.header')
 {{--@dd(auth()->user()->id)--}}
-<h4>{{auth()->user()->id}}</h4> <h4>{{auth()->user()->name}}</h4>
+<h4>ADMIN {{auth()->user()->id}}</h4> <h4>{{auth()->user()->name}}</h4>
 <form action="/admin/logout" method="POST">
     @csrf
     <button style="margin-left: 93%; width: 6%;">logout</button>
