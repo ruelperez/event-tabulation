@@ -24,7 +24,7 @@
         <tbody>
         @foreach($candidate as $candidates)
             <tr>
-                <th style="text-align: center">{{$candidates->id}}</th>
+                <th style="text-align: center">{{$candidates->candidate_num}}</th>
                 <td>photos</td>
                 <td>{{$candidates->full_name}} <br> <p style="font-size: 0.8em";>{{$candidates->origin}}</p></td>
                 @foreach($criteria as $criterias)

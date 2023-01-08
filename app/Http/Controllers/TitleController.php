@@ -11,7 +11,7 @@ class TitleController extends Controller
     public function store(Request $request){
             $event = User::find(auth()->user()->id)->event;
             if (count($event) >= 1){
-                return redirect('/home')->with('message_title_error', 'Unable to add another event, Only one event is allowed');
+                return redirect('/admin/home')->with('message_title_error', 'Unable to add another event, Only one event is allowed');
             }
             else{
                 Event::create([

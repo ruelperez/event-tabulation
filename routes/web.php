@@ -31,7 +31,7 @@ Route::prefix('judge')->middleware(['isJudge'])->group(function (){
 
 Route::get('/judge/login', function () {
     return view('user.judge.login');
-});
+})->middleware('judgeGuest');
 
 
 Route::get('/admin/register', function () {
