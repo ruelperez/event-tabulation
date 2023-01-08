@@ -20,7 +20,7 @@ class CandidateController extends Controller
                 'photo' => $request->photo
             ]);
 
-            return redirect('/home')->with('message_can', 'Data Save!!!');
+            return redirect('/admin/home')->with('message_can', 'Data Save!!!');
         }
         else{
             Candidate::create([
@@ -32,7 +32,7 @@ class CandidateController extends Controller
                 'photo' => $request->photo
             ]);
 
-            return redirect('/home')->with('message_can', 'Data Save!!!');
+            return redirect('/admin/home')->with('message_can', 'Data Save!!!');
         }
     }
 }

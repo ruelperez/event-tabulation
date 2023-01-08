@@ -15,7 +15,7 @@ class PortionController extends Controller
             'title' => $request->title
         ]);
 
-        return redirect('/home')->with('message_portion', 'Data Save!!!');
+        return redirect('/admin/home')->with('message_portion', 'Data Save!!!');
 
     }
 }

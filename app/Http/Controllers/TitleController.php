@@ -19,7 +19,7 @@ class TitleController extends Controller
                     'user_id' => $request->user_id
                 ]);
 
-                return redirect('/home')->with('message_title', 'Data Save!!!');
+                return redirect('/admin/home')->with('message_title', 'Data Save!!!');
             }
 
 

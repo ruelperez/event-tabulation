@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Judge;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
 
 class JudgeController extends Controller
@@ -35,10 +36,10 @@ class JudgeController extends Controller
             "password" => 'required'
         ]);
 
-        if(auth()->attempt($validated)){
+        if(Auth::guard('webjudge')->attempt($validated)){
             $request->session()->regenerate();
 
-            return redirect('/scoring-page');
+            return redirect('/judge/scoring-page');
         }
         return back()->withErrors(['username' => 'login failed']);
     }
