@@ -22,11 +22,15 @@ Route::prefix('admin')->middleware(['auth','isAdmin'])->group(function (){
     Route::get('/home', [\App\Http\Controllers\HomeController::class, 'home']);
 });
 
-Route::prefix('judge')->middleware('auth')->group(function (){
-    Route::get('/scoring-page', function () {
+//Route::prefix('judge')->middleware('auth')->group(function (){
+//    Route::get('/scoring-page', function () {
+//        return view('scoring');
+//    });
+//});
+
+Route::get('/scoring-page', function () {
         return view('scoring');
-    });
-});
+    })->middleware('auth');
 
 Route::get('/judge/login', function () {
     return view('user.judge.login');

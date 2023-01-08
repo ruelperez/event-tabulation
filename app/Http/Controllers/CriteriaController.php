@@ -27,7 +27,7 @@ class CriteriaController extends Controller
             'percentage' => $cri_data
         ]);
 
-        return redirect('/home')->with('message_cri', 'Data Save!!!');
+        return redirect('/admin/home')->with('message_cri', 'Data Save!!!');
 
     }
 

@@ -4,6 +4,7 @@ namespace App\Http\Livewire;
 
 use App\Models\Criteria;
 use App\Models\Portion;
+use App\Models\User;
 use Livewire\Component;
 
 class ShowCriteria extends Component
@@ -12,8 +13,8 @@ class ShowCriteria extends Component
 
     public function render()
     {
-        $this->show = Criteria::all();
-        $this->show_portion = Portion::all();
+        $this->show = User::find(auth()->user()->id)->criteria;
+        $this->show_portion = User::find(auth()->user()->id)->portion;
         return view('livewire.show-criteria');
     }
 

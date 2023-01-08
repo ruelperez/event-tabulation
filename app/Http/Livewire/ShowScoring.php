@@ -6,6 +6,7 @@ use App\Models\Candidate;
 use App\Models\Criteria;
 use App\Models\Event;
 use App\Models\Portion;
+use App\Models\User;
 use Livewire\Component;
 
 class ShowScoring extends Component
@@ -15,10 +16,10 @@ class ShowScoring extends Component
 
     public function render()
     {
-        $this->event = Event::all();
-        $this->candidate = Candidate::all();
-        $this->portion = Portion::all();
-        $this->criteria = Portion::find($this->ids)->criteria;
+        $this->event = User::find(auth()->user()->id)->event;
+        $this->candidate = User::find(auth()->user()->id)->candidate;
+        $this->portion = User::find(auth()->user()->id)->portion;
+        $this->criteria = User::find(auth()->user()->id)->criteria;
         return view('livewire.show-scoring');
     }
 
