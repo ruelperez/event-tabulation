@@ -26,7 +26,7 @@
                         <input type="text" class="form-control" value="{{auth()->user()->id}}" name="user_id"  required>
                     </div>
                     <div class="mb-3">
-                        <input type="text" class="form-control" name="candidate_num" placeholder="Candidate No." required>
+                        <input type="text" class="form-control" name="id" placeholder="Candidate No." required>
                     </div>
                     <div class="mb-3">
                         <input type="text" class="form-control" name="full_name" placeholder="Full Name" required>
@@ -47,7 +47,6 @@
                     </div>
                 </form>
 
-
                 <form action="/reg-candidate" method="POST" x-show="appear" style="margin-top: 10px;">
                     @csrf
                     <div class="mb-3" hidden>
@@ -63,6 +62,9 @@
                     </div>
                     <div class="mb-3" hidden>
                         <input type="text" class="form-control" name="full_name" value="null" placeholder="Full Name" required>
+                    </div>
+                    <div class="mb-3">
+                        <input type="text" class="form-control" name="id" placeholder="Team No." required>
                     </div>
                     <div class="mb-3">
                         <input type="text" class="form-control" name="team_name" placeholder="Team Name">

@@ -18,7 +18,7 @@ class CandidateController extends Controller
         if (count($can) < 1){
 
             Candidate::create([
-                'candidate_num' => $request->candidate_num,
+                'id' => $request->id,
                 'event_id' => $request->event_id,
                 'user_id' => $request->user_id,
                 'full_name' => $request->full_name,
@@ -31,12 +31,12 @@ class CandidateController extends Controller
         }
         else{
             foreach ($can as $cans){
-                if ($cans->candidate_num == $request->candidate_num){
+                if ($cans->id == $request->id){
                     return redirect('/admin/home')->with('can_num_error','Failed! Enter different Candidate Number');
                 }
             }
             Candidate::create([
-                'candidate_num' => $request->candidate_num,
+                'id' => $request->id,
                 'event_id' => $request->event_id,
                 'user_id' => $request->user_id,
                 'full_name' => $request->full_name,

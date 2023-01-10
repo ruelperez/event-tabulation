@@ -18,6 +18,10 @@ class ShowCandidate extends Component
         return view('livewire.show-candidate');
     }
 
+    public function fetch(){
+
+    }
+
     protected $listeners = [
         'deleteCandidate' => 'destroy'
         ];

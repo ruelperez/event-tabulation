@@ -53,10 +53,13 @@ Route::post('/reg-title', [\App\Http\Controllers\TitleController::class, 'store'
 Route::post('/reg-judges', [\App\Http\Controllers\JudgeController::class, 'store']);
 Route::post('/reg-candidate', [\App\Http\Controllers\CandidateController::class, 'store']);
 Route::post('/criteria', [\App\Http\Controllers\CriteriaController::class, 'store']);
-
+Route::post('/rating/store', [\App\Http\Controllers\RatingController::class, 'store']);
 //Route::get('/n', function (){
 //    return view('nono');
 //});
 
-
+//Route::get('/tes', function () {
+//    $test = \App\Models\Criteria::find(16)->portion;
+//    dd($test);
+//});
 

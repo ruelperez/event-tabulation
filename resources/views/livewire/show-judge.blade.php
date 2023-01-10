@@ -23,7 +23,7 @@
 
 @else
     <div> No Data Found</div>
-
+    <button wire:click="fetch">button</button>
 @endif
 
 <script>
