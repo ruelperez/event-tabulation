@@ -12,11 +12,11 @@ use Livewire\Component;
 
 class ShowScoring extends Component
 {
-    public $event, $candidate, $portion, $criteria, $ids = 1, $na;
-
+    public $event, $candidate, $portion, $criteria, $ids = 1;
 
     public function render()
     {
+
         $auth = Auth::guard('webjudge')->user()->user_id;
         $this->event = User::find($auth)->event;
         $this->candidate = User::find($auth)->candidate;
@@ -32,11 +32,17 @@ class ShowScoring extends Component
 
         $this->criteria = Portion::find($this->ids)->criteria;
 
+
         return view('livewire.show-scoring');
     }
 
     public function fetch($id){
         $this->ids = $id;
     }
+
+    public function select($id){
+        $this->num = $id;
+    }
+
 
 }

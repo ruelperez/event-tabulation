@@ -18,7 +18,7 @@
                 <th></th>
                 <th></th>
                 @foreach($criteria as $criterias)
-                    <th style="text-align: center; width: 13%;" >{{ucfirst($criterias->title)}} <br> ({{ucfirst($criterias->percentage)}}%)</th>
+                    <th style="text-align: center; width: 500px;" >{{ucfirst($criterias->title)}} <br> ({{ucfirst($criterias->percentage)}}%)</th>
                 @endforeach
                 <th style="text-align: center; width: 13%;">Total</th>
             </tr>
@@ -27,16 +27,16 @@
 
                 @foreach($candidate as $candidates)
                     <tr>
-                        <th style="text-align: center">{{$candidates->id}}</th>
+                        <th style="text-align: center; width: 10%;">{{$candidates->id}}</th>
                         <td>photos</td>
-                        <td>{{$candidates->full_name}} <br> <p style="font-size: 0.8em";>{{$candidates->origin}}</p></td>
+                        <td style="width:600px;">{{$candidates->full_name}} <br> <p style="font-size: 0.8em";>{{$candidates->origin}}</p></td>
                         @foreach($criteria as $criterias)
                             <input type="text" hidden value="{{$candidates->id}}" name="candidate[]">
                             <input type="text" hidden value="{{Auth::guard('webjudge')->user()->id}}" name="judge[]">
                             <input type="text" value="{{$criterias->id}}" name="criteria[]" hidden>
-                            <td><input type="text" name="rating[]" placeholder="00.00" style="width: 50%; height: 40px; margin-left: 25%; margin-top: 10px; text-align: center"></td>
+                            <td><input type="text" name="rating[]" placeholder="00.00" style="width: 50%; height: 40px; margin-left: 25%; margin-top: 10px; text-align: center" required></td>
                         @endforeach
-{{--                            <td><input type="text" placeholder="00.00" style="width: 50%; height: 40px; margin-left: 25%; margin-top: 10px; text-align: center"></td>--}}
+                            <td><input type="text" placeholder="00.00" style="width: 50%; height: 40px; margin-left: 25%; margin-top: 10px; text-align: center"></td>
 
                     </tr>
                 @endforeach
@@ -44,9 +44,12 @@
             </tbody>
         </table>
 
-        <button type="submit">sumbit</button>
+        <button type="submit" class="btn btn-info" style="width: 40%; margin-left: 30%;">Submit</button>
+{{--@if(isset($rate[0]))--}}
+{{--        {{$rate[0]}}--}}
+{{--@endif--}}
     </form>
     </div>
-
+<div>
 
 
