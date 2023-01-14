@@ -1,5 +1,5 @@
 
-<div class="modal" tabindex="-1" role="dialog" id="reg_modal">
+<div wire:ignore.self class="modal" tabindex="-1" role="dialog" id="reg_modal">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">

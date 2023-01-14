@@ -21,11 +21,6 @@ class ShowJudge extends Component
 
     }
 
-    public function fetch()
-    {
-        dd('haha');
-    }
-
     protected $listeners = [
         'deleteJudge' => 'destroy'
     ];

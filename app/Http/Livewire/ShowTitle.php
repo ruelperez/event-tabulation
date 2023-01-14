@@ -41,7 +41,7 @@ class ShowTitle extends Component
             ]);
             //$this->show->prepend($new);
 
-        session()->flash('message', 'added successfully');
+        session()->flash('message', 'Added successfully');
         $this->resetInput();
             //$this->dispatchBrowserEvent('close-modal');
         }
@@ -62,10 +62,10 @@ class ShowTitle extends Component
     public function destroy($id){
         try {
             Event::find($id)->delete();
-            session()->flash('success',"Deleted Successfully!!");
+            session()->flash('deleted',"Deleted Successfully!!");
         }
         catch(\Exception $e){
-            session()->flash('error',"Something goes wrong while deleting!!");
+            session()->flash('delete_error',"Something goes wrong while deleting!!");
         }
     }
 }

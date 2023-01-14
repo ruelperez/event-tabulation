@@ -1,4 +1,4 @@
-
+<div>
 @if(count($show) > 0)
     <div>
         @foreach($show as $shows)
@@ -23,7 +23,6 @@
 
 @else
     <div> No Data Found</div>
-    <button wire:click="fetch">button</button>
 @endif
 
 <script>
@@ -34,3 +33,5 @@
 
 
 </script>
+
+</div>

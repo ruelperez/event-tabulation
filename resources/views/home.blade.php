@@ -14,7 +14,6 @@
         <div class="bg-primary text-center pt-2" style="width:97%; height: 50px; margin-left: 3%;"><h4>Event Title</h4></div>
         <p class="text-center"><b class="btn text-danger" data-bs-toggle="modal" data-bs-target="#title_modal">Click
                 here</b></p>
-        @include('components.message_title')
         @livewire('show-title')
 
     </div>

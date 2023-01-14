@@ -8,7 +8,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form wire:submit.prevent="submit">
+                <form wire:submit.prevent="submit({{3}})">
                     <div class="mb-3" hidden>
                         <input type="text" class="form-control" id="id_admin" wire:model="user_id">
                     </div>
