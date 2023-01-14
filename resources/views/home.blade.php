@@ -15,7 +15,6 @@
         <p class="text-center"><b class="btn text-danger" data-bs-toggle="modal" data-bs-target="#title_modal">Click
                 here</b></p>
         @include('components.message_title')
-        @include('components.modal_title')
         @livewire('show-title')
 
     </div>
