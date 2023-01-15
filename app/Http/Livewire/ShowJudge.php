@@ -49,7 +49,7 @@ class ShowJudge extends Component
         }
 
         $this->password = bcrypt($this->password);
-       
+
         try {
             Judge::create([
                 'user_id' => $this->user_id,

@@ -26,19 +26,16 @@ Route::prefix('admin')->middleware(['auth','isAdmin'])->group(function (){
 
 Route::prefix('judge')->middleware(['isJudge'])->group(function (){
     Route::get('/scoring-page', function () {
+
         return view('scoring');
     });
 });
 
 
+
 Route::get('/judge/login', function () {
     return view('user.judge.login');
 })->middleware('judgeGuest');
-
-
-Route::get('/admin/register', function () {
-    return view('user.admin.register');
-});
 
 Route::get('/admin/login', function () {
     return view('user.admin.login');
