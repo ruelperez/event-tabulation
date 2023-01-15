@@ -36,9 +36,8 @@
         <p class="text-center"><b class="btn text-danger" data-bs-toggle="modal" data-bs-target="#can_reg">Click
                 here</b></p>
         @include('components.message_candidate')
-
         @livewire('show-candidate')
-        @include('components.modal_candidate_reg')
+
 
     <div class="col-4 border border-primary" style="margin-top: 30px;">
         <div class="bg-primary text-center pt-2" style="width:97%; height: 50px; margin-left: 3%;"><h4>Portion</h4></div>

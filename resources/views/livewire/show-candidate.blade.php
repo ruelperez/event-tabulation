@@ -1,4 +1,5 @@
-
+<div>
+@include('components.modal_candidate_reg')
 @if(count($show) > 0)
 
 <div>
@@ -31,3 +32,23 @@
 
 </script>
 
+    <script>
+        window.livewire.on('fileChoosen', ()=>{
+
+            let inputfield = document.getElementById('image');
+
+            let file = inputfield.files[0];
+
+            let reader = new FileReader();
+
+            reader.onloadend = () => {
+
+                window.livewire.emit('fileUpload', reader.result);
+            }
+
+            reader.readAsDataURL(file);
+
+        })
+    </script>
+
+</div>
