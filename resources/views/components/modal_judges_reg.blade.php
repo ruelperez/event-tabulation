@@ -7,43 +7,48 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form action="/reg-judges" method="post">
-                @csrf
+                <form wire:submit.prevent="submit">
                     <div class="mb-3" hidden >
-                        <input type="text" class="form-control" value="{{auth()->user()->id}}" name="user_id" required>
+                        <input type="text" class="form-control" wire:model="user_id">
                     </div>
                     <div class="mb-3" hidden >
-                        <input type="text" class="form-control" name="event_id" placeholder="Event Title Number"
-                               @if(isset($eventID))
-                                   value="{{$eventID}}"
-                               @else
-                                   value="null"
-                               @endif >
+                        <input type="text" class="form-control" wire:model="event_id">
                     </div>
+                    @error('full_name') <span style="color: red">{{ $message }}</span> @enderror
                     <div class="mb-3">
-                        <input type="text" class="form-control" id="id_name" placeholder="Full Name" name="full_name" required>
+                        <input type="text" class="form-control" id="id_name" placeholder="Full Name" wire:model.debounce.500ms="full_name" required>
                     </div>
+                    @error('username') <span style="color: red">{{ $message }}</span> @enderror
                     <div class="mb-3">
-                        <input type="text" class="form-control" id="id_username" name="username" placeholder="Username" required>
+                        <input type="text" class="form-control" id="id_username" wire:model.debounce.500ms="username" placeholder="Username" required>
                     </div>
+                    @error('password') <span style="color: red">{{ $message }}</span> @enderror
                     <div class="mb-3">
-                        <input type="password" class="form-control" id="id_pass" name="password" placeholder="Password" required>
+                        <input type="password" class="form-control" id="id_pass" wire:model.debounce.500ms="password" placeholder="Password" required>
                     </div>
+                    @error('password_confirmation') <span style="color: red">{{ $message }}</span> @enderror
                     <div class="mb-3">
-                        <input type="password" class="form-control" name="password_confirmation" placeholder="Confirm Password" required>
+                        <input type="password" class="form-control" wire:model.debounce.500ms="password_confirmation" placeholder="Confirm Password" required>
                     </div>
                     <div class="mb-3">
                         <label> Is Chairman:</label>
-                        <label style="margin-left: 10px;">Yes</label>
-                        <input type="radio" name="is_chairman" value="1" required>
-                        <label style="margin-left: 10px;">No</label>
-                        <input type="radio" name="is_chairman" value="0" required>
+                        <input type="checkbox" wire:model="is_chairman" value="1">
 
                     </div>
-                    <div class="mb-3">
+                    <div class="mb-3" hidden>
                         <label>Photo</label>
-                        <input type="file" name="photo" class="form-control">
+                        <input type="file" wire:model="photo" class="form-control">
                     </div>
+                    @if(session()->has('data_save'))
+                        <div class="alert alert-success" style="width: 60%; ">
+                            {{ session('data_save') }}
+                        </div>
+                    @endif
+                    @if(session()->has('data_unsave'))
+                        <div class="alert alert-success" style="width: 60%; ">
+                            {{ session('data_unsave') }}
+                        </div>
+                    @endif
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                         <button type="submit" class="btn btn-primary" >Submit</button>

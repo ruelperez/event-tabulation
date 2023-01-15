@@ -19,7 +19,7 @@ return new class extends Migration
             $table->unsignedSmallInteger('user_id');
             $table->string('full_name');
             $table->boolean('is_chairman')->default(0);
-            $table->string('photo');
+            $table->string('photo')->nullable();
             $table->string('username');
             $table->string('password');
             $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));

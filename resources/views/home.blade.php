@@ -27,7 +27,6 @@
         <div x-data="{show:true}" x-show="show" x-init="setTimeout(()=>show=false, 3000)"   class="alert alert-danger">{{ $message. " Please try again"}}</div>
         @enderror
         @include('components.message_judges')
-        @include('components.modal_judges_reg')
         @livewire('show-judge')
 
     </div>
