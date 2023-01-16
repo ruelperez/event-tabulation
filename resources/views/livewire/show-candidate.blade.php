@@ -1,28 +1,34 @@
 <div>
-@include('components.modal_candidate_reg')
-@if(count($show) > 0)
 
-<div>
-    @foreach($show as $shows)
-        <ul class="list-group">
-            <li class="list-group-item"><button onclick="deleteCandidate({{$shows->id}})" type="button" class="btn btn-danger py-1" style="margin-right: 13%;">Delete
-                        </button> #{{$shows->id}} - @if($shows->full_name == "null")
-                                                           {{ucfirst($shows->team_name)}}
-                                                @else
+    @include('components.modal_candidate_reg')
+    @if(count($show) > 0)
 
-                                                         {{ucfirst($shows->full_name)}}
-                                                @endif
+        @foreach($show as $shows)
+
+            <ul class="list-group">
+                <li class="list-group-item"><button onclick="deleteCandidate({{$shows->id}})" type="button" class="btn btn-danger py-1" style="margin-right: 5%;">Delete
+                            </button> <img src="{{ asset('storage/'.$shows->photo) }}" height="50" width="50" style="margin-right: 20px;"/>
+                            #{{$shows->id}} - @if($shows->full_name == "null")
+                                                               {{ucfirst($shows->team_name)}}
+                                                    @else
+
+                                                             {{ucfirst($shows->full_name)}}
+                                                    @endif
+                </li>
 
 
-            </li>
-        </ul>
-    @endforeach
+            </ul>
+
+        @endforeach
+
+    @else
+     No data
+    @endif
+
 </div>
 
 
-@else
- No data
-@endif
+
 
 <script>
     function deleteCandidate(id) {
@@ -30,25 +36,21 @@
             window.livewire.emit('deleteCandidate', id);
     }
 
+
+    window.livewire.on('fileChoosen', ()=>{
+
+        let inputfield = document.getElementById('image');
+
+        let file = inputfield.files[0];
+
+        let reader = new FileReader();
+
+        reader.onloadend = () => {
+
+            window.livewire.emit('fileUpload', reader.result);
+        }
+
+        reader.readAsDataURL(file);
+
+    })
 </script>
-
-    <script>
-        window.livewire.on('fileChoosen', ()=>{
-
-            let inputfield = document.getElementById('image');
-
-            let file = inputfield.files[0];
-
-            let reader = new FileReader();
-
-            reader.onloadend = () => {
-
-                window.livewire.emit('fileUpload', reader.result);
-            }
-
-            reader.readAsDataURL(file);
-
-        })
-    </script>
-
-</div>

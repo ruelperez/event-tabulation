@@ -1,6 +1,5 @@
 <div>
-
-    @include('components.modal_judges_reg')
+@include('components.modal_judges_reg')
 @if(count($show) > 0)
     <div>
         @foreach($show as $shows)

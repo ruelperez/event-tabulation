@@ -21,7 +21,7 @@ class ShowJudge extends Component
         }
         $this->user_id = auth()->user()->id;
         $this->show = User::find(auth()->user()->id)->judge;
-//        dd(auth()->user()->id);
+
         return view('livewire.show-judge');
 
     }
