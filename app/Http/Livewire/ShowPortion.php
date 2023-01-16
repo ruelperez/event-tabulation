@@ -8,12 +8,45 @@ use Livewire\Component;
 
 class ShowPortion extends Component
 {
-    public $show;
+    public $show, $title, $user_id, $event_id;
 
     public function render()
     {
+        $this->eventID();
+        $this->user_id = auth()->user()->id;
         $this->show = User::find(auth()->user()->id)->portion;
         return view('livewire.show-portion');
+    }
+
+    public function eventID(){
+        $datas = User::find(auth()->user()->id)->event;
+        foreach ($datas as $data){
+            $this->event_id = $data->id;
+        }
+    }
+
+    public function submit(){
+        $prtn = User::find(auth()->user()->id)->event;
+        if (count($prtn) == "0"){
+            $this->title = "";
+            session()->flash('portionError','Failed! (Register first an Event Title)');
+            return;
+        };
+        $this->validate(['title' => 'required']);
+        try {
+            Portion::create([
+                'user_id' => $this->user_id,
+                'event_id' => $this->event_id,
+                'title' => $this->title,
+            ]);
+            $this->title = "";
+            session()->flash('portionSave',"Successfully Registered");
+        }
+        catch (\Exception $e){
+            session()->flash('portionError',"Failed to Register");
+        }
+
+
     }
 
     protected $listeners = [

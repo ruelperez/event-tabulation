@@ -44,7 +44,6 @@
         <p class="text-center"><b class="btn text-danger" data-bs-toggle="modal" data-bs-target="#portion_modal">Click
                 here</b></p>
         @include('components.message_portion')
-        @include('components.modal_portion')
         @livewire('show-portion')
 
     </div>

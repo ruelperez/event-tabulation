@@ -11,7 +11,7 @@ use Livewire\Component;
 
 class ShowCandidate extends Component
 {
-    public $show, $image, $user_id, $event_id, $full_name, $candidate_id, $origin;
+    public $show, $image, $user_id, $event_id, $full_name, $candidate_number, $origin;
 
     public function render()
     {
@@ -23,24 +23,32 @@ class ShowCandidate extends Component
     }
 
     public function submit(){
-        $this->validate([
-            'full_name' => 'required',
-            'candidate_id' => 'required|integer',
-            'origin' => 'required',
-        ]);
+        $evnt = User::find(auth()->user()->id)->event;
+        if (count($evnt) == "0"){
+            $this->resetInput();
+            session()->flash('dataError','Failed! (Register first an Event Title)');
+            return;
+        };
 
         $active = User::find(auth()->user()->id)->candidate;
         foreach ($active as $actives){
-            if ($actives->id == $this->candidate_id){
+            if ($actives->id == $this->candidate_number){
                 session()->flash('idInputError', 'Input unique candidate number');
                 return;
             }
         }
+
+        $this->validate([
+            'full_name' => 'required',
+            'candidate_number' => 'required|integer',
+            'origin' => 'required',
+        ]);
+
         $image = $this->storeImage();
         try {
             Candidate::create([
                 'full_name' => $this->full_name,
-                'id' => $this->candidate_id,
+                'id' => $this->candidate_number,
                 'origin' => $this->origin,
                 'photo' => $image,
                 'user_id' => $this->user_id,
@@ -58,8 +66,7 @@ class ShowCandidate extends Component
 
     public function resetInput(){
         $this->full_name = "";
-        $this->candidate_id = "";
-        $this->team_name = "";
+        $this->candidate_number = "";
         $this->origin = "";
         $this->image = "";
     }

@@ -9,7 +9,7 @@ use Livewire\Component;
 
 class ShowTitle extends Component
 {
-    public $show, $name, $user_id;
+    public $show, $name, $user_id, $eventID;
 
     public function render()
     {
@@ -29,7 +29,12 @@ class ShowTitle extends Component
     }
 
     public function submit(){
-
+        $evnt = User::find(auth()->user()->id)->event;
+        if (count($evnt) >= "1"){
+            $this->name = "";
+            session()->flash('evntError',"Failed, Only one event is allowed, You can EDIT the data");
+            return;
+        }
         $this->validate([
             'name' => 'required',
         ]);
@@ -67,5 +72,32 @@ class ShowTitle extends Component
         catch(\Exception $e){
             session()->flash('delete_error',"Something goes wrong while deleting!!");
         }
+    }
+
+    public function editTitle($id){
+        $titleData = Event::find($id);
+        $this->name = $titleData->title;
+        $this->eventID = $titleData->id;
+    }
+
+    public function closeModal(){
+        $this->name = "";
+    }
+
+    public function editSubmit(){
+        $this->validate(['name' => 'required']);
+
+        try {
+            $new = Event::find($this->eventID);
+            $new->title = $this->name;
+            $new->save();
+            $this->name = "";
+            session()->flash('editSave',"Successfully Updated Data");
+        }
+        catch (\Exception $e){
+            session()->flash('editError',"Something goes wrong while Editing!!");
+        }
+
+
     }
 }

@@ -14,6 +14,10 @@
                     <div class="mb-3" hidden >
                         <input type="text" class="form-control" wire:model="event_id">
                     </div>
+                    @error('judge_number') <span style="color: red">{{ $message }}</span> @enderror
+                    <div class="mb-3">
+                        <input type="text" class="form-control" placeholder="Judge No." wire:model.debounce.500ms="judge_number" required>
+                    </div>
                     @error('full_name') <span style="color: red">{{ $message }}</span> @enderror
                     <div class="mb-3">
                         <input type="text" class="form-control" id="id_name" placeholder="Full Name" wire:model.debounce.500ms="full_name" required>
@@ -32,24 +36,29 @@
                     </div>
                     <div class="mb-3">
                         <label> Is Chairman:</label>
-                        <input type="checkbox" wire:model="is_chairman" value="1">
+                        <input type="checkbox" wire:model="is_chairman">
 
                     </div>
                     <div class="mb-3" hidden>
                         <label>Photo</label>
                         <input type="file" wire:model="photo" class="form-control">
                     </div>
-                    @if(session()->has('data_save'))
-                        <div class="alert alert-success" style="width: 60%; ">
-                            {{ session('data_save') }}
-                        </div>
-                    @endif
-                    @if(session()->has('data_unsave'))
-                        <div class="alert alert-success" style="width: 60%; ">
-                            {{ session('data_unsave') }}
-                        </div>
-                    @endif
                     <div class="modal-footer">
+                        @if(session()->has('regError'))
+                            <div class="alert alert-danger" style="width: 60%; ">
+                                {{ session('regError') }}
+                            </div>
+                        @endif
+                        @if(session()->has('data_save'))
+                            <div class="alert alert-success" style="width: 60%; ">
+                                {{ session('data_save') }}
+                            </div>
+                        @endif
+                        @if(session()->has('data_unsave'))
+                            <div class="alert alert-danger" style="width: 60%; ">
+                                {{ session('data_unsave') }}
+                            </div>
+                        @endif
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                         <button type="submit" class="btn btn-primary" >Submit</button>
                     </div>

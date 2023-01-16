@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create('portions', function (Blueprint $table) {
-            $table->mediumIncrements('id');
+            $table->id();
             $table->unsignedSmallInteger('event_id');
             $table->unsignedSmallInteger('user_id');
             $table->string('title');

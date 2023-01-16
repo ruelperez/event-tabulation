@@ -13,6 +13,7 @@ class Event extends Model
         'user_id',
     ];
 
+
     public function judge(){
         return $this->hasMany(Judge::class);
     }

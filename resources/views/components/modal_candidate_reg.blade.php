@@ -18,8 +18,8 @@
                         @if(session()->has('idInputError'))
                             <span style="color: red; margin-bottom: 1px; font-size: 15px;">{{session('idInputError')}}</span>
                         @endif
-                        @error('candidate_id')<span style="color: red">{{ $message }}</span> @enderror
-                        <input type="text" class="form-control" wire:model="candidate_id" placeholder="Candidate No." required>
+                        @error('candidate_number')<span style="color: red">{{ $message }}</span> @enderror
+                        <input type="text" class="form-control" wire:model="candidate_number" placeholder="Candidate No." required>
                     </div>
                     <div class="mb-3">
                         <input type="text" class="form-control" wire:model="full_name" placeholder="Full Name / Team Name" required>

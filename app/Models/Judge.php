@@ -8,6 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 class Judge extends Authenticatable
 {
     protected $fillable = [
+        'id',
         'event_id',
         'user_id',
         'full_name',

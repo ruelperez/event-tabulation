@@ -14,11 +14,11 @@ return new class extends Migration
     public function up()
     {
         Schema::create('criterias', function (Blueprint $table) {
-            $table->mediumIncrements('id');
+            $table->id();
             $table->unsignedMediumInteger('portion_id');
             $table->unsignedMediumInteger('user_id');
             $table->string('title');
-            $table->double('percentage');
+            $table->integer('percentage');
             $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->timestamp('updated_at')->default(DB::raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'));
         });

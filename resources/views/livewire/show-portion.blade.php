@@ -1,3 +1,5 @@
+<div>
+@include('components.modal_portion')
 @if(count($show) > 0)
 
     <div>
@@ -28,3 +30,4 @@
     }
 
 </script>
+</div>

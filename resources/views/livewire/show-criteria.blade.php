@@ -1,3 +1,5 @@
+<div>
+    @include('components.modal_criteria')
 @if(count($show) > 0)
 
     <div>
@@ -40,3 +42,4 @@
     }
 
 </script>
+</div>
