@@ -11,15 +11,27 @@ class LoginJudge extends Component
 
     public function render()
     {
+
         return view('livewire.login-judge');
     }
 
     public function submit(){
+
         $validated = $this->validate([
             'username' => 'required',
             'password' => 'required',
         ]);
+
         Auth::guard('webjudge')->attempt($validated);
-        return $this->redirect('/judge/scoring-page');
+        if (Auth::guard('webjudge')->attempt($validated)){
+            return $this->redirect('/judge/scoring-page');
+        }
+        else{
+            session()->flash('loginError', 'Login Failed, Wrong Username/Password');
+        }
+
+
+
+
     }
 }

@@ -34,6 +34,8 @@ class JudgeController extends Controller
     }
 
     public function process(Request $request){
+
+
         $validated = $request->validate([
             "username" => 'required',
             "password" => 'required'

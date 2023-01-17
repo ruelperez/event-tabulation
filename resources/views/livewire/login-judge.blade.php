@@ -1,4 +1,10 @@
+
 <div>
+    @if(session()->has('loginError'))
+        <div x-data="{show:true}" x-show="show" x-init="setTimeout(()=>show=false, 5000)" class="alert alert-danger text-center pt-2" role="alert" style="height: 50px;">
+            {{session('loginError')}}
+        </div>
+    @endif
     <form wire:submit.prevent="submit">
         <div class="form-outline mb-4">
             <input type="text" id="form3Example3cg" wire:model="username" placeholder="Your Username" class="form-control form-control-lg" />

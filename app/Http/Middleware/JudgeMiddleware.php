@@ -21,7 +21,7 @@ class JudgeMiddleware
         if ($judge = Auth::guard('webjudge')->user())
             return $next($request);
         else
-            return redirect('/judge/login')->with('message', 'login to access the website');
+            return redirect('/judge/login')->with('message', 'Login to access the website');
         return $next($request);
     }
 }

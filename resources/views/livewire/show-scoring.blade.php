@@ -9,8 +9,7 @@
 <h1>{{$ids  }}</h1>
 
     </div>
-    <form action="/rating/store" method="post">
-        @csrf
+    <form wire:submit.prevent="submit">
         <table class="table table-bordered">
             <thead>
             <tr>
@@ -31,12 +30,13 @@
                         <td>photos</td>
                         <td style="width:600px;">{{$candidates->full_name}} <br> <p style="font-size: 0.8em";>{{$candidates->origin}}</p></td>
                         @foreach($criteria as $criterias)
-                            <input type="text" hidden value="{{$candidates->id}}" name="candidate[]">
-                            <input type="text" hidden value="{{Auth::guard('webjudge')->user()->id}}" name="judge[]">
-                            <input type="text" value="{{$criterias->id}}" name="criteria[]" hidden>
-                            <td><input type="text" name="rating[]" placeholder="00.00" style="width: 50%; height: 40px; margin-left: 25%; margin-top: 10px; text-align: center" required></td>
+
+                            <input type="text" hidden wire:model="judge_id">
+                            <input type="text" hidden wire:model="candidate_id.{{$x}}">
+                            <input type="text" hidden wire:model="criteria_id.{{$x}}">
+                            <td><input type="text" wire:model.lazy="rating.{{$x++}}" placeholder="00.00" style="width: 50%; height: 40px; margin-left: 25%; margin-top: 10px; text-align: center" required></td>
                         @endforeach
-                            <td><input type="text" placeholder="00.00" style="width: 50%; height: 40px; margin-left: 25%; margin-top: 10px; text-align: center"></td>
+                            <td><input type="text" wire:model.lazy="total.{{$candidates->id}}" placeholder="00.00" style="width: 50%; height: 40px; margin-left: 25%; margin-top: 10px; text-align: center"></td>
 
                     </tr>
                 @endforeach
