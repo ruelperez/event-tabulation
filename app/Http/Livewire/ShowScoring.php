@@ -11,28 +11,28 @@ use App\Models\Rating;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
-use function Termwind\style;
 
 class ShowScoring extends Component
 {
-    public $event, $s, $prtn, $ss, $candidate, $portion, $criteria, $ids = 1, $judge_id, $candidate_id = [], $criteria_id = [], $rating=[], $x=1, $nums=0;
+    public $event, $candidate, $portion, $criteria, $ids = 1, $judge_id, $candidate_id = [], $criteria_id = [], $rating=[], $x=1, $total=[], $nums=0;
 
     public function render()
     {
+
         $this->judge_id = Auth::guard('webjudge')->user()->id;
         $auth = Auth::guard('webjudge')->user()->user_id;
         $this->event = User::find($auth)->event;
         $this->candidate = User::find($auth)->candidate;
         $this->portion = User::find($auth)->portion;
 
-        $pr = User::find($auth)->portion;
+        $cri = User::find($auth)->portion;
         if ($this->ids == 1){
-            foreach ($pr as $prs){
-                $this->ids = $prs->id;
+            foreach ($cri as $cris){
+                $this->ids = $cris->id;
                 break;
             }
         }
-        $this->prtn = Portion::find($this->ids)->title;
+
         $this->criteria = Portion::find($this->ids)->criteria;
 
 
@@ -51,6 +51,25 @@ class ShowScoring extends Component
             }
 
         }
+        $h=1;
+        $s=1;
+        foreach ($can as $cn){
+            if (isset($this->total[$h])){
+                $result = $this->total[$h]*3/3;
+                foreach ($cr as $c){
+                    $this->rating[$s] = $result;
+                    $s++;
+                }
+            }
+
+            $h++;
+        }
+
+
+
+
+
+
 
         return view('livewire.show-scoring');
     }
@@ -65,21 +84,15 @@ class ShowScoring extends Component
             ]);
 
         }
-        $this->ss = "disable";
-
     }
 
     public function fetch($id){
-        if ($id == $this->ids){
-
-        }
-        else{
-            $this->ids = $id;
-            $this->rating=[];
-
-        }
-
-
+        $this->ids = $id;
     }
+
+    public function select($id){
+        $this->num = $id;
+    }
+
 
 }

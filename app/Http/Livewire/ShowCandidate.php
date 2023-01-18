@@ -100,7 +100,6 @@ class ShowCandidate extends Component
     }
 
     public function destroy($id){
-
          $del = Candidate::find($id)->photo;
         try {
             Storage::disk('public')->delete($del);
