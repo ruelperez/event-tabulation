@@ -7,4 +7,5 @@
 
     @livewire('show-scoring')
 
+
 @include('partial.footer')
