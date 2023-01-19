@@ -14,7 +14,7 @@ use Livewire\Component;
 
 class ShowScoring extends Component
 {
-    public $event, $candidate, $portion, $criteria, $ids = 1, $judge_id, $candidate_id = [], $criteria_id = [], $rating=[], $x=1, $total=[], $nums=0;
+    public $event, $por_name, $candidate, $portion, $criteria, $ids = 1, $judge_id, $candidate_id = [], $criteria_id = [], $rating=[], $x=1, $total=[], $nums=0;
 
     public function render()
     {
@@ -32,7 +32,7 @@ class ShowScoring extends Component
                 break;
             }
         }
-
+        $this->por_name = Portion::find($this->ids)->title;
         $this->criteria = Portion::find($this->ids)->criteria;
 
 
@@ -41,53 +41,43 @@ class ShowScoring extends Component
         $cr = Portion::find($this->ids)->criteria;
         $count = count($cr);
         $d = 1;
+        $h=1;
         foreach ($can as $cans){
 
             foreach ($cr as $crs){
-                $this->candidate_id[$d] = $cans->id;
-                $this->criteria_id[$d] = $crs->id;
+                $this->candidate_id[$h][$d] = $cans->id;
+                $this->criteria_id[$h][$d] = $crs->id;
 
                 $d++;
             }
-
-        }
-        $h=1;
-        $s=1;
-        foreach ($can as $cn){
-            if (isset($this->total[$h])){
-                $result = $this->total[$h]*3/3;
-                foreach ($cr as $c){
-                    $this->rating[$s] = $result;
-                    $s++;
-                }
-            }
-
             $h++;
         }
-
-
-
-
-
 
 
         return view('livewire.show-scoring');
     }
 
     public function submit(){
-        for ($i=1; $i<=count($this->rating); $i++){
-            Rating::create([
-                'judge_id' => $this->judge_id,
-                'candidate_id' => $this->candidate_id[$i],
-                'criteria_id' => $this->criteria_id[$i],
-                'rating' => $this->rating[$i],
-            ]);
+        $u = count($this->criteria);
+        $e = 1;
+        for ($i=1; $i<=count($this->candidate); $i++){
 
+            while ($e <= $u){
+                Rating::create([
+                    'judge_id' => $this->judge_id,
+                    'candidate_id' => $this->candidate_id[$i][$e],
+                    'criteria_id' => $this->criteria_id[$i][$e],
+                    'rating' => $this->rating[$i][$e],
+                ]);
+                $e++;
+            }
+            $u += count($this->criteria);
         }
     }
 
     public function fetch($id){
         $this->ids = $id;
+        $this->rating = [];
     }
 
     public function select($id){
