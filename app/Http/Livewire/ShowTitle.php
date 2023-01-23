@@ -5,11 +5,14 @@ namespace App\Http\Livewire;
 
 use App\Models\Event;
 use App\Models\User;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
+use Intervention\Image\ImageManagerStatic;
 use Livewire\Component;
 
 class ShowTitle extends Component
 {
-    public $show, $name, $user_id, $eventID;
+    public $show, $name, $user_id, $eventID, $image, $anti=1;
 
     public function render()
     {
@@ -39,10 +42,13 @@ class ShowTitle extends Component
             'name' => 'required',
         ]);
 
+        $image = $this->storeImage();
+
         try {
             $new = Event::create([
                 'title' => $this->name,
-                'user_id' => $this->user_id
+                'user_id' => $this->user_id,
+                'photo' => $image,
             ]);
             //$this->show->prepend($new);
 
@@ -56,13 +62,31 @@ class ShowTitle extends Component
 
     }
 
+    public function storeImage(){
+        if (!$this->image) {
+            return "null";
+        }
+        $img =  ImageManagerStatic::make($this->image)->encode('jpg');
+        $name = Str::random() . '.jpg';
+        Storage::disk('public')->put($name, $img);
+        return $name;
+
+    }
+
     public function updated($field){
         $this->validateOnly($field, ['name' => 'required']);
     }
 
     protected $listeners = [
-        'deleteTitle' => 'destroy'
+        'deleteTitle' => 'destroy',
+        'files' => 'file',
+
     ];
+
+    public function file($imageData){
+        $this->image = $imageData;
+        $this->anti++;
+    }
 
     public function destroy($id){
         try {
@@ -77,6 +101,7 @@ class ShowTitle extends Component
     public function editTitle($id){
         $titleData = Event::find($id);
         $this->name = $titleData->title;
+        $this->image = $titleData->photo;
         $this->eventID = $titleData->id;
     }
 
@@ -86,12 +111,21 @@ class ShowTitle extends Component
 
     public function editSubmit(){
         $this->validate(['name' => 'required']);
+        if ($this->anti != 1){
+            $pic = $this->storeImage();
+        }
+        else{
+            $pic = $this->image;
+        }
 
         try {
             $new = Event::find($this->eventID);
             $new->title = $this->name;
+            $new->photo = $pic;
             $new->save();
+            $this->anti = 1;
             $this->name = "";
+            $this->image = "";
             session()->flash('editSave',"Successfully Updated Data");
         }
         catch (\Exception $e){

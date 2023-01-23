@@ -50,7 +50,7 @@ class JudgeController extends Controller
     }
 
     public function logout(Request $request){
-        auth()->logout();
+        Auth::guard('webjudge')->logout();
 
         $request->session()->invalidate();
         $request->session()->regenerateToken();

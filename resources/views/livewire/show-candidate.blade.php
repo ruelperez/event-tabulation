@@ -8,7 +8,7 @@
             <ul class="list-group">
                 <li class="list-group-item"><button onclick="deleteCandidate({{$shows->id}})" type="button" class="btn btn-danger py-1" style="margin-right: 5%;">Delete
                             </button> <img src="{{ asset('storage/'.$shows->photo) }}" height="50" width="50" style="margin-right: 20px;"/>
-                            #{{$shows->id}} - {{ucfirst($shows->full_name)}}
+                            #{{$shows->candidate_number}} - {{ucfirst($shows->full_name)}}
                 </li>
 
 

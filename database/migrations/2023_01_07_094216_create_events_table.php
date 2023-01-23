@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('events', function (Blueprint $table) {
             $table->smallIncrements('id');
             $table->string('title');
+            $table->string('photo');
             $table->text('description')->nullable();
             $table->unsignedSmallInteger('user_id');
             $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));

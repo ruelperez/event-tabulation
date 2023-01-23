@@ -14,7 +14,8 @@ return new class extends Migration
     public function up()
     {
         Schema::create('candidates', function (Blueprint $table) {
-            $table->integer('id');
+            $table->id();
+            $table->integer('candidate_number');
             $table->unsignedSmallInteger('event_id');
             $table->unsignedSmallInteger('user_id');
             $table->string('full_name');

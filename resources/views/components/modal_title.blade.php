@@ -15,6 +15,12 @@
                     <div class="mb-3">
                         <input type="text" class="form-control" id="id_title" placeholder="Name of the Title" wire:model.debounce.500ms="name">
                     </div>
+                    <div class="mb-3">
+                        <img src={{$image}} width="200">
+
+                        <label>Photo</label>
+                        <input type="file" id="titleImage" wire:change="$emit('choosen')" class="form-control">
+                    </div>
                     @error('name') <span style="color: red">{{ $message }}</span> @enderror
 
                     <div class="modal-footer">
@@ -61,8 +67,18 @@
                         <input type="text" class="form-control" id="id_title" placeholder="Name of the Title" wire:model.debounce.500ms="name">
                     </div>
                     @error('name') <span style="color: red">{{ $message }}</span> @enderror
+                    <div class="mb-3">
+                        @if($anti == 1)
+                        <img src="{{asset('storage/'.$image)}}" width="200">
+                        @else
+                        <img src={{$image}} width="200">
+                        @endif
+                        <label>Photo</label>
+                        <input type="file" id="editTitle" wire:change="$emit('editChoosen')" class="form-control">
+                    </div>
 
                     <div class="modal-footer">
+
                         @if (session()->has('editSave'))
                             <div class="alert alert-success" style="width: 60%;">
                                 {{ session('editSave') }}

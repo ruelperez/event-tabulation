@@ -14,7 +14,7 @@
                 <tr>
                     <td><button onclick="deleteCriteria({{$shows->id}})" type="button" class="btn btn-danger py-1" style="margin-right: 13%;">Delete</button></td>
                     @foreach($show_portion as $show_portions)
-                        @if($show_portions->id === $shows->portion_id)
+                        @if($show_portions->id == $shows->portion_id)
                            <td>{{ucfirst($show_portions->title)}}</td>
                         @endif
                     @endforeach

@@ -48,7 +48,7 @@ class ShowCandidate extends Component
         try {
             Candidate::create([
                 'full_name' => $this->full_name,
-                'id' => $this->candidate_number,
+                'candidate_number' => $this->candidate_number,
                 'origin' => $this->origin,
                 'photo' => $image,
                 'user_id' => $this->user_id,

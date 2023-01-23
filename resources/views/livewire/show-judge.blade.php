@@ -10,13 +10,13 @@
                         <button onclick="deleteJudge({{$shows->id}})" type="button" class="btn btn-danger py-1"
                                 style="margin-right: 13%;">Delete
                         </button>
-                        #{{$shows->id}} - {{ucfirst($shows->full_name)}} - <b>chairman</b>  </li>
+                        #{{$shows->judge_number}} - {{ucfirst($shows->full_name)}} - <b>chairman</b>  </li>
                 @else
                     <li class="list-group-item">
                         <button onclick="deleteJudge({{$shows->id}})" type="button" class="btn btn-danger py-1"
                                 style="margin-right: 13%;">Delete
                         </button>
-                        #{{$shows->id}} - {{$shows->full_name}}</li>
+                        #{{$shows->judge_number}} - {{$shows->full_name}}</li>
                 @endif
             </ul>
         @endforeach
@@ -32,6 +32,22 @@
             window.livewire.emit('deleteJudge', id);
     }
 
+    window.livewire.on('fileChoose', ()=>{
+
+        let inputfield = document.getElementById('judge_photo');
+
+        let file = inputfield.files[0];
+
+        let reader = new FileReader();
+
+        reader.onloadend = () => {
+
+            window.livewire.emit('Upload', reader.result);
+        }
+
+        reader.readAsDataURL(file);
+
+    })
 
 </script>
 

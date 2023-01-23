@@ -6,12 +6,15 @@ use App\Models\Event;
 use App\Models\Judge;
 use App\Models\User;
 use http\Env\Request;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
+use Intervention\Image\ImageManagerStatic;
 use Livewire\Component;
 
 class ShowJudge extends Component
 {
 
-    public $show, $user_id, $judge_number, $event_id, $full_name, $username, $password, $password_confirmation, $is_chairman, $photo;
+    public $show, $image, $user_id, $judge_number, $event_id, $full_name, $username, $password, $password_confirmation, $is_chairman, $photo;
 
     public function render()
     {
@@ -47,7 +50,7 @@ class ShowJudge extends Component
 
         $active = User::find(auth()->user()->id)->judge;
         foreach ($active as $actives){
-            if ($actives->id == $this->judge_number){
+            if ($actives->judge_number == $this->judge_number){
                 session()->flash('regError', 'Input unique candidate number');
                 return;
             }
@@ -68,16 +71,17 @@ class ShowJudge extends Component
         }
 
         $this->password = bcrypt($this->password);
-
+        $image = $this->storeImage();
         try {
             Judge::create([
-                'id' => $this->judge_number,
+                'judge_number' => $this->judge_number,
                 'user_id' => $this->user_id,
                 'event_id' => $this->event_id,
                 'full_name' => $this->full_name,
                 'username' => $this->username,
                 'password' => $this->password,
                 'is_chairman' => $this->is_chairman,
+                'photo' => $image,
             ]);
             $this->reset_form();
             session()->flash('data_save','Succsessfully Registered');
@@ -89,7 +93,8 @@ class ShowJudge extends Component
     }
 
     protected $listeners = [
-        'deleteJudge' => 'destroy'
+        'deleteJudge' => 'destroy',
+        'Upload' => 'handle',
     ];
 
     public function destroy($id){
@@ -109,6 +114,22 @@ class ShowJudge extends Component
         $this->password = '';
         $this->password_confirmation = '';
         $this->is_chairman = '';
+        $this->image = '';
+    }
+
+    public function handle($imageData){
+        $this->image = $imageData;
+    }
+
+    public function storeImage(){
+        if (!$this->image) {
+            return "null";
+        }
+        $img =  ImageManagerStatic::make($this->image)->encode('jpg');
+        $name = Str::random() . '.jpg';
+        Storage::disk('public')->put($name, $img);
+        return $name;
+
     }
 
 }

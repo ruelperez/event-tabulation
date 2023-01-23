@@ -14,26 +14,40 @@ use Livewire\Component;
 
 class ShowScoring extends Component
 {
-    public $event, $por_name, $candidate, $portion, $criteria, $ids = 1, $judge_id, $candidate_id = [], $criteria_id = [], $rating=[], $x=1, $total=[], $nums=0;
+    public $event, $judge_profile, $try, $ind, $por_name, $candidate, $portion, $criteria, $ids = 1, $judge_id, $candidate_id = [], $criteria_id = [], $rating=[], $x=1, $total=[], $nums=0;
 
     public function render()
     {
 
-        $this->judge_id = Auth::guard('webjudge')->user()->id;
+        $this->judge_profile = Auth::guard('webjudge')->user();
+        $this->judge_id = Auth::guard('webjudge')->user();
         $auth = Auth::guard('webjudge')->user()->user_id;
         $this->event = User::find($auth)->event;
         $this->candidate = User::find($auth)->candidate;
         $this->portion = User::find($auth)->portion;
 
-        $cri = User::find($auth)->portion;
+        $ptn = User::find($auth)->portion;
+
         if ($this->ids == 1){
-            foreach ($cri as $cris){
-                $this->ids = $cris->id;
-                break;
+            if (count($ptn) == 0){
+                $this->por_name = null;
+                $this->criteria = null;
             }
+            else{
+                foreach ($ptn as $ptns){
+                    $this->ids = $ptns->id;
+                    break;
+                }
+                $this->por_name = Portion::find($this->ids)->title;
+                $this->criteria = Portion::find($this->ids)->criteria;
+            }
+
         }
-        $this->por_name = Portion::find($this->ids)->title;
-        $this->criteria = Portion::find($this->ids)->criteria;
+        else{
+            $this->por_name = Portion::find($this->ids)->title;
+            $this->criteria = Portion::find($this->ids)->criteria;
+        }
+
 
 
         $f = Auth::guard('webjudge')->user()->user_id;
@@ -45,7 +59,7 @@ class ShowScoring extends Component
         foreach ($can as $cans){
 
             foreach ($cr as $crs){
-                $this->candidate_id[$h][$d] = $cans->id;
+                $this->candidate_id[$h][$d] = $cans->candidate_number;
                 $this->criteria_id[$h][$d] = $crs->id;
 
                 $d++;

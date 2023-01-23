@@ -39,9 +39,11 @@
                         <input type="checkbox" wire:model="is_chairman">
 
                     </div>
-                    <div class="mb-3" hidden>
+                    <div class="mb-3">
+                        <img src={{$image}} width="200">
+
                         <label>Photo</label>
-                        <input type="file" wire:model="photo" class="form-control">
+                        <input type="file" id="judge_photo" wire:change="$emit('fileChoose')" class="form-control">
                     </div>
                     <div class="modal-footer">
                         @if(session()->has('regError'))
