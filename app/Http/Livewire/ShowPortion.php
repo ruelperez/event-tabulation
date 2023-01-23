@@ -20,9 +20,15 @@ class ShowPortion extends Component
 
     public function eventID(){
         $datas = User::find(auth()->user()->id)->event;
-        foreach ($datas as $data){
-            $this->event_id = $data->id;
+        if (count($datas) == 0){
+            $this->event_id = null;
         }
+        else{
+            foreach ($datas as $data){
+                $this->event_id = $data->id;
+            }
+        }
+
     }
 
     public function submit(){
