@@ -46,7 +46,6 @@
 
     <div class="col-8 border border-primary" style="margin-top: 30px;">
         <div class="bg-primary text-center pt-2" style="width:97%; height: 50px;"><h4>Criteria</h4></div>
-        <span class="btn" data-bs-toggle="modal" data-bs-target="#criteria" class="bi bi-plus-circle-fill" style="font-size: 42px; color: rgb(165, 42, 42);margin-left: 45%;">+</span>
         @include('components.message_criteria')
         @livewire('show-criteria')
 

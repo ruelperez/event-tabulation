@@ -1,7 +1,7 @@
 <div>
     @include('components.modal_criteria')
 {{--@if(count($show) > 0)--}}
-
+       <a href="/admin/home"><img src="{{url('image/reload.png')}}" width="30" height="30"  style="margin-left: 46%; margin-top: 10px;"></a>
     <div>
         @foreach($show_portion as $show_portions)
         <table class="table table-bordered border-primary" style="width: 250px; display: inline-block; position: relative;">
