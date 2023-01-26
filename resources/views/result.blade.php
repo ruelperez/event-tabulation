@@ -1,0 +1,4 @@
+@include('partial.header')
+
+
+@include('partial.footer')

@@ -22,6 +22,9 @@ Route::prefix('admin')->middleware(['auth','isAdmin'])->group(function (){
     Route::get('/home', function (){
         return view('home');
     });
+    Route::get('/result', function (){
+        return view('result');
+    });
 });
 
 Route::prefix('judge')->middleware(['isJudge'])->group(function (){

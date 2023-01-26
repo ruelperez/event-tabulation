@@ -36,23 +36,14 @@
         @livewire('show-candidate')
 
     </div>
-    <div class="col-4 border border-primary" style="margin-top: 30px;">
-        <div class="bg-primary text-center pt-2" style="width:97%; height: 50px; margin-left: 3%;"><h4>Portion</h4></div>
-        <span class="btn" data-bs-toggle="modal" data-bs-target="#portion_modal" class="bi bi-plus-circle-fill" style="font-size: 42px; color: rgb(165, 42, 42);margin-left: 45%;">+</span>
-        @include('components.message_portion')
-        @livewire('show-portion')
-
-    </div>
-
-    <div class="col-8 border border-primary" style="margin-top: 30px;">
-        <div class="bg-primary text-center pt-2" style="width:97%; height: 50px;"><h4>Criteria</h4></div>
-        @include('components.message_criteria')
-        @livewire('show-criteria')
-
-    </div>
 
 </div>
-    <button type="button" class="btn btn-outline-success" onclick="location.href='/home';" style="margin-top: 20px;margin-left: 40%; width: 20%; height: 50px;">Finished</button>
+
+    @include('components.message_portion')
+    @livewire('show-portion')
+
+
+    <button type="button" class="btn btn-outline-success" onclick="location.href='/admin/result'" style="margin-top: 20px;margin-left: 40%; width: 20%; height: 50px;">Finished</button>
 
 
 @include('partial.footer')
