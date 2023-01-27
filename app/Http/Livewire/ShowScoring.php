@@ -14,8 +14,8 @@ use Livewire\Component;
 
 class ShowScoring extends Component
 {
-    public $event, $judge_profile, $try, $ind, $por_name, $candidate, $portion, $criteria, $ids = 1, $judge_id, $candidate_id = [],
-            $criteria_id = [], $rating=[], $x=1, $total=[], $nums=0, $df=0;
+    public $event, $judge_profile, $try,$candidate, $portion, $criteria, $ids = 1, $judge_id, $candidate_id = [],
+            $criteria_id = [], $rating=[], $x=1, $total=[], $pass, $num=1, $ber=1;
 
     public function render()
     {
@@ -26,48 +26,7 @@ class ShowScoring extends Component
         $this->event = User::find($auth)->event;
         $this->candidate = User::find($auth)->candidate;
         $this->portion = User::find($auth)->portion;
-
-        $ptn = User::find($auth)->portion;
-
-        if ($this->ids == 1){
-            if (count($ptn) == 0){
-                $this->por_name = null;
-                $this->criteria = null;
-            }
-            else{
-                foreach ($ptn as $ptns){
-                    $this->ids = $ptns->id;
-                    break;
-                }
-                $this->por_name = Portion::find($this->ids)->title;
-                $this->criteria = Portion::find($this->ids)->criteria;
-            }
-
-        }
-        else{
-            $this->por_name = Portion::find($this->ids)->title;
-            $this->criteria = Portion::find($this->ids)->criteria;
-        }
-
-
-
-        $f = Auth::guard('webjudge')->user()->user_id;
-        $can = User::find($f)->candidate;
-        $cr = Portion::find($this->ids)->criteria;
-        $count = count($cr);
-        $d = 1;
-        $h=1;
-        foreach ($can as $cans){
-
-            foreach ($cr as $crs){
-                $this->candidate_id[$h][$d] = $cans->candidate_number;
-                $this->criteria_id[$h][$d] = $crs->id;
-
-                $d++;
-            }
-            $h++;
-        }
-
+        $this->criteria = User::find($auth)->criteria;
 
         return view('livewire.show-scoring');
     }
@@ -97,6 +56,12 @@ class ShowScoring extends Component
 
     public function select($id){
         $this->num = $id;
+    }
+
+    public function getData($id){
+        $this->pass = $id;
+        $this->num = 2;
+        $this->ber = 2;
     }
 
 
