@@ -14,7 +14,8 @@ use Livewire\Component;
 
 class ShowScoring extends Component
 {
-    public $event, $judge_profile, $try, $ind, $por_name, $candidate, $portion, $criteria, $ids = 1, $judge_id, $candidate_id = [], $criteria_id = [], $rating=[], $x=1, $total=[], $nums=0;
+    public $event, $judge_profile, $try, $ind, $por_name, $candidate, $portion, $criteria, $ids = 1, $judge_id, $candidate_id = [],
+            $criteria_id = [], $rating=[], $x=1, $total=[], $nums=0, $df=0;
 
     public function render()
     {

@@ -63,10 +63,10 @@
             </div>
             <div class="modal-body">
                 <form wire:submit.prevent="edit_submit" style="margin-top: 10px;">
-                    <div class="mb-3" >
+                    <div class="mb-3" HIDDEN>
                         <input type="text" class="form-control" wire:model="event_id" placeholder="Event Title Number">
                     </div>
-                    <div class="mb-3" >
+                    <div class="mb-3" hidden>
                         <input type="text" class="form-control" wire:model="user_id">
                     </div>
                     <div class="mb-3">

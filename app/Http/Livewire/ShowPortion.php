@@ -9,7 +9,7 @@ use Livewire\Component;
 
 class ShowPortion extends Component
 {
-    public $show, $title, $user_id, $event_id;
+    public $show, $title, $user_id, $event_id, $porID;
     public $show_cri, $show_portion, $title_cri, $percentage_cri, $portion_id, $criID;
 
     public function render()
@@ -76,7 +76,11 @@ class ShowPortion extends Component
             session()->flash('portionError','Failed! (Register first an Event Title)');
             return;
         };
-        $this->validate(['title' => 'required']);
+        $this->validate([
+            'event_id' => 'required',
+            'user_id' => 'required',
+            'title' => 'required',
+        ]);
         try {
             Portion::create([
                 'user_id' => $this->user_id,
@@ -151,5 +155,39 @@ class ShowPortion extends Component
         catch (\Exception $e){
             session()->flash('criteriaUnsave',"Failed to Register");
         }
+    }
+
+    public function edit_por($id){
+        $por = Portion::find($id);
+        $this->title = $por->title;
+        $this->user_id = $por->user_id;
+        $this->event_id = $por->event_id;
+        $this->porID = $por->id;
+    }
+
+    public function submitEdit(){
+        $this->validate([
+            'event_id' => 'required',
+            'user_id' => 'required',
+            'title' => 'required',
+        ]);
+
+        try {
+            $new = Portion::find($this->porID);
+            $new->user_id = $this->user_id;
+            $new->event_id = $this->event_id;
+            $new->title = $this->title;
+            $new->save();
+            $this->title = "";
+            $this->event_id = "";
+            $this->user_id = "";
+            session()->flash('portionSave',"Successfully Saved");
+        }
+        catch (\Exception $e){
+            session()->flash('portionError',"Failed to Saved");
+        }
+
+
+
     }
 }

@@ -57,9 +57,9 @@
                             <input type="text" hidden wire:model="judge_id">
                             <input type="text" hidden wire:model="candidate_id.{{$candidates->candidate_number}}.{{$x}}">
                             <input type="text" hidden wire:model="criteria_id.{{$candidates->candidate_number}}.{{$x}}">
-                            <td><input type="text" class="form-control" wire:model.lazy="rating.{{$candidates->candidate_number}}.{{$x++}}" placeholder="00.00" style="width: 50%; height: 40px; margin-left: 25%; margin-top: 10px; text-align: center" required></td>
+                            <td><input type="text" class="form-control" wire:model.lazy="rating.{{$candidates->candidate_number}}.{{$x++}}"  style="width: 50%; height: 40px; margin-left: 25%; margin-top: 10px; text-align: center" required></td>
                         @endforeach
-                            <td><input type="text" class="form-control"  wire:model.lazy="total.{{$candidates->candidate_number}}" placeholder="00.00" style="width: 50%; height: 40px; margin-left: 25%; margin-top: 10px; text-align: center"></td>
+                            <td><input type="text" class="form-control"  wire:model.lazy="total.{{$candidates->candidate_number}}"  style="width: 50%; height: 40px; margin-left: 25%; margin-top: 10px; text-align: center"></td>
                     </tr>
                 @endforeach
 

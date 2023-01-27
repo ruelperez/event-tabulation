@@ -2,16 +2,15 @@
     <div class="col-4 border border-primary" style="margin-top: 30px;">
         <div class="bg-primary text-center pt-2" style="width:97%; height: 50px; margin-left: 3%;"><h4>Portion</h4></div>
         <span class="btn" data-bs-toggle="modal" data-bs-target="#portion_modal" class="bi bi-plus-circle-fill" style="font-size: 42px; color: rgb(165, 42, 42);margin-left: 45%;">+</span>
-        @include('components.modal_portion')
         @if(count($show) > 0)
+            @php $d=0; @endphp
             @foreach($show as $shows)
+                @include('components.modal_portion')
                 <ul class="list-group">
-                    <li class="list-group-item"><button onclick="deleteTitles({{$shows->id}})" type="button" class="btn btn-danger py-1" style="margin-right: 13%;">Delete
-                        </button>
+                    <li class="list-group-item">
                         #{{$shows->id}} - {{strtoupper($shows->title)}}
-
-
-
+                        <img src="{{url('/image/edit.png')}}" width="20" height="20" wire:click="edit_por({{$shows->id}})" data-bs-toggle="modal" data-bs-target="#editPortion{{$d}}" style="cursor: pointer;position: absolute;right: 45px;">
+                        <img src="{{url('/image/delete.png')}}" width="20" height="20" onclick="deleteTitles({{$shows->id}})" style="cursor: pointer; position: absolute;right: 10px;">
                     </li>
                 </ul>
             @endforeach
