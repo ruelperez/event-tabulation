@@ -29,7 +29,7 @@
             @foreach($show as $shows)
                 @php $total=0; @endphp
                 @include('components.modal_criteria')
-                <table class="table table-bordered border-primary" style="width: 30%; display: inline-block;">
+                <table class="table table-bordered border-primary" style="width: 30%; display: inline-block; margin-top: 10px;">
                     <thead>
                         <tr style="text-align: center;">
                             <th colspan="2" style="padding: 10px 30px;">{{ucwords($shows->title)}}</th>

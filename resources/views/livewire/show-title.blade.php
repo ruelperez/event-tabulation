@@ -6,10 +6,8 @@
             @foreach($show as $shows)
                 <ul class="list-group">
                     <li class="list-group-item">
-                        <button wire:click="editTitle({{$shows->id}})" data-bs-toggle="modal" data-bs-target="#editTitle_modal" type="button" class="btn btn-warning py-1"
-                                style="margin-right: 10%;">Edit
-                        </button>
-                        {{strtoupper($shows->title)}} <img src="{{asset('storage/'.$shows->photo)}}" width="150" height="80" style="margin-left: 10px;">
+                        {{strtoupper($shows->title)}} <img src="{{asset('storage/'.$shows->photo)}}" width="150" height="80" style="margin-left: 10px">
+                        <img src="{{url('/image/edit.png')}}" width="18" height="18" wire:click="editTitle({{$shows->id}})" data-bs-toggle="modal" data-bs-target="#editTitle_modal" style="cursor: pointer; position: absolute; right: 0px;">
 
                     </li>
                 </ul>

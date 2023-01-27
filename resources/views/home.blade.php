@@ -1,13 +1,19 @@
 @include('partial.header')
 {{--@dd(auth()->user()->id)--}}
-<h4>ADMIN {{auth()->user()->id}}</h4> <h4>{{auth()->user()->name}}</h4>
-<form action="/admin/logout" method="POST">
-    @csrf
-    <button style="margin-left: 93%; width: 6%;">logout</button>
-</form>
-<div class="container-fluid" style="background-color: darkblue; height: 70px; text-align: center; padding: 10px;">
-    <h1 style="color: white">Event Tabulation</h1>
+<div class="d-flex">
+    <div style="border: solid darkblue; height: 94px; width: 15%; padding-left: 10px;">
+        <h5>Admin #{{auth()->user()->id}}</h5> <h6>{{ucwords(auth()->user()->name)}}</h6>
+        <form action="/admin/logout" method="POST">
+            @csrf
+            <button style="border: none; background-color: white; color: blue; padding: 0px;font-size: 15px;">Logout</button>
+        </form>
+    </div>
+    <div class="container-fluid" style="background-color: darkblue; height: 94px; text-align: center; padding: 10px;">
+        <h1 style="color: white">Event Tabulation</h1>
+    </div>
 </div>
+
+
 
 <div class="row mt-4 ">
     <div class="col-4 border border-primary">
