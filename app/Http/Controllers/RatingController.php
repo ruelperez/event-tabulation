@@ -8,19 +8,20 @@ use Illuminate\Http\Request;
 class RatingController extends Controller
 {
     public function store(Request $request){
-        $candidate = $request->candidate;
-        $judge = $request->judge;
-        $criteria = $request->criteria;
+        $candidate = $request->candidate_number;
+        $judge = $request->judge_id;
+        $criteria = $request->criteria_id;
         $rating = $request->rating;
 
-        for ($i=0; $i< count($rating); $i++){
+        for ($i=1; $i <= count($rating); $i++){
             $datasave = [
-                'judge_id' => $judge[$i],
+                'judge_id' => $judge,
                 'criteria_id' => $criteria[$i],
-                'candidate_id' => $candidate[$i],
+                'candidate_number' => $candidate[$i],
                 'rating' => $rating[$i],
             ];
             Rating::create($datasave);
+            return redirect('/judge/scoring-page');
         }
     }
 }

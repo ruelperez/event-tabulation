@@ -14,9 +14,9 @@ return new class extends Migration
     public function up()
     {
         Schema::create('ratings', function (Blueprint $table) {
-            $table->integerIncrements('id');
+            $table->id();
             $table->unsignedSmallInteger('judge_id');
-            $table->unsignedSmallInteger('candidate_id');
+            $table->unsignedSmallInteger('candidate_number');
             $table->unsignedMediumInteger('criteria_id');
             $table->double('rating');
             $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));

@@ -15,7 +15,7 @@ use Livewire\Component;
 class ShowScoring extends Component
 {
     public $event, $judge_profile, $try,$candidate, $portion, $criteria, $ids = 1, $judge_id, $candidate_id = [],
-            $criteria_id = [], $rating=[], $x=1, $total=[], $pass, $num=1, $ber=1;
+            $criteria_id = [], $rating=[], $x=1, $total=[], $pass, $num=1, $ber=1, $r, $datas, $u=1, $z=1;
 
     public function render()
     {
@@ -62,6 +62,16 @@ class ShowScoring extends Component
         $this->pass = $id;
         $this->num = 2;
         $this->ber = 2;
+    }
+
+    protected $listeners = [
+        'emitScore' => 'dataScore',
+
+    ];
+
+    public function dataScore($data,$x){
+    $this->r = $x;
+    $this->datas = $data;
     }
 
 

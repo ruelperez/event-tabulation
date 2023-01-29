@@ -22,5 +22,9 @@ class Judge extends Authenticatable
         return $this->belongsTo(Event::class);
     }
 
+    public function rating(){
+        return $this->hasMany(Rating::class);
+    }
+
     use HasFactory;
 }

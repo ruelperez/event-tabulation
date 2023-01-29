@@ -9,7 +9,7 @@ class Rating extends Model
 {
     protected $fillable = [
         'judge_id',
-        'candidate_id',
+        'candidate_number',
         'criteria_id',
         'rating',
     ];
