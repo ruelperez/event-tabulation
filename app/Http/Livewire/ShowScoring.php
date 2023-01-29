@@ -15,10 +15,17 @@ use Livewire\Component;
 class ShowScoring extends Component
 {
     public $event, $judge_profile, $try,$candidate, $portion, $criteria, $ids = 1, $judge_id, $candidate_id = [],
-            $criteria_id = [], $rating=[], $x=1, $total=[], $pass, $num=1, $ber=1, $r, $datas, $u=1, $z=1;
+            $criteria_id = [], $rating=[], $x=1, $total=[], $pass, $num=1, $ber=1, $r, $datas, $u=1, $z=1, $jk = 1, $rt=[], $xa = 0;
 
     public function render()
     {
+        $er = 1;
+        $rr = Rating::all();
+        foreach ($rr as $rrs){
+            $this->xa = 1;
+            $this->rt[$er] = $rrs->rating;
+            $er++;
+        }
 
         $this->judge_profile = Auth::guard('webjudge')->user();
         $this->judge_id = Auth::guard('webjudge')->user();
@@ -66,8 +73,72 @@ class ShowScoring extends Component
 
     protected $listeners = [
         'emitScore' => 'dataScore',
-
+        'rateEmit' => 'scoreRate',
     ];
+
+    public function scoreRate($rating,$candidate,$criteria){
+        $judgeID = Auth::guard('webjudge')->user()->id;
+        $count = count($rating)-1;
+        $rt = Rating::all();
+        $y = 1;
+
+        $e = 1;
+
+        foreach ($rt as $rts){
+           $e = 0;
+            break;
+        }
+
+        if ($e == 1){
+            for ($i = 1; $i <= $count; $i++){
+
+                Rating::create([
+                    'judge_id' => $judgeID,
+                    'rating' => $rating[$i],
+                    'candidate_number' => $candidate[$i],
+                    'criteria_id' => $criteria[$i],
+                ]);
+            }
+        }
+        elseif ($e == 0){
+
+            foreach ($rt as $rts){
+               $rts->judge_id = $judgeID;
+               $rts->rating = $rating[$y];
+               $rts->candidate_number = $candidate[$y];
+               $rts->criteria_id = $criteria[$y];
+               $y++;
+               $rts->save();
+            }
+            return;
+        }
+
+
+//        if ($trax != 0){
+//            foreach ($rt as $rts){
+//               $rts->judge_id = $judgeID;
+//               $rts->rating = $rating[$y];
+//               $rts->candidate_number = $candidate[$y];
+//               $rts->criteria_id = $criteria[$y];
+//               $y++;
+//               $rt->save();
+//            }
+//
+//        }
+//        else{
+//            for ($i = 1; $i <= $count; $i++){
+//
+//                Rating::create([
+//                    'judge_id' => $judgeID,
+//                    'rating' => $rating[$i],
+//                    'candidate_number' => $candidate[$i],
+//                    'criteria_id' => $criteria[$i],
+//                ]);
+//            }
+//        }
+
+
+    }
 
     public function dataScore($data,$x){
     $this->r = $x;

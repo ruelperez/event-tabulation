@@ -12,8 +12,11 @@ class RatingController extends Controller
         $judge = $request->judge_id;
         $criteria = $request->criteria_id;
         $rating = $request->rating;
+        $max = $request->maxX;
 
-        for ($i=1; $i <= count($rating); $i++){
+        $i = $max - count($rating);
+        $max--;
+        while ($i <= $max){
             $datasave = [
                 'judge_id' => $judge,
                 'criteria_id' => $criteria[$i],
@@ -21,7 +24,8 @@ class RatingController extends Controller
                 'rating' => $rating[$i],
             ];
             Rating::create($datasave);
-            return redirect('/judge/scoring-page');
+            $i++;
         }
+        return redirect('/judge/scoring-page');
     }
 }

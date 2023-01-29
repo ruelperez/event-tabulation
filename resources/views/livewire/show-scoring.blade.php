@@ -21,10 +21,10 @@
             </tr>
         </table>
 
-        <ul class="list-group" style="width: 100%; margin-top: 40px;">
+        <ul class="list-group" style="width: 100%; margin-top: 40px;" >
             @php $vp = 1; $sp = 1; @endphp
             @foreach($portion as $portions)
-                <li class="list-group-item btn" id="style{{$sp}}" onclick="portionFetch({{$sp++}})">
+                <li wire:ignore.self class="list-group-item btn" style="background-color: @if($sp == 1) aquamarine @else none @endif" id="style{{$sp}}" onclick="portionFetch({{$sp++}})">
                     {{ucwords($portions->title)}}
                 </li>
                 <input type="text" value="{{$vp++}}"  hidden>
@@ -36,7 +36,7 @@
 
     @php $r=1; @endphp
     @foreach($portion as $portions)
-    <form action="/rating/store" method="post" id="formFetch{{$r}}" style="margin-left: 20px;display: @if($r == 1) block @else none @endif ">
+    <form wire:ignore.self action="/rating/store" method="post" id="formFetch{{$r}}" style="margin-left: 20px;display: @if($r == 1) block @else none @endif ">
         @csrf
         <table class="table table-bordered" style="width: 100%;">
             <thead>
@@ -60,109 +60,143 @@
                         @foreach($criteria as $criterias)
                         @if($criterias->portion_id == $portions->id)
                             <input type="text" hidden value="{{$judge_id->id}}" name="judge_id">
-                            <input type="text" hidden value="{{$candidates->candidate_number}}" name="candidate_number[{{$x}}]">
-                            <input type="text" hidden value="{{$criterias->id}}" name="criteria_id[{{$x}}]">
+                            <input type="text" hidden id="candidateID{{$x}}" value="{{$candidates->candidate_number}}" name="candidate_number[{{$x}}]">
+                            <input type="text" hidden id="criteriaID{{$x}}" value="{{$criterias->id}}" name="criteria_id[{{$x}}]">
                             <input type="text" hidden id="percent{{$x}}" value="{{"0.".$criterias->percentage}}">
-                            <td><input type="text" class="form-control" id="scoreID{{$x}}" name="rating[{{$x}}]" onfocus="onFocus({{$x}},{{$candidates->candidate_number}})" onblur="onBlur({{$x++}},{{$candidates->candidate_number}})" style="width: 50%; height: 40px; margin-left: 25%; margin-top: 10px; text-align: center" required></td>
+                            <td><input type="text" @if($xa == 1)  value="{{$rt[$x]}}" @endif class="form-control" id="scoreID{{$x}}" name="rating[{{$x}}]" onfocus="onFocus({{$x}},{{$jk}})" onblur="onBlur({{$x++}},{{$jk}})" style="width: 50%; height: 40px; margin-left: 25%; margin-top: 10px; text-align: center"></td>
                         @endif
                         @endforeach
-                            <td><input type="text" class="form-control" id="total{{$candidates->candidate_number}}"   style="width: 50%; height: 40px; margin-left: 25%; margin-top: 10px; text-align: center"></td>
+                            <td><input type="text" class="form-control" id="total{{$jk++}}"   style="width: 50%; height: 40px; margin-left: 25%; margin-top: 10px; text-align: center"></td>
                             <input type="text" hidden value="{{$z++}}">
                             <input type="text" hidden value="{{$u=1}}">
                     </tr>
                 @endforeach
-                <input type="text" id="maxX" value="{{$x-1}}" hidden>
-                <input type="text" id="maxCan" value="{{$z-1}}" hidden>
-
             </tbody>
         </table>
-
+        <input type="text" value="{{$x}}" name="maxX" hidden>
         <button type="submit" class="btn btn-info" style="width: 40%; margin-left: 30%;">Submit</button>
     </form>
     @php $r++; @endphp
+
     @endforeach
+    <input type="text" id="maxX" value="{{$x-1}}" hidden>
+    <input type="text" id="maxCan" value="{{$z-1}}" hidden>
     </div>
+
+    <script>
+        function onFocus(num,candidate) {
+            let total = document.getElementById("total"+candidate).value;
+            let tot = document.getElementById("total"+candidate);
+            let percentage = document.getElementById("percent"+num).value;
+            let rateVal = document.getElementById("scoreID"+num).value;
+            let rate = document.getElementById("scoreID"+num).value;
+            if (rate != 0){
+                rateVal *= percentage;
+                rate = Number(total) - Number(rateVal);
+                tot.value = rate;
+                return;
+                // onBlur();
+
+            }
+            else{
+                return;
+            }
+
+            let product = document.getElementById("total"+candidate).value;
+            var i = document.getElementById("scoreID"+num);
+            if (rate > 100){
+                rate = 100;
+                i.value = rate;
+            }
+            else if (rate < 75){
+                rate = 75;
+                i.value = rate;
+            }
+            let compute = rate * percentage;
+            let final = Number(product) + Number(compute);
+            total.value = final;
+        }
+
+        function onBlur(num,candidate){
+            let rate = document.getElementById("scoreID"+num).value;
+            let total = document.getElementById("total"+candidate);
+            let product = document.getElementById("total"+candidate).value;
+            let i = document.getElementById("scoreID"+num);
+            if (rate > 100){
+                rate = 100;
+                i.value = rate;
+            }
+            else if (rate < 75){
+                rate = 75;
+                i.value = rate;
+            }
+            let percentage = document.getElementById("percent"+num).value;
+            let compute = rate * percentage;
+            let final = Number(product) + Number(compute);
+            total.value = Number(final);
+
+            // myFunction();
+            // updateData
+            let max = document.getElementById("maxX").value;
+            let rating = [];
+            let candi = [];
+            let criteria = [];
+
+            for (let ix=1; ix <= max; ix++){
+                let a = document.getElementById("candidateID"+ix).value;
+                let b = document.getElementById("criteriaID"+ix).value;
+                let fa = document.getElementById("scoreID"+ix).value;
+
+                rating[ix] = fa;
+                candi[ix] = a;
+                criteria[ix] = b;
+            }
+            window.livewire.emit('rateEmit', rating,candi,criteria);
+
+
+        }
+
+        function portionFetch(id){
+            let porMax = document.getElementById("porMax").value;
+            let ff = document.getElementById("formFetch"+id);
+            let style = document.getElementById("style"+id);
+            for (let t = 1; t <= porMax; t++){
+                document.getElementById("formFetch"+t).style.display = "none";
+                document.getElementById("style"+t).style.backgroundColor = "";
+            }
+            style.style.backgroundColor = "aquamarine";
+            ff.style.display = "block";
+        }
+
+        function myFunction(){
+            let max = document.getElementById("maxX").value;
+            let rating = [];
+            let candidate = [];
+            let criteria = [];
+
+            for (let i=1; i <= max; i++){
+                let a = document.getElementById("candidateID"+i).value;
+                let b = document.getElementById("criteriaID"+i).value;
+                let f = document.getElementById("scoreID"+i).value;
+                let t = document.getElementById("scoreID"+i);
+                if (f == "" || f == 0){
+                    t.value = 0;
+                    rating[i] = 0;
+                }
+                else if (f != 0){
+                    rating[i] = f;
+                }
+                candidate[i] = a;
+                criteria[i] = b;
+            }
+
+            window.livewire.emit('rateEmit', rating,candidate,criteria);
+
+        }
+
+
+    </script>
 </div>
 
-<script>
-    function onFocus(num,candidate) {
-        let total = document.getElementById("total"+candidate).value;
-        let tot = document.getElementById("total"+candidate);
-        let percentage = document.getElementById("percent"+num).value;
-        let rateVal = document.getElementById("scoreID"+num).value;
-        let rate = document.getElementById("scoreID"+num).value;
-        if (rate != ""){
-            console.log('haha');
-            rateVal *= percentage;
-           rate = Number(total) - Number(rateVal);
-           tot.value = rate;
-           return;
-           onBlur();
 
-        }
-        else{
-             return;
-            onBlur();
-        }
-        let product = document.getElementById("total"+candidate).value;
-        var i = document.getElementById("scoreID"+num);
-        if (rate > 100){
-            rate = 100;
-            i.value = rate;
-        }
-        else if (rate < 75){
-            rate = 75;
-            i.value = rate;
-        }
-        let compute = rate * percentage;
-        let final = Number(product) + Number(compute);
-        total.value = final;
-    }
-
-    function onBlur(num,candidate){
-        let rate = document.getElementById("scoreID"+num).value;
-        let total = document.getElementById("total"+candidate);
-        let product = document.getElementById("total"+candidate).value;
-        let i = document.getElementById("scoreID"+num);
-        if (rate > 100){
-            rate = 100;
-            i.value = rate;
-        }
-        else if (rate < 75){
-            rate = 75;
-            i.value = rate;
-        }
-        let percentage = document.getElementById("percent"+num).value;
-        let compute = rate * percentage;
-        let final = Number(product) + Number(compute);
-        total.value = final;
-    }
-
-    function portionFetch(id){
-        let porMax = document.getElementById("porMax").value;
-        let ff = document.getElementById("formFetch"+id);
-        let style = document.getElementById("style"+id);
-        for (let t = 1; t <= porMax; t++){
-            document.getElementById("formFetch"+t).style.display = "none";
-            document.getElementById("style"+t).style.backgroundColor = "";
-        }
-        style.style.backgroundColor = "aquamarine";
-       ff.style.display = "block";
-    }
-
-    function myFunction(){
-
-        let maxCan = document.getElementById("maxCan").value;
-        let maxX = document.getElementById("maxX").value;
-
-
-        // for (let ac = 1; ac <= maxX){
-           let fg = document.getElementById("scoreID1").value;
-        // }
-
-        console.log(fg);
-    }
-
-
-</script>
 
