@@ -22,17 +22,21 @@
         </table>
 
         <ul class="list-group" style="width: 100%; margin-top: 40px;">
+            @php $vp = 1; $sp = 1; @endphp
             @foreach($portion as $portions)
-                <li class="list-group-item btn" @if($pass == $portions->id or $ber++==1) style="background-color: aquamarine" @endif wire:click="getData({{$portions->id}})">
+                <li class="list-group-item btn" id="style{{$sp}}" onclick="portionFetch({{$sp++}})">
                     {{ucwords($portions->title)}}
                 </li>
+                <input type="text" value="{{$vp++}}"  hidden>
             @endforeach
+            <input type="text" id="porMax" value="{{$vp-1}}" hidden>
         </ul>
 
     </div>
 
+    @php $r=1; @endphp
     @foreach($portion as $portions)
-    <form action="/rating/store" method="post" style="margin-left: 20px;display: @if($pass == $portions->id) block @elseif($num++==1) block @endif none">
+    <form action="/rating/store" method="post" id="formFetch{{$r}}" style="margin-left: 20px;display: @if($r == 1) block @else none @endif ">
         @csrf
         <table class="table table-bordered" style="width: 100%;">
             <thead>
@@ -75,7 +79,7 @@
 
         <button type="submit" class="btn btn-info" style="width: 40%; margin-left: 30%;">Submit</button>
     </form>
-
+    @php $r++; @endphp
     @endforeach
     </div>
 </div>
@@ -134,9 +138,24 @@
         total.value = final;
     }
 
+    function portionFetch(id){
+        let porMax = document.getElementById("porMax").value;
+        let ff = document.getElementById("formFetch"+id);
+        let style = document.getElementById("style"+id);
+        for (let t = 1; t <= porMax; t++){
+            document.getElementById("formFetch"+t).style.display = "none";
+            document.getElementById("style"+t).style.backgroundColor = "";
+        }
+        style.style.backgroundColor = "aquamarine";
+       ff.style.display = "block";
+    }
+
     function myFunction(){
+
         let maxCan = document.getElementById("maxCan").value;
         let maxX = document.getElementById("maxX").value;
+
+
         // for (let ac = 1; ac <= maxX){
            let fg = document.getElementById("scoreID1").value;
         // }
