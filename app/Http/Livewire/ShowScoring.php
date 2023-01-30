@@ -27,7 +27,13 @@ class ShowScoring extends Component
         $this->candidate = User::find($auth)->candidate;
         $this->portion = User::find($auth)->portion;
         $this->criteria = User::find($auth)->criteria;
-        $this->displayScoreData();
+        $sed = Rating::all();
+        if (count($sed) == 0){
+
+        }else{
+            $this->displayScoreData();
+        }
+
         return view('livewire.show-scoring');
     }
 

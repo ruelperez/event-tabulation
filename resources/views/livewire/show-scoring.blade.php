@@ -67,7 +67,7 @@
                             <td><input type="text"  @if(isset($rtt[$x])) value="{{$rtt[$x]}}" @endif class="form-control" id="scoreID{{$x}}" name="rating[{{$x}}]" onfocus="onFocus({{$x}},{{$jk}})" onblur="onBlur({{$x++}},{{$jk}})" style="width: 50%; height: 40px; margin-left: 25%; margin-top: 10px; text-align: center"></td>
                         @endif
                         @endforeach
-                            <td><input type="text" @if($sa == 1) value="{{$total_data[$jk]}}" @endif class="form-control" id="total{{$jk++}}"   style="width: 50%; height: 40px; margin-left: 25%; margin-top: 10px; text-align: center"></td>
+                            <td><input type="text" @if(isset($total_data[$jk])) value="{{$total_data[$jk]}}" @endif class="form-control" id="total{{$jk++}}"   style="width: 50%; height: 40px; margin-left: 25%; margin-top: 10px; text-align: center"></td>
 
                             <input type="text" hidden value="{{$z++}}">
                             <input type="text" hidden value="{{$u=1}}">
