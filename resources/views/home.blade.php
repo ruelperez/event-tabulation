@@ -14,7 +14,6 @@
 </div>
 
 
-
 <div class="row mt-4 ">
     <div class="col-4 border border-primary">
         <div class="bg-primary text-center pt-2" style="width:97%; height: 50px; margin-left: 3%;"><h4>Event Title</h4></div>

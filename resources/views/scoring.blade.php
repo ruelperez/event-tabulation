@@ -16,6 +16,8 @@
 <body onload="myFunction()">
 
 
+
+{{--@include('components.score_submit_modal')--}}
     @livewire('show-scoring')
 
 

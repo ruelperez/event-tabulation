@@ -18,6 +18,7 @@ return new class extends Migration
             $table->unsignedSmallInteger('judge_id');
             $table->unsignedSmallInteger('candidate_number');
             $table->unsignedMediumInteger('criteria_id');
+            $table->unsignedSmallInteger('portion_id');
             $table->double('rating');
             $table->boolean('isSubmit')->default(false);
             $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));

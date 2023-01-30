@@ -18,5 +18,9 @@ class Portion extends Model
         return $this->hasMany(Criteria::class);
     }
 
+    public function rating(){
+        return $this->hasMany(Rating::class);
+    }
+
     use HasFactory;
 }

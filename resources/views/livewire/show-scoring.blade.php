@@ -1,5 +1,9 @@
 <div>
-{{--@dd($rtt)--}}
+{{--    <button type="button" class="btn btn-primary" id="btnID" data-bs-toggle="modal" data-bs-target="#btnModal" hidden>--}}
+{{--        Launch demo modal--}}
+{{--    </button>--}}
+
+{{--@include('components.score_submit_modal')--}}
 <div class="d-flex container-fluid" style="margin-top: 10px;" >
     <div style="width: 50%;">
         @foreach($event as $events)
@@ -34,9 +38,9 @@
 
     </div>
 
-    @php $r=1; @endphp
+    @php $r=1; $l=1; @endphp
     @foreach($portion as $portions)
-    <form wire:ignore.self action="/rating/store" method="post" id="formFetch{{$r}}" style="margin-left: 20px;display: @if($r == 1) block @else none @endif ">
+    <form wire:ignore.self id="formFetch{{$r}}" style="margin-left: 20px;display: @if($r == 1) block @else none @endif ">
         @csrf
         <table class="table table-bordered" style="width: 100%;">
             <thead>
@@ -60,14 +64,15 @@
                         @foreach($criteria as $criterias)
                         @if($criterias->portion_id == $portions->id)
                             <input type="text" hidden value="{{$judge_id->id}}" name="judge_id">
+                            <input type="text" hidden id="portionID{{$x}}" value="{{$portions->id}}" name="portion_id[{{$x}}]">
                             <input type="text" hidden id="candidateID{{$x}}" value="{{$candidates->candidate_number}}" name="candidate_number[{{$x}}]">
                             <input type="text" hidden id="criteriaID{{$x}}" value="{{$criterias->id}}" name="criteria_id[{{$x}}]">
                             <input type="text" hidden id="percent{{$x}}" value="{{"0.".$criterias->percentage}}">
                             <input type="text" hidden id="ans{{$x}}" value="{{$jk}}">
-                            <td><input type="text"  @if(isset($rtt[$x])) value="{{$rtt[$x]}}" @endif class="form-control" id="scoreID{{$x}}" name="rating[{{$x}}]" onfocus="onFocus({{$x}},{{$jk}})" onblur="onBlur({{$x++}},{{$jk}})" style="width: 50%; height: 40px; margin-left: 25%; margin-top: 10px; text-align: center"></td>
+                            <td><input type="text"  @if(isset($rtt[$x])) value="{{$rtt[$x]}}" @endif @if(isset($islocked[$x]) and $islocked[$x] == 1 ) disabled @endif class="form-control" id="scoreID{{$x}}" name="rating[{{$x}}]" onfocus="onFocus({{$x}},{{$jk}})" onblur="onBlur({{$x++}},{{$jk}})" style="width: 50%; height: 40px; margin-left: 25%; margin-top: 10px; text-align: center"></td>
                         @endif
                         @endforeach
-                            <td><input type="text" @if(isset($total_data[$jk])) value="{{$total_data[$jk]}}" @endif class="form-control" id="total{{$jk++}}"   style="width: 50%; height: 40px; margin-left: 25%; margin-top: 10px; text-align: center"></td>
+                            <td><input type="text" @if(isset($total_data[$jk])) value="{{$total_data[$jk]}}" @endif class="form-control" id="total{{$jk++}}"   style="width: 50%; height: 40px; margin-left: 25%; margin-top: 10px; text-align: center" @if(isset($islocked[$x-=1]) and $islocked[$x++] == 1 ) disabled  @endif></td>
 
                             <input type="text" hidden value="{{$z++}}">
                             <input type="text" hidden value="{{$u=1}}">
@@ -75,17 +80,47 @@
                 @endforeach
             </tbody>
         </table>
-        <input type="text" value="{{$x}}" name="maxX" hidden>
-        <button type="submit" class="btn btn-info" style="width: 40%; margin-left: 30%;">Confirm</button>
+{{--        <input type="text" value="{{$x}}" name="maxX" hidden>--}}
+        <div @if(isset($islocked[$x-=1]) and $islocked[$x] == 1 ) @else onclick="filterForm({{$l}},{{$x}})"  @endif  style="text-align:center; @if(isset($islocked[$x]) and $islocked[$x] == 1 ) @else cursor: pointer;  @endif  padding: 5px; width: 60%; height: 40px; margin-left: 20%; background-color: aquamarine"><b>Submit</b></div>
+
+        <button type="button" class="btn btn-primary" id="btnID{{$x}}" data-bs-toggle="modal" data-bs-target="#btnModal{{$x}}" hidden>
+            Launch demo modal
+        </button>
+
+        @include('components.score_submit_modal')
     </form>
-    @php $r++; @endphp
+    @php $r++; $l = $x+1; $x++; @endphp
 
     @endforeach
+
     <input type="text" id="maxX" value="{{$x-1}}" hidden>
     <input type="text" id="maxCan" value="{{$z-1}}" hidden>
     </div>
 
     <script>
+        function exitModal(){
+            window.livewire.emit('exit');
+        }
+
+        function filterForm(start,end){
+            let h = 1;
+            for (let i=start; i <= end; i++){
+                let u  = document.getElementById("scoreID"+i).value;
+                if (u == 0){
+                    h++;
+                }
+            }
+            if (h >= 2){
+                alert('PLEASE RATE ALL THE CANDIDATE');
+                return;
+            }
+            else if (h == 1){
+                let yt = document.getElementById("btnID"+end).click();
+
+            }
+
+        }
+
         function onFocus(num,candidate) {
             let total = document.getElementById("total"+candidate).value;
             let tot = document.getElementById("total"+candidate);
@@ -144,24 +179,28 @@
             let rating = [];
             let candi = [];
             let criteria = [];
+            let portion = [];
 
             for (let ix=1; ix <= max; ix++){
                 let a = document.getElementById("candidateID"+ix).value;
+                let c = document.getElementById("portionID"+ix).value;
                 let b = document.getElementById("criteriaID"+ix).value;
                 let fa = document.getElementById("scoreID"+ix).value;
 
                 rating[ix] = fa;
                 candi[ix] = a;
                 criteria[ix] = b;
+                portion[ix] = c;
 
             }
 
-            window.livewire.emit('rateEmit', rating,candi,criteria);
+            window.livewire.emit('rateEmit', rating,candi,criteria,portion);
 
 
         }
 
         function portionFetch(id){
+
             let porMax = document.getElementById("porMax").value;
             let ff = document.getElementById("formFetch"+id);
             let style = document.getElementById("style"+id);
@@ -171,23 +210,21 @@
             }
             style.style.backgroundColor = "aquamarine";
             ff.style.display = "block";
+
+            window.livewire.emit('exit');
         }
 
         function myFunction(){
-            console.log('haha');
             let ert = document.getElementById("scoreID1").value;
-            console.log(ert);
             let max = document.getElementById("maxX").value;
             let rating = [];
             let candidate = [];
             let criteria = [];
+            let portion = [];
 
             for (let i=1; i <= max; i++){
-                let ans = document.getElementById("ans"+i).value;
-                let total = document.getElementById("total"+ans).value;
-                let displayTotal = document.getElementById("total"+ans);
-                let percentage = document.getElementById("percent"+i).value;
                 let a = document.getElementById("candidateID"+i).value;
+                let c = document.getElementById("portionID"+i).value;
                 let b = document.getElementById("criteriaID"+i).value;
                 let f = document.getElementById("scoreID"+i).value;
                 let t = document.getElementById("scoreID"+i);
@@ -199,16 +236,13 @@
                 else if (f != 0){
                     rating[i] = f;
                 }
-
+                portion[i] = c;
                 candidate[i] = a;
                 criteria[i] = b;
 
-                // let compute = f * percentage;
-                // let final = Number(compute) + Number(total);
-                // displayTotal.value = final;
             }
 
-            window.livewire.emit('rateEmit', rating,candidate,criteria);
+            window.livewire.emit('rateEmit', rating,candidate,criteria,portion);
 
         }
 
