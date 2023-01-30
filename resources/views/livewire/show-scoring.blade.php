@@ -1,6 +1,6 @@
 <div>
-
-<div class="d-flex container-fluid" style="margin-top: 10px;">
+{{--@dd($rtt)--}}
+<div class="d-flex container-fluid" style="margin-top: 10px;" >
     <div style="width: 50%;">
         @foreach($event as $events)
         <img src="{{ asset('storage/'.$events->photo) }}" width="100%"/>
@@ -63,10 +63,12 @@
                             <input type="text" hidden id="candidateID{{$x}}" value="{{$candidates->candidate_number}}" name="candidate_number[{{$x}}]">
                             <input type="text" hidden id="criteriaID{{$x}}" value="{{$criterias->id}}" name="criteria_id[{{$x}}]">
                             <input type="text" hidden id="percent{{$x}}" value="{{"0.".$criterias->percentage}}">
-                            <td><input type="text" @if($xa == 1)  value="{{$rt[$x]}}" @endif class="form-control" id="scoreID{{$x}}" name="rating[{{$x}}]" onfocus="onFocus({{$x}},{{$jk}})" onblur="onBlur({{$x++}},{{$jk}})" style="width: 50%; height: 40px; margin-left: 25%; margin-top: 10px; text-align: center"></td>
+                            <input type="text" hidden id="ans{{$x}}" value="{{$jk}}">
+                            <td><input type="text"  @if(isset($rtt[$x])) value="{{$rtt[$x]}}" @endif class="form-control" id="scoreID{{$x}}" name="rating[{{$x}}]" onfocus="onFocus({{$x}},{{$jk}})" onblur="onBlur({{$x++}},{{$jk}})" style="width: 50%; height: 40px; margin-left: 25%; margin-top: 10px; text-align: center"></td>
                         @endif
                         @endforeach
-                            <td><input type="text" class="form-control" id="total{{$jk++}}"   style="width: 50%; height: 40px; margin-left: 25%; margin-top: 10px; text-align: center"></td>
+                            <td><input type="text" @if($sa == 1) value="{{$total_data[$jk]}}" @endif class="form-control" id="total{{$jk++}}"   style="width: 50%; height: 40px; margin-left: 25%; margin-top: 10px; text-align: center"></td>
+
                             <input type="text" hidden value="{{$z++}}">
                             <input type="text" hidden value="{{$u=1}}">
                     </tr>
@@ -123,17 +125,18 @@
             let product = document.getElementById("total"+candidate).value;
             let i = document.getElementById("scoreID"+num);
             if (rate > 100){
-                rate = 100;
-                i.value = rate;
+                i.value = 100;
+                rate = i.value;
             }
             else if (rate < 75){
-                rate = 75;
-                i.value = rate;
+                i.value = 75;
+                rate = i.value;
             }
+
             let percentage = document.getElementById("percent"+num).value;
             let compute = rate * percentage;
             let final = Number(product) + Number(compute);
-            total.value = Number(final);
+            total.value = final;
 
             // myFunction();
             // updateData
@@ -150,7 +153,9 @@
                 rating[ix] = fa;
                 candi[ix] = a;
                 criteria[ix] = b;
+
             }
+
             window.livewire.emit('rateEmit', rating,candi,criteria);
 
 
@@ -169,16 +174,24 @@
         }
 
         function myFunction(){
+            console.log('haha');
+            let ert = document.getElementById("scoreID1").value;
+            console.log(ert);
             let max = document.getElementById("maxX").value;
             let rating = [];
             let candidate = [];
             let criteria = [];
 
             for (let i=1; i <= max; i++){
+                let ans = document.getElementById("ans"+i).value;
+                let total = document.getElementById("total"+ans).value;
+                let displayTotal = document.getElementById("total"+ans);
+                let percentage = document.getElementById("percent"+i).value;
                 let a = document.getElementById("candidateID"+i).value;
                 let b = document.getElementById("criteriaID"+i).value;
                 let f = document.getElementById("scoreID"+i).value;
                 let t = document.getElementById("scoreID"+i);
+
                 if (f == "" || f == 0){
                     t.value = 0;
                     rating[i] = 0;
@@ -186,8 +199,13 @@
                 else if (f != 0){
                     rating[i] = f;
                 }
+
                 candidate[i] = a;
                 criteria[i] = b;
+
+                // let compute = f * percentage;
+                // let final = Number(compute) + Number(total);
+                // displayTotal.value = final;
             }
 
             window.livewire.emit('rateEmit', rating,candidate,criteria);

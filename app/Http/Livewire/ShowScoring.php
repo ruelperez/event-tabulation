@@ -14,18 +14,11 @@ use Livewire\Component;
 
 class ShowScoring extends Component
 {
-    public $event, $judge_profile, $try,$candidate, $portion, $criteria, $ids = 1, $judge_id, $candidate_id = [],
-            $criteria_id = [], $rating=[], $x=1, $total=[], $pass, $num=1, $ber=1, $r, $datas, $u=1, $z=1, $jk = 1, $rt=[], $xa = 0;
+    public $event, $judge_profile, $try,$candidate, $portion, $criteria, $ids = 1, $judge_id, $candidate_id = [], $tot, $total_data, $rmm,
+            $criteria_id = [], $rating=[], $x=1, $total=[], $pass, $num=1, $ber=1, $r, $datas, $u=1, $z=1, $jk = 1, $rtt=[], $xa = 1, $sa = 0;
 
     public function render()
     {
-        $er = 1;
-        $rr = Rating::all();
-        foreach ($rr as $rrs){
-            $this->xa = 1;
-            $this->rt[$er] = $rrs->rating;
-            $er++;
-        }
 
         $this->judge_profile = Auth::guard('webjudge')->user();
         $this->judge_id = Auth::guard('webjudge')->user();
@@ -34,7 +27,7 @@ class ShowScoring extends Component
         $this->candidate = User::find($auth)->candidate;
         $this->portion = User::find($auth)->portion;
         $this->criteria = User::find($auth)->criteria;
-
+        $this->displayScoreData();
         return view('livewire.show-scoring');
     }
 
@@ -77,6 +70,7 @@ class ShowScoring extends Component
     ];
 
     public function scoreRate($rating,$candidate,$criteria){
+//        dd($rating);
         $judgeID = Auth::guard('webjudge')->user()->id;
         $count = count($rating)-1;
         $rt = Rating::all();
@@ -90,6 +84,7 @@ class ShowScoring extends Component
         }
 
         if ($e == 1){
+
             for ($i = 1; $i <= $count; $i++){
 
                 Rating::create([
@@ -99,6 +94,7 @@ class ShowScoring extends Component
                     'criteria_id' => $criteria[$i],
                 ]);
             }
+
         }
         elseif ($e == 0){
 
@@ -107,12 +103,23 @@ class ShowScoring extends Component
                $rts->rating = $rating[$y];
                $rts->candidate_number = $candidate[$y];
                $rts->criteria_id = $criteria[$y];
-               $y++;
                $rts->save();
+                $y++;
             }
-            return;
+
         }
 
+        $this->displayScoreData();
+
+
+
+
+
+//        foreach ($rr as $rrs){
+//            $this->xa = 1;
+//            $this->rtt[$er] = $rrs->rating;
+//            $er++;
+//        }
 
 //        if ($trax != 0){
 //            foreach ($rt as $rts){
@@ -138,6 +145,54 @@ class ShowScoring extends Component
 //        }
 
 
+    }
+
+    public function displayScoreData(){
+        $er = 1;
+        $re = 1;
+        $equal = 0;
+        $dh = 1;
+        $ram = 1;
+        $rr = Rating::all();
+        $pn = $this->portion;
+        $ca = $this->criteria;
+        $can = $this->candidate;
+
+        foreach ($rr as $rrs){
+            $this->xa = 1;
+            $this->rtt[$er] = $rrs->rating;
+            $er++;
+        }
+
+        foreach ($rr as $rrs){
+            $this->rmm[$ram] = $rrs->rating;
+            $ram++;
+        }
+
+
+        foreach ($pn as $pns){
+
+            foreach ($can as $cans){
+
+                foreach ($ca as $cas){
+
+                    if ($pns->id == $cas->portion_id){
+
+                        $this->sa = 1;
+                        $this->rmm[$re] *= '.'.$cas->percentage;
+                        $equal += $this->rmm[$re];
+                        $re++;
+
+                    }
+                }
+
+                $this->total_data[$dh] = $equal;
+                $equal = 0;
+                $dh++;
+            }
+
+
+        }
     }
 
     public function dataScore($data,$x){
