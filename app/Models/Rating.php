@@ -12,6 +12,7 @@ class Rating extends Model
         'candidate_number',
         'criteria_id',
         'rating',
+        'isSubmit',
     ];
 
     use HasFactory;

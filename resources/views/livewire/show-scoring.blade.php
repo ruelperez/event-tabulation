@@ -76,7 +76,7 @@
             </tbody>
         </table>
         <input type="text" value="{{$x}}" name="maxX" hidden>
-        <button type="submit" class="btn btn-info" style="width: 40%; margin-left: 30%;">Submit</button>
+        <button type="submit" class="btn btn-info" style="width: 40%; margin-left: 30%;">Confirm</button>
     </form>
     @php $r++; @endphp
 
