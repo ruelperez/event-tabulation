@@ -38,7 +38,7 @@
 
     </div>
 
-    @php $r=1; $l=1; @endphp
+    @php $r=1; $l=1;  @endphp
     @foreach($portion as $portions)
     <form wire:ignore.self id="formFetch{{$r}}" style="margin-left: 20px;display: @if($r == 1) block @else none @endif ">
         @csrf
@@ -72,7 +72,8 @@
                             <td><input type="text"  @if(isset($rtt[$x])) value="{{$rtt[$x]}}" @endif @if(isset($islocked[$x]) and $islocked[$x] == 1 ) disabled @endif class="form-control" id="scoreID{{$x}}" name="rating[{{$x}}]" onfocus="onFocus({{$x}},{{$jk}})" onblur="onBlur({{$x++}},{{$jk}})" style="width: 50%; height: 40px; margin-left: 25%; margin-top: 10px; text-align: center"></td>
                         @endif
                         @endforeach
-                            <td><input type="text" @if(isset($total_data[$jk])) value="{{$total_data[$jk]}}" @endif class="form-control" id="total{{$jk++}}"   style="width: 50%; height: 40px; margin-left: 25%; margin-top: 10px; text-align: center" @if(isset($islocked[$x-=1]) and $islocked[$x++] == 1 ) disabled  @endif></td>
+                            <td><input type="text"  @if(isset($total_data[$jk])) value="{{$total_data[$jk]}}" @endif class="form-control" id="total{{$jk++}}"   style="width: 50%; height: 40px; margin-left: 25%; margin-top: 10px; text-align: center" @if(isset($islocked[$x]) and $islocked[$x] == 1 ) disabled  @endif></td>
+                            @php $x++; @endphp
 
                             <input type="text" hidden value="{{$z++}}">
                             <input type="text" hidden value="{{$u=1}}">
@@ -98,6 +99,13 @@
     </div>
 
     <script>
+
+        function totalValue(start,end){
+            for (let b=1; b <= end; b++){
+
+            }
+        }
+
         function exitModal(){
             window.livewire.emit('exit');
         }
