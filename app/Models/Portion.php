@@ -11,6 +11,7 @@ class Portion extends Model
         'event_id',
         'user_id',
         'title',
+        'numberOfTopCandidate',
         'description'
     ];
 

@@ -2,10 +2,11 @@
     <div class="col-4 border border-primary" style="margin-top: 30px;">
         <div class="bg-primary text-center pt-2" style="width:97%; height: 50px; margin-left: 3%;"><h4>Portion</h4></div>
         <span class="btn" data-bs-toggle="modal" data-bs-target="#portion_modal" class="bi bi-plus-circle-fill" style="font-size: 42px; color: rgb(165, 42, 42);margin-left: 45%;">+</span>
+        @include('components.modal_portion')
         @if(count($show) > 0)
             @php $d=0; @endphp
             @foreach($show as $shows)
-                @include('components.modal_portion')
+                @include('components.modal_portion_edit')
                 <ul class="list-group">
                     <li class="list-group-item">
                         #{{$shows->id}} - {{strtoupper($shows->title)}}
@@ -15,13 +16,13 @@
                 </ul>
             @endforeach
         @else
+            @include('components.modal_portion')
             No Data Found
         @endif
     </div>
 
     <div class="col-8 border border-primary" style="margin-top: 30px;">
         <div class="bg-primary text-center pt-2" style="width:97%; height: 50px;"><h4>Criteria</h4></div>
-        @include('components.message_criteria')
 
             @php $n=0; $m=0; @endphp
 
@@ -37,6 +38,7 @@
                     </thead>
 
                     @foreach($show_cri as $shows_cri)
+                        @include('components.modal_edit_criteria')
                         @if($shows->id == $shows_cri->portion_id)
                         <tr>
                             <td>{{ucfirst($shows_cri->title)}}</td>

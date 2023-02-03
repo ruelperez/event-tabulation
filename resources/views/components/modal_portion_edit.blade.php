@@ -1,5 +1,4 @@
-
-<div wire:ignore.self class="modal" tabindex="-1" role="dialog" id="portion_modal">
+<div wire:ignore.self class="modal" tabindex="-1" role="dialog" id="editPortion{{$d}}">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -7,24 +6,23 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form wire:submit.prevent="submit">
+                <form wire:submit.prevent="submitEdit">
                     @csrf
-                    <div class="mb-3" hidden >
-                        <input type="text" class="form-control" wire:model="event_id" placeholder="Event Title Number" required>
+                    <div class="mb-3" hidden>
+                        <input type="text" class="form-control" wire:model="event_id" placeholder="Event Title Number">
                     </div>
                     <div class="mb-3" hidden>
-                        <input type="text" class="form-control" wire:model="user_id" required>
+                        <input type="text" class="form-control" wire:model="user_id">
                     </div>
 
                     <div class="mb-3">
                         <input type="text" class="form-control" id="id_title" placeholder="Portion Name" wire:model="title" required>
                     </div>
 
-                    <input type="checkbox" value="1" wire:model="checkbox">
-                    <label> Number of top candidate to be rate</label><br>
-                    @if($checkbox == 1)
-                    <label>Top</label> <input type="text" wire:model="numberOfTopCandidate">
-                    @error('numberOfTopCandidate') <span style="color: red; margin-left: 45%;">{{ $message}}</span> @enderror
+                    @if($numberOfTopCandidate != 0)
+                        <label>Number of Candidate to be Rate</label> <br>
+                        <label>Top</label> <input type="text" wire:model="numberOfTopCandidate">
+                        @error('numberOfTopCandidate') <span style="color: red; margin-left: 45%;">{{ $message}}</span> @enderror
                     @endif
 
                     <div class="modal-footer">
@@ -46,5 +44,3 @@
         </div>
     </div>
 </div>
-
-

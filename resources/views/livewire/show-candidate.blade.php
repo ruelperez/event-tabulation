@@ -18,6 +18,7 @@
 
     @else
      No data
+        @include('components.modal_candidate_editReg')
     @endif
 
 </div>

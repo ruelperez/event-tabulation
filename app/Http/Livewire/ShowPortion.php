@@ -9,8 +9,8 @@ use Livewire\Component;
 
 class ShowPortion extends Component
 {
-    public $show, $title, $user_id, $event_id, $porID;
-    public $show_cri, $show_portion, $title_cri, $percentage_cri, $portion_id, $criID;
+    public $show, $title, $user_id, $event_id, $porID, $bb =1, $dd, $checkbox, $numberOfTopCandidate,
+            $show_cri, $show_portion, $title_cri, $percentage_cri, $portionID_selectInput, $portion_id, $criID;
 
     public function render()
     {
@@ -43,6 +43,8 @@ class ShowPortion extends Component
                 'user_id' => $this->user_id,
                 'title' => $this->title_cri,
                 'percentage' => $this->percentage_cri,
+                'isLink' => false,
+                'portionLink' => 0,
             ]);
 
             $this->percentage_cri = "";
@@ -53,6 +55,35 @@ class ShowPortion extends Component
             session()->flash('criteriaUnsave',"Failed to Register");
         }
 
+
+    }
+
+    public function submit_linkPortion(){
+        $portion_selectInput = Portion::find($this->portionID_selectInput);
+        $this->validate([
+            'user_id' => 'required',
+            'portion_id' => 'required',
+            'portionID_selectInput' => 'required',
+            'percentage_cri' => 'required|integer',
+        ]);
+
+        try {
+            Criteria::create([
+                'portion_id' => $this->portion_id,
+                'user_id' => $this->user_id,
+                'title' => $portion_selectInput->title,
+                'percentage' => $this->percentage_cri,
+                'isLink' => true,
+                'portionLink' => $portion_selectInput->id,
+            ]);
+
+            $this->percentage_cri = "";
+            $this->portionID_selectInput = "";
+            session()->flash('linkSave',"Successfully Registered");
+        }
+        catch (\Exception $e){
+            session()->flash('linkUnsave',"Failed to Register");
+        }
 
     }
 
@@ -70,29 +101,39 @@ class ShowPortion extends Component
     }
 
     public function submit(){
+        if ($this->numberOfTopCandidate == null){
+            $this->numberOfTopCandidate = 0;
+        }
         $prtn = User::find(auth()->user()->id)->event;
         if (count($prtn) == "0"){
             $this->title = "";
             session()->flash('portionError','Failed! (Register first an Event Title)');
             return;
         };
+
         $this->validate([
-            'event_id' => 'required',
-            'user_id' => 'required',
-            'title' => 'required',
+        'event_id' => 'required',
+        'user_id' => 'required',
+        'title' => 'required',
+        'numberOfTopCandidate' => 'required|integer'
         ]);
+
         try {
+
             Portion::create([
                 'user_id' => $this->user_id,
                 'event_id' => $this->event_id,
                 'title' => $this->title,
+                'numberOfTopCandidate' => $this->numberOfTopCandidate,
             ]);
             $this->title = "";
+            $this->numberOfTopCandidate = "";
             session()->flash('portionSave',"Successfully Registered");
         }
         catch (\Exception $e){
             session()->flash('portionError',"Failed to Register");
         }
+
 
 
     }
@@ -103,7 +144,12 @@ class ShowPortion extends Component
     ];
 
     public function destroy($id){
+        $delP = Portion::find($id)->criteria;
         try {
+            foreach ($delP as $delPs){
+                Criteria::find($delPs->id)->delete();
+            }
+            //$delP->delete();
             Portion::find($id)->delete();
             session()->flash('success',"Deleted Successfully!!");
         }
@@ -148,8 +194,6 @@ class ShowPortion extends Component
             $cri->portion_id = $this->portion_id;
             $cri->percentage = $this->percentage_cri;
             $cri->save();
-            $this->title_cri = "";
-            $this->percentage_cri = "";
             session()->flash('criteriaSave',"Successfully Registered");
         }
         catch (\Exception $e){
@@ -163,6 +207,7 @@ class ShowPortion extends Component
         $this->user_id = $por->user_id;
         $this->event_id = $por->event_id;
         $this->porID = $por->id;
+        $this->numberOfTopCandidate = $por->numberOfTopCandidate;
     }
 
     public function submitEdit(){
@@ -170,6 +215,7 @@ class ShowPortion extends Component
             'event_id' => 'required',
             'user_id' => 'required',
             'title' => 'required',
+            'numberOfTopCandidate' => 'integer',
         ]);
 
         try {
@@ -177,17 +223,31 @@ class ShowPortion extends Component
             $new->user_id = $this->user_id;
             $new->event_id = $this->event_id;
             $new->title = $this->title;
+            if ($this->numberOfTopCandidate != 0){
+                $new->numberOfTopCandidate = $this->numberOfTopCandidate;
+            }
             $new->save();
             $this->title = "";
-            $this->event_id = "";
-            $this->user_id = "";
+            $this->numberOfTopCandidate = "";
             session()->flash('portionSave',"Successfully Saved");
         }
         catch (\Exception $e){
             session()->flash('portionError',"Failed to Saved");
         }
 
+    }
 
+    public function linkportionClicked($id){
+        $this->dd = $id;
+        $this->bb = $id;
+    }
+
+    public  function inputCriteria(){
+        $this->bb = 0;
+        $this->dd = 0;
+    }
+
+    public function submit_portion_edit(){
 
     }
 }

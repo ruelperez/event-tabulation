@@ -11,7 +11,9 @@ class Criteria extends Model
         'portion_id',
         'user_id',
         'title',
-        'percentage'
+        'percentage',
+        'isLink',
+        'portionLink',
     ];
 
     public function portion(){

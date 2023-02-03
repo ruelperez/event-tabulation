@@ -14,8 +14,8 @@ use Livewire\Component;
 
 class ShowScoring extends Component
 {
-    public $event, $judge_profile, $try,$candidate, $portion, $criteria, $ids = 1, $judge_id, $candidate_id = [], $tot, $total_data, $rmm, $bbm = 0, $islocked=[],
-            $criteria_id = [], $rating=[], $x=1, $total=[], $pass, $num=1, $ber=1, $r, $datas, $u=1, $z=1, $jk = 1, $rtt=[], $xa = 1, $sa = 0, $rateData;
+    public $event, $vt=1, $judge_profile, $try,$candidate, $portion, $criteria, $ids = 1, $judge_id, $candidate_id = [], $tot, $total_data, $rmm, $bbm = 0, $islocked=[],
+            $criteria_id = [], $rating=[], $x=1, $total=[], $pass, $num=1, $ber=1, $r, $datas, $u=1, $z=1, $rtt=[], $xa = 1, $sa = 0, $rateData;
 
     public function render()
     {
@@ -100,6 +100,8 @@ class ShowScoring extends Component
                     'criteria_id' => $criteria[$i],
                     'portion_id' => $portion[$i],
                 ]);
+
+                $this->emit('refreshResult');
             }
 
         }
@@ -114,7 +116,7 @@ class ShowScoring extends Component
                $rts->save();
                 $y++;
             }
-
+            $this->emit('refreshResult');
         }
 
         $this->displayScoreData();
@@ -197,7 +199,7 @@ class ShowScoring extends Component
 
                 $this->total_data[$dh] = $equal;
                 $equal = 0;
-                $dh++;
+                $dh = $re;
             }
 
 

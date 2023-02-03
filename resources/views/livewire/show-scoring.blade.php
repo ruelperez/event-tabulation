@@ -38,7 +38,7 @@
 
     </div>
 
-    @php $r=1; $l=1;  @endphp
+    @php $r=1; $l=1; $jk=1;  @endphp
     @foreach($portion as $portions)
     <form wire:ignore.self id="formFetch{{$r}}" style="margin-left: 20px;display: @if($r == 1) block @else none @endif ">
         @csrf
@@ -72,8 +72,8 @@
                             <td><input type="text"  @if(isset($rtt[$x])) value="{{$rtt[$x]}}" @endif @if(isset($islocked[$x]) and $islocked[$x] == 1 ) disabled @endif class="form-control" id="scoreID{{$x}}" name="rating[{{$x}}]" onfocus="onFocus({{$x}},{{$jk}})" onblur="onBlur({{$x++}},{{$jk}})" style="width: 50%; height: 40px; margin-left: 25%; margin-top: 10px; text-align: center"></td>
                         @endif
                         @endforeach
-                            <td><input type="text"  @if(isset($total_data[$jk])) value="{{$total_data[$jk]}}" @endif class="form-control" id="total{{$jk++}}"   style="width: 50%; height: 40px; margin-left: 25%; margin-top: 10px; text-align: center" @if(isset($islocked[$x]) and $islocked[$x] == 1 ) disabled  @endif></td>
-                            @php $x++; @endphp
+                            <td><input type="text" onblur="totalValue({{$jk}},{{$x-=1}})" @if(isset($total_data[$jk])) value="{{$total_data[$jk]}}" @endif class="form-control" id="total{{$jk}}" style="width: 50%; height: 40px; margin-left: 25%; margin-top: 10px; text-align: center" @if(isset($islocked[$x]) and $islocked[$x] == 1 ) disabled  @endif></td>
+                            @php $x++; $jk=$x @endphp
 
                             <input type="text" hidden value="{{$z++}}">
                             <input type="text" hidden value="{{$u=1}}">
@@ -98,12 +98,48 @@
     <input type="text" id="maxCan" value="{{$z-1}}" hidden>
     </div>
 
+{{--    @livewire('show-result')--}}
+
     <script>
 
         function totalValue(start,end){
-            for (let b=1; b <= end; b++){
+            let as = document.getElementById("total"+start).value;
+            let s =  document.getElementById("total"+start);
+            if (as > 100){
+                s.value = 100;
+                as = s.value;
+            }
+            else if (as < 75){
+                s.value = 75;
+                as = s.value;
+            }
+            for (let b=start; b <= end; b++){
+               let val = document.getElementById("scoreID"+b);
+               val.value = as;
+            }
+
+            //Update Data
+            let max = document.getElementById("maxX").value;
+            let rating = [];
+            let candi = [];
+            let criteria = [];
+            let portion = [];
+
+            for (let ix=1; ix <= max; ix++){
+                let a = document.getElementById("candidateID"+ix).value;
+                let c = document.getElementById("portionID"+ix).value;
+                let b = document.getElementById("criteriaID"+ix).value;
+                let fa = document.getElementById("scoreID"+ix).value;
+
+                rating[ix] = fa;
+                candi[ix] = a;
+                criteria[ix] = b;
+                portion[ix] = c;
 
             }
+
+            window.livewire.emit('rateEmit', rating,candi,criteria,portion);
+
         }
 
         function exitModal(){

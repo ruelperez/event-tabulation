@@ -8,11 +8,13 @@
             <button style="border: none; background-color: white; color: blue; padding: 0px;font-size: 15px;">Logout</button>
         </form>
     </div>
-    <div class="container-fluid" style="background-color: darkblue; height: 94px; text-align: center; padding: 10px;">
+    <div class="container-fluid" style="background-color: darkblue; height: 94px; padding-left: 31%; padding-top: 12px;">
         <h1 style="color: white">Event Tabulation</h1>
     </div>
 </div>
 
+<button type="button" class="btn btn-outline-success" onclick="location.href='/admin/home'" style="margin-top: 10px;margin-left: 1%; width: 8%; height: 40px;">Home</button>
+<button type="button" class="btn btn-outline-success" onclick="location.href='/admin/result'" style="margin-top: 10px;margin-left: 1%; width: 8%; height: 40px;">Result</button>
 
 <div class="row mt-4 ">
     <div class="col-4 border border-primary">
@@ -46,9 +48,6 @@
 
     @include('components.message_portion')
     @livewire('show-portion')
-
-
-    <button type="button" class="btn btn-outline-success" onclick="location.href='/admin/result'" style="margin-top: 20px;margin-left: 40%; width: 20%; height: 50px;">Finished</button>
 
 
 @include('partial.footer')
