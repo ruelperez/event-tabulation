@@ -1,6 +1,6 @@
 <div>
     @foreach($portion as $portions)
-        <table class="table" style="margin-bottom: 20px;">
+        <table class="table" style="margin-bottom: 20px;" id="table{{$table_id}}">
             <thead>
             <tr style="text-align: center">
                 <td colspan="3">
@@ -53,16 +53,22 @@
                         </td>
                         @php $final_average += $final; $final = 0; @endphp
                     @endforeach
-                    <td>
+                    <td id="final_average{{$counter}}{{$final_average_id++}}">
                         {{$final_average}}
                     </td>
                 </tr>
-                @php $final_average = 0; @endphp
+                @php $final_average = 0; $u++; @endphp
             @endforeach
             </tbody>
         </table>
+        @php $average_id = $final_average_id - 1; @endphp
+        @php $counter++; @endphp
+        <input type="text" id="count_candidate" value="{{$u-1}}">
+        @php $u = 1; $final_average_id = 1; @endphp
     @endforeach
-
+        <input type="text" id="count_average" value="{{$average_id}}">
+        <input type="text" id="count_table" value="{{$counter = $counter-1}}">
 </div>
+
 
 
