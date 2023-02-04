@@ -31,6 +31,9 @@
 <button type="button" class="btn btn-outline-success" onclick="location.href='/admin/result'" style="margin-top: 10px;margin-left: 1%; width: 8%; height: 40px;">Result</button>
 
 <script type="text/javascript">
+    setInterval(function (){
+        table()
+    },1000);
     function table(){
         const xhttp = new XMLHttpRequest();
         xhttp.onload = function (){
