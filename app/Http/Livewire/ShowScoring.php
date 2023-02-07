@@ -14,8 +14,8 @@ use Livewire\Component;
 
 class ShowScoring extends Component
 {
-    public $event, $vt=1, $judge_profile, $try,$candidate, $portion, $criteria, $ids = 1, $judge_id, $candidate_id = [], $tot, $total_data, $rmm, $bbm = 0, $islocked=[], $iy=0,
-            $criteria_id = [], $rating=[], $x=1, $total=[], $pass, $num=1, $ber=1, $r, $datas, $u=1, $z=1, $rtt=[], $xa = 1, $sa = 0, $rateData, $submitted=0, $tns, $alas = 0;
+    public $event, $vt=1, $judge_profile, $try,$candidate, $portion, $criteria, $ids = 1, $judge_id, $candidate_id = [], $tot, $total_data, $rmm, $bbm = 0, $islocked=[], $iy=0, $linkInput=[],
+            $criteria_id = [], $rtg, $rating=[], $x=1, $total=[], $pass, $num=1, $ber=1, $r, $datas, $u=1, $z=1, $rtt=[], $xa = 1, $sa = 0, $rateData, $submitted=0, $tns, $alas = 0, $linkID =[];
 
     public function render()
     {
@@ -28,6 +28,7 @@ class ShowScoring extends Component
         $this->criteria = User::find($auth)->criteria;
         $sed = Judge::find(Auth::guard('webjudge')->user()->id)->rating;
         $drd = User::find($auth)->criteria;
+        $this->rtg = Judge::find(Auth::guard('webjudge')->user()->id)->rating;
         foreach ($drd as $drds){
             if ($drds->isLink == 1){
                 $this->alas = $drds->portion_id;
@@ -168,11 +169,15 @@ class ShowScoring extends Component
     }
 
     public function displayScoreData(){
+        $hyp = 1;
+        $ugh = 1;
+        $urt = 0;
         $er = 1;
         $re = 1;
         $equal = 0;
         $dh = 1;
         $ram = 1;
+        $gad = 1;
         $rr = Judge::find(Auth::guard('webjudge')->user()->id)->rating;
         $pn = $this->portion;
         $ca = $this->criteria;
@@ -220,18 +225,51 @@ class ShowScoring extends Component
         foreach ($ca as $cas){
 
             if ($cas->isLink == 1){
-                $linkID[] = $cas->portionLink;
+                $this->linkID[] = $cas->portionLink;
                 $linkPercentage[] = $cas->percentage;
                 $ptnId[] = $cas->portion_id;
             }
         }
 
+       $qr = Judge::find(Auth::guard('webjudge')->user()->id)->rating;
+        $rex = 0;
+
+        foreach ($pn as $pns){
+
+            foreach ($ca as $cas){
+
+                if ($cas->isLink ==1 and $pns->id == $cas->portion_id){
+
+                    foreach ($can as $cans) {
+
+                        foreach ($qr as $qrs) {
+
+                            if ($qrs->portion_id == $cas->portionLink and $qrs->candidate_number == $cans->candidate_number) {
+                                $urt += $qrs->rating;
+                                $gad++;
+                            }
+
+                        }
+                        $gad--;
+                        $this->linkInput[$hyp][$ugh] = $urt / $gad;
+                        $urt = 0;
+                        $gad = 1;
+                        $hyp++;
+
+                    }
+
+                    $ugh++;
+                    $hyp = 1;
+
+                }
+                else{
+
+                }
 
 
+            }
 
-
-
-
+        }
 
 
     }

@@ -803,6 +803,7 @@
         average = 0;
         let za =1;
         let scr;
+        let cge = [];
         for (let i = 1; i<=count_can; i++){
             if (i == 1){
                 scr = "st";
@@ -824,40 +825,28 @@
                 let textnode = document.createTextNode(i+scr);
                 node.appendChild(textnode);
                 row_select.appendChild(node);
-                //row_select.appendChild('<td><b style="color: red;"><i> 1st </i></b></td>');
-                if(za == 1){
-                   let cge = document.getElementById('final_average'+t+rn);
-                   cge.style.backgroundColor = "yellow";
-                }
+
+                let ss = document.getElementById('final_average'+t+rn).innerHTML;
+                
+                // let kol = document.getElementById('link'+t);
+                // if (kol != null){
+                //     if(za <= kol.value){
+                //        let cge = document.getElementById('final_average'+t+rn);
+                //        cge.style.backgroundColor = "yellow";
+                //     }
+                // }
+                // else if(za == 1){
+                //     let cge = document.getElementById('final_average'+t+rn);
+                //     cge.style.backgroundColor = "yellow";
+                // }
+
             }
             za++;
-
-
         }
-
+        console.log(cge);
     }
 
 
-
-
-  // let printBtn = document.querySelector("#print");
-  // let saveBtn = document.querySelector("#save");
-  //
-  // printBtn.addEventListener("click", function () {
-  //     window.print();
-  // });
-  //
-  // saveBtn.addEventListener("click", function () {
-  //     html2canvas(document.querySelector("#save_to_image")).then(function (canvas) {
-  //         var link = document.querySelector("#save_to_image");
-  //         link.setAttribute("download", "123456.png");
-  //         link.setAttribute(
-  //             "href",
-  //             canvas.toDataURL("image/png").replace("image/png", "image/octet-stream")
-  //         );
-  //         link.click();
-  //     });
-  // });
 
 
 

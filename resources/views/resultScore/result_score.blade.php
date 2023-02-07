@@ -1,5 +1,12 @@
-
+    @php $cnt = 1; @endphp
     @foreach($portion as $portions)
+        @foreach($criteria as $criterias)
+            @if($criterias->portion_id == $portions->id)
+                @if($portions->numberOfTopCandidate > 0 )
+                    <input type="text" hidden id="link{{$cnt}}" value="{{$portions->numberOfTopCandidate}}" >
+                @endif
+            @endif
+        @endforeach
     <button type="button" onclick="printTable({{$table_id}})" class="btn btn-primary" style="margin-left: 80%;width: 7%;">Print</button>  <button type="button" onclick="saveImage({{$table_id}})" class="btn btn-warning" style="width: 7%;">Save</button>
     <a id="save-image{{$table_id}}">
         <div  id="table{{$table_id}}">
@@ -47,7 +54,8 @@
                                             @if($ratings->judge_id == $judges->id)
                                                 @foreach($criteria as $criterias)
                                                     @if($criterias->id == $ratings->criteria_id)
-                                                        @if ($ratings->isSubmit == 0)
+                                                        @if($criterias->isLink == 1)
+                                                        @elseif($ratings->isSubmit == 0)
                                                             @php $lm = 1; break; @endphp
                                                         @endif
                                                         @php  $total = $criterias->percentage  * $ratings->rating / 100;
@@ -89,6 +97,7 @@
 
         </div>
     </a>
+        @php $cnt++; @endphp
     @endforeach
         <input hidden type="text" id="count_average" value="{{$average_id}}">
         <input hidden type="text" id="count_table" value="{{$counter = $counter-1}}">
