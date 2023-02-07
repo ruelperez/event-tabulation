@@ -29,6 +29,7 @@ class ShowScoring extends Component
         $sed = Judge::find(Auth::guard('webjudge')->user()->id)->rating;
         $drd = User::find($auth)->criteria;
         $this->rtg = Judge::find(Auth::guard('webjudge')->user()->id)->rating;
+        $ca = User::find($auth)->criteria;
         foreach ($drd as $drds){
             if ($drds->isLink == 1){
                 $this->alas = $drds->portion_id;
@@ -36,12 +37,18 @@ class ShowScoring extends Component
 
         }
         if (count($sed) == 0){
+            foreach ($ca as $cas){
+
+                if ($cas->isLink == 1){
+                    $this->linkID[] = $cas->portionLink;
+                    $linkPercentage[] = $cas->percentage;
+                    $ptnId[] = $cas->portion_id;
+                }
+            }
 
         }else{
             $this->displayScoreData();
         }
-
-
 
 
         return view('livewire.show-scoring');
@@ -132,40 +139,6 @@ class ShowScoring extends Component
 
         $this->displayScoreData();
 
-
-
-
-
-//        foreach ($rr as $rrs){
-//            $this->xa = 1;
-//            $this->rtt[$er] = $rrs->rating;
-//            $er++;
-//        }
-
-//        if ($trax != 0){
-//            foreach ($rt as $rts){
-//               $rts->judge_id = $judgeID;
-//               $rts->rating = $rating[$y];
-//               $rts->candidate_number = $candidate[$y];
-//               $rts->criteria_id = $criteria[$y];
-//               $y++;
-//               $rt->save();
-//            }
-//
-//        }
-//        else{
-//            for ($i = 1; $i <= $count; $i++){
-//
-//                Rating::create([
-//                    'judge_id' => $judgeID,
-//                    'rating' => $rating[$i],
-//                    'candidate_number' => $candidate[$i],
-//                    'criteria_id' => $criteria[$i],
-//                ]);
-//            }
-//        }
-
-
     }
 
     public function displayScoreData(){
@@ -195,33 +168,6 @@ class ShowScoring extends Component
             $ram++;
         }
 
-
-        foreach ($pn as $pns){
-
-            foreach ($can as $cans){
-
-                foreach ($ca as $cas){
-
-                    if ($pns->id == $cas->portion_id){
-
-                        $this->sa = 1;
-                        $this->rmm[$re] *= '.'.$cas->percentage;
-                        $equal += $this->rmm[$re];
-                        $re++;
-
-                    }
-                }
-
-                $this->total_data[$dh] = $equal;
-                $equal = 0;
-                $dh = $re;
-            }
-
-
-        }
-
-
-
         foreach ($ca as $cas){
 
             if ($cas->isLink == 1){
@@ -231,48 +177,81 @@ class ShowScoring extends Component
             }
         }
 
-       $qr = Judge::find(Auth::guard('webjudge')->user()->id)->rating;
-        $rex = 0;
-
         foreach ($pn as $pns){
 
-            foreach ($ca as $cas){
+            foreach ($can as $cans){
+                $lam = 0;
+                foreach ($ca as $cas){
 
-                if ($cas->isLink ==1 and $pns->id == $cas->portion_id){
+                    if ($pns->id == $cas->portion_id){
+                        if ($cas->isLink == 1 and $cas->portionLink == $this->linkID[$lam]){
+                            $this->sa = 1;
+                            $this->rmm[$re] *= '.'.$cas->percentage;
+                            $equal += $this->rmm[$re];
+                            $lam++;
+                            $re++;
+                        }
+                        else{
+                            $this->sa = 1;
+                            $this->rmm[$re] *= '.'.$cas->percentage;
+                            $equal += $this->rmm[$re];
+                            $re++;
+                        }
+                    }
 
-                    foreach ($can as $cans) {
+                }
+                $this->total_data[$dh] = $equal;
+                $equal = 0;
+                $dh = $re;
+            }
 
-                        foreach ($qr as $qrs) {
 
-                            if ($qrs->portion_id == $cas->portionLink and $qrs->candidate_number == $cans->candidate_number) {
-                                $urt += $qrs->rating;
-                                $gad++;
+
+        }
+
+
+
+
+
+            $qr = Judge::find(Auth::guard('webjudge')->user()->id)->rating;
+            $rex = 0;
+
+            foreach ($pn as $pns){
+
+                foreach ($ca as $cas){
+
+                    if ($cas->isLink ==1 and $pns->id == $cas->portion_id){
+
+                        foreach ($can as $cans) {
+
+                            foreach ($qr as $qrs) {
+
+                                if ($qrs->portion_id == $cas->portionLink and $qrs->candidate_number == $cans->candidate_number) {
+                                    $urt += $qrs->rating;
+                                    $gad++;
+                                }
+
                             }
+                            $gad--;
+                            $this->linkInput[$hyp][$ugh] = $urt / $gad;
+                            $urt = 0;
+                            $gad = 1;
+                            $hyp++;
 
                         }
-                        $gad--;
-                        $this->linkInput[$hyp][$ugh] = $urt / $gad;
-                        $urt = 0;
-                        $gad = 1;
-                        $hyp++;
+
+                        $ugh++;
+                        $hyp = 1;
 
                     }
 
-                    $ugh++;
-                    $hyp = 1;
 
                 }
-                else{
-
-                }
-
 
             }
 
         }
 
-
-    }
 
     public function dataScore($data,$x){
     $this->r = $x;

@@ -804,30 +804,31 @@
         let za =1;
         let scr;
         let cge = [];
-        for (let i = 1; i<=count_can; i++){
-            if (i == 1){
-                scr = "st";
-            }
-            else if(i==2){
-                scr="nd";
-            }
-            else if (i==3){
-                scr = "rd";
-            }
-            else{
-                scr="th";
-            }
+        for (let i = 1; i<=count_table; i++){
 
-            for(let t = 1; t<=count_table; t++){
-                let rn = rank[i+'_'+t];
-                let row_select = document.getElementById('candidate_row'+t+rn);
+            for(let t = 1; t<=count_can; t++){
+                if (t == 1){
+                    scr = "st";
+                }
+                else if(t==2){
+                    scr="nd";
+                }
+                else if (t==3){
+                    scr = "rd";
+                }
+                else{
+                    scr="th";
+                }
+
+                let rn = rank[t+'_'+i];
+                let row_select = document.getElementById('candidate_row'+i+rn);
                 let node = document.createElement("td");
-                let textnode = document.createTextNode(i+scr);
+                let textnode = document.createTextNode(t+scr);
                 node.appendChild(textnode);
                 row_select.appendChild(node);
 
-                let ss = document.getElementById('final_average'+t+rn).innerHTML;
-                
+                cge[i+'_'+t] = document.getElementById('final_average'+i+rn).innerHTML;
+
                 // let kol = document.getElementById('link'+t);
                 // if (kol != null){
                 //     if(za <= kol.value){
@@ -843,11 +844,54 @@
             }
             za++;
         }
-        console.log(cge);
+
+        let u = 1;
+        let d=0;
+        let common = [];
+        let r = 1;
+        let j = 1;
+
+        for (let table = 1; table<=count_table; table++){
+
+            for (let can = 1; can<=count_can; can++){
+
+                for (let cans =1; cans<=count_can; cans++){
+
+                    if (cge[table+'_'+can] == cge[table+'_'+cans]){
+
+                        if (can != cans){
+                                common[table+'_'+j] = cge[table+'_'+can];
+                                j++;
+                            }
+                        }
+
+                    }
+                }
+            j = 1;
+            }
+
+        for (let qwe = 1; qwe<=count_table; qwe++){
+
+            for (let yg = 1; yg<=count_can; yg++){
+
+                for (let mas = 1; mas<=count_can; mas++){
+
+                    let rn =  document.getElementById('final_average'+qwe+mas);
+                    if (rn.innerHTML ==  common[qwe+'_'+yg]){
+                        rn.style.backgroundColor = "yellow";
+                    }
+
+
+                }
+
+            }
+
+
+
+        }
+
+
     }
-
-
-
 
 
 </script>

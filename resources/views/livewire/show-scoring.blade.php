@@ -71,7 +71,7 @@
                                         <input type="text" hidden id="criteriaID{{$x}}" value="{{$criterias->id}}" name="criteria_id[{{$x}}]">
                                         <input type="text" hidden id="percent{{$x}}" value="{{"0.".$criterias->percentage}}">
                                         <input type="text" hidden id="ans{{$x}}" value="{{$jk}}">
-                                        <td><input type="text" @if($iy == 1) disabled @endif  value="{{$linkInput[$candidates->candidate_number][$qp++]}}"    class="form-control" id="scoreID{{$x}}" name="rating[{{$x}}]" onfocus="onFocus({{$x}},{{$jk}})" onblur="onBlur({{$x++}},{{$jk}})" style="width: 50%; height: 40px; margin-left: 25%; margin-top: 10px; text-align: center"></td>
+                                        <td><input type="text" @if($iy == 1) disabled @endif @if(isset($linkInput[$candidates->candidate_number][$qp])) value="{{$linkInput[$candidates->candidate_number][$qp++]}}" @endif  class="form-control" id="scoreID{{$x}}" name="rating[{{$x}}]" onfocus="onFocus({{$x}},{{$jk}})" onblur="onBlur({{$x++}},{{$jk}})" style="width: 50%; height: 40px; margin-left: 25%; margin-top: 10px; text-align: center"></td>
                                     @php $lamp++; @endphp
                                     @endif
 
