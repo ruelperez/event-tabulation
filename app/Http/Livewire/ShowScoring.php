@@ -14,8 +14,8 @@ use Livewire\Component;
 
 class ShowScoring extends Component
 {
-    public $event, $vt=1, $judge_profile, $try,$candidate, $portion, $criteria, $ids = 1, $judge_id, $candidate_id = [], $tot, $total_data, $rmm, $bbm = 0, $islocked=[],
-            $criteria_id = [], $rating=[], $x=1, $total=[], $pass, $num=1, $ber=1, $r, $datas, $u=1, $z=1, $rtt=[], $xa = 1, $sa = 0, $rateData;
+    public $event, $vt=1, $judge_profile, $try,$candidate, $portion, $criteria, $ids = 1, $judge_id, $candidate_id = [], $tot, $total_data, $rmm, $bbm = 0, $islocked=[], $iy=0,
+            $criteria_id = [], $rating=[], $x=1, $total=[], $pass, $num=1, $ber=1, $r, $datas, $u=1, $z=1, $rtt=[], $xa = 1, $sa = 0, $rateData, $submitted=0, $tns, $alas = 0;
 
     public function render()
     {
@@ -27,11 +27,21 @@ class ShowScoring extends Component
         $this->portion = User::find($auth)->portion;
         $this->criteria = User::find($auth)->criteria;
         $sed = Judge::find(Auth::guard('webjudge')->user()->id)->rating;
+        $drd = User::find($auth)->criteria;
+        foreach ($drd as $drds){
+            if ($drds->isLink == 1){
+                $this->alas = $drds->portion_id;
+            }
+
+        }
         if (count($sed) == 0){
 
         }else{
             $this->displayScoreData();
         }
+
+
+
 
         return view('livewire.show-scoring');
     }
@@ -204,6 +214,26 @@ class ShowScoring extends Component
 
 
         }
+
+
+
+        foreach ($ca as $cas){
+
+            if ($cas->isLink == 1){
+                $linkID[] = $cas->portionLink;
+                $linkPercentage[] = $cas->percentage;
+                $ptnId[] = $cas->portion_id;
+            }
+        }
+
+
+
+
+
+
+
+
+
     }
 
     public function dataScore($data,$x){
@@ -211,12 +241,15 @@ class ShowScoring extends Component
     $this->datas = $data;
     }
 
-    public function submitModal($id){
-
-        $rate = Portion::find($id)->rating;
-        foreach ($rate as $rates){
-            $rates->isSubmit = 1;
-            $rates->save();
+    public function submitModal($id,$auths){
+        $rating = Rating::all();
+        foreach ($rating as $ratings){
+            if ($ratings->judge_id == $auths){
+                if ($ratings->portion_id == $id){
+                    $ratings->isSubmit = 1;
+                    $ratings->save();
+                }
+            }
         }
         $this->bbm = 1;
     }
@@ -224,6 +257,47 @@ class ShowScoring extends Component
     public function closeModal(){
 
         $this->bbm = 0;
+    }
+
+    public function ptnClick($id){
+        $this->submitted = 0;
+        $this->tns = $id;
+       $fs = Portion::find($id)->criteria;
+       foreach ($fs as $fss){
+           if ($fss->isLink == 1){
+               $this->iy = 1;
+               $porID_link[] = $fss->portionLink;
+           }
+
+       }
+       if (isset($porID_link)){
+
+           for ($f = 0; $f<count($porID_link); $f++){
+               $pt = Portion::find($porID_link[$f])->rating;
+               foreach ($pt as $pts){
+                   if ($pts->judge_id == Auth::guard('webjudge')->user()->id and $pts->isSubmit == 5){
+                       $this->submitted++;
+                       break;
+                   }
+
+               }
+
+           }
+           if (count($porID_link) == $this->submitted){
+               $this->iy =0;
+           }
+
+
+       }
+       else{
+           $this->iy=0;
+       }
+
+
+
+
+
+
     }
 
 

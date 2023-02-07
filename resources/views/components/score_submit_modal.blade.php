@@ -20,7 +20,7 @@
                     <button type="button" class="btn btn-secondary" onclick="exitModal()" data-bs-dismiss="modal">Close</button>
                 @else
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" >Cancel</button>
-                    <button type="button" class="btn btn-primary" wire:click="submitModal({{$portions->id}})">Proceed</button>
+                    <button type="button" class="btn btn-primary" wire:click="submitModal({{$portions->id}},{{Auth::guard('webjudge')->user()->id}})">Proceed</button>
                 @endif
 
             </div>

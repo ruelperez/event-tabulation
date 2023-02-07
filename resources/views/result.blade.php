@@ -5,10 +5,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <link rel="stylesheet" href="/styles.css">
     <title>
     </title>
-    <link rel="stylesheet" href="css/main.css>
+    <link rel="stylesheet" href="css/main.css">
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
 
     <style>
@@ -59,7 +58,7 @@
 <body onload="table()">
 <div class="d-flex">
     <span style="font-size:30px;cursor:pointer; width: 5%; text-align: center;padding-top: 20px;" onclick="openNav()">&#9776; </span>
-    <div class="container-fluid" style="background-color: darkblue; height: 94px;">
+    <div class="container-fluid" style="background-color: darkblue; height: 94px; margin-bottom: 30px;">
         <h2 style="color: white; margin-left: 38%; margin-top: 15px; position: absolute; font-style: italic"></h2>
         <button type="button" class="btn btn-success" onclick="location.href='/admin/home'" style="width: 8%; margin-top: 50px; height: 40px;">Back Home</button>
     </div>
@@ -76,9 +75,9 @@
     </div>
 {{--    @livewire('portion-click')--}}
 </div>
-<button onclick="window.print()">click</button>
+
 <script type="text/javascript">
-  let interval =  setInterval(function (){
+  setInterval(function (){
         table();
     },1000);
 
@@ -841,24 +840,26 @@
 
 
 
-  let printBtn = document.querySelector("#print");
-  let saveBtn = document.querySelector("#save");
+  // let printBtn = document.querySelector("#print");
+  // let saveBtn = document.querySelector("#save");
+  //
+  // printBtn.addEventListener("click", function () {
+  //     window.print();
+  // });
+  //
+  // saveBtn.addEventListener("click", function () {
+  //     html2canvas(document.querySelector("#save_to_image")).then(function (canvas) {
+  //         var link = document.querySelector("#save_to_image");
+  //         link.setAttribute("download", "123456.png");
+  //         link.setAttribute(
+  //             "href",
+  //             canvas.toDataURL("image/png").replace("image/png", "image/octet-stream")
+  //         );
+  //         link.click();
+  //     });
+  // });
 
-  printBtn.addEventListener("click", function () {
-      window.print();
-  });
 
-  saveBtn.addEventListener("click", function () {
-      html2canvas(document.querySelector("#save_to_image")).then(function (canvas) {
-          var link = document.querySelector("#save_to_image");
-          link.setAttribute("download", "123456.png");
-          link.setAttribute(
-              "href",
-              canvas.toDataURL("image/png").replace("image/png", "image/octet-stream")
-          );
-          link.click();
-      });
-  });
 
 </script>
 
@@ -868,6 +869,7 @@
 
 
 <script src="{{asset('js/print.js')}}"></script>
+<script src="{{asset('js/index.js')}}"></script>
 <script src="{{ asset('js/jqueryCdn.js') }}"></script>
 {{--<script src="{{ asset('js/score_result.js')}}"></script>--}}
 @include('partial.footer')

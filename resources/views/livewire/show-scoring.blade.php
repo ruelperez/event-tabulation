@@ -28,7 +28,7 @@
         <ul class="list-group" style="width: 100%; margin-top: 40px;" >
             @php $vp = 1; $sp = 1; @endphp
             @foreach($portion as $portions)
-                <li wire:ignore.self class="list-group-item btn" style="background-color: @if($sp == 1) aquamarine @else none @endif" id="style{{$sp}}" onclick="portionFetch({{$sp++}})">
+                <li wire:ignore.self class="list-group-item btn" style="background-color: @if($sp == 1) aquamarine @else none @endif ; @if($alas == $portions->id)   @endif" id="style{{$sp}}" wire:click="ptnClick({{$portions->id}})" onclick="portionFetch({{$sp++}})">
                     {{ucwords($portions->title)}}
                 </li>
                 <input type="text" value="{{$vp++}}"  hidden>
@@ -61,18 +61,20 @@
                         <th style="text-align: center; width: 200px; font-size: 20px; padding-top: 23px;" id="we">{{$candidates->candidate_number}}</th>
                         <td><img src="{{ asset('storage/'.$candidates->photo) }}" height="70" width="70"/></td>
                         <td style="width:600px; font-size: 15px;"><b>{{ucwords($candidates->full_name)}}</b> <br> <p style="font-size: 0.8em; ">{{ucwords($candidates->origin)}}</p></td>
+                        @php $lamp = 0; @endphp
                         @foreach($criteria as $criterias)
                         @if($criterias->portion_id == $portions->id)
+                            
                             <input type="text" hidden value="{{$judge_id->id}}" name="judge_id">
                             <input type="text" hidden id="portionID{{$x}}" value="{{$portions->id}}" name="portion_id[{{$x}}]">
                             <input type="text" hidden id="candidateID{{$x}}" value="{{$candidates->candidate_number}}" name="candidate_number[{{$x}}]">
                             <input type="text" hidden id="criteriaID{{$x}}" value="{{$criterias->id}}" name="criteria_id[{{$x}}]">
                             <input type="text" hidden id="percent{{$x}}" value="{{"0.".$criterias->percentage}}">
                             <input type="text" hidden id="ans{{$x}}" value="{{$jk}}">
-                            <td><input type="text"  @if(isset($rtt[$x])) value="{{$rtt[$x]}}" @endif @if(isset($islocked[$x]) and $islocked[$x] == 1 ) disabled @endif class="form-control" id="scoreID{{$x}}" name="rating[{{$x}}]" onfocus="onFocus({{$x}},{{$jk}})" onblur="onBlur({{$x++}},{{$jk}})" style="width: 50%; height: 40px; margin-left: 25%; margin-top: 10px; text-align: center"></td>
+                            <td><input type="text" @if($iy == 1) disabled @endif   @if(isset($rtt[$x])) value="{{$rtt[$x]}}" @endif  @if(isset($islocked[$x]) and $islocked[$x] == 1 ) disabled @endif class="form-control" id="scoreID{{$x}}" name="rating[{{$x}}]" onfocus="onFocus({{$x}},{{$jk}})" onblur="onBlur({{$x++}},{{$jk}})" style="width: 50%; height: 40px; margin-left: 25%; margin-top: 10px; text-align: center"></td>
                         @endif
                         @endforeach
-                            <td><input type="text" onblur="totalValue({{$jk}},{{$x-=1}})" @if(isset($total_data[$jk])) value="{{$total_data[$jk]}}" @endif class="form-control" id="total{{$jk}}" style="width: 50%; height: 40px; margin-left: 25%; margin-top: 10px; text-align: center" @if(isset($islocked[$x]) and $islocked[$x] == 1 ) disabled  @endif></td>
+                            <td><input type="text" onblur="totalValue({{$jk}},{{$x-=1}})" @if(isset($total_data[$jk])) value="{{$total_data[$jk]}}" @endif class="form-control" id="total{{$jk}}" style="width: 50%; height: 40px; margin-left: 25%; margin-top: 10px; text-align: center" @if(isset($islocked[$x]) and $islocked[$x] == 1 ) disabled  @endif  @if($iy == 1) disabled @endif></td>
                             @php $x++; $jk=$x @endphp
 
                             <input type="text" hidden value="{{$z++}}">
