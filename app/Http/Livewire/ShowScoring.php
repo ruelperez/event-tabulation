@@ -46,6 +46,8 @@ class ShowScoring extends Component
                 }
             }
 
+
+
         }else{
             $this->displayScoreData();
         }

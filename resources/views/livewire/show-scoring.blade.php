@@ -55,6 +55,7 @@
             </tr>
             </thead>
             <tbody>
+            
                 @foreach($candidate as $candidates)
                     <tr>
                         <th style="text-align: center; width: 200px; font-size: 20px; padding-top: 23px;" id="we">{{$candidates->candidate_number}}</th>
