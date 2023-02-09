@@ -37,18 +37,10 @@ class ShowScoring extends Component
 
         }
         if (count($sed) == 0){
-            foreach ($ca as $cas){
 
-                if ($cas->isLink == 1){
-                    $this->linkID[] = $cas->portionLink;
-                    $linkPercentage[] = $cas->percentage;
-                    $ptnId[] = $cas->portion_id;
-                }
-            }
-
-
-
-        }else{
+        }
+        else{
+            $this->top();
             $this->displayScoreData();
         }
 
@@ -121,7 +113,6 @@ class ShowScoring extends Component
                     'portion_id' => $portion[$i],
                 ]);
 
-                $this->emit('refreshResult');
             }
 
         }
@@ -136,14 +127,80 @@ class ShowScoring extends Component
                $rts->save();
                 $y++;
             }
-            $this->emit('refreshResult');
         }
 
-        $this->displayScoreData();
+        //$this->displayScoreData();
 
     }
 
+    public function top(){
+        $auth = Auth::guard('webjudge')->user()->user_id;
+        $ca = User::find($auth)->criteria;
+        $pn = User::find($auth)->portion;
+        $can = User::find($auth)->candidate;
+        $rst = 0;
+
+        foreach ($pn as $pns){
+
+            foreach ($can as $cans){
+
+                foreach ($ca as $cas){
+
+                    if ($cas->portion_id == $pns->id and $cas->isLink == 1){
+                        $cria[] = $cas->id;
+                        $rate = Portion::find($cas->portionLink)->rating;
+                        $jdg = Auth::guard('webjudge')->user()->id;
+
+                        foreach ($rate as $rates){
+                            if ($rates->judge_id == $jdg and $rates->candidate_number == $cans->candidate_number){
+                                $pct =  Criteria::find($rates->criteria_id)->percentage;
+                                $rst += $rates->rating * $pct / 100;
+                            }
+
+                        }
+                        $saved[] = $rst;
+                    }
+                    else{
+
+                    }
+                    $rst = 0;
+                }
+                if (isset($saved)){
+
+                    for ( $nm = 0; $nm<count($saved); $nm++){
+
+                        $rng = Rating::all();
+                        foreach ($rng as $rngs){
+                            if ($rngs->judge_id == $jdg and $rngs->portion_id == $pns->id and $rngs->candidate_number == $cans->candidate_number and $cria[$nm] == $rngs->criteria_id){
+                                try {
+                                    $rngs->rating = $saved[$nm];
+                                    $rngs->save();
+                                    break;
+                                }
+                                catch(\Exception $e){
+                                    dd('failed to save');
+                                    break;
+                                }
+
+                            }
+                        }
+
+                    }
+
+                    $saved = [];
+
+                }
+
+            }
+        }
+
+
+
+    }
+
+
     public function displayScoreData(){
+        $this->rmm = [];
         $hyp = 1;
         $ugh = 1;
         $urt = 0;
@@ -154,9 +211,10 @@ class ShowScoring extends Component
         $ram = 1;
         $gad = 1;
         $rr = Judge::find(Auth::guard('webjudge')->user()->id)->rating;
-        $pn = $this->portion;
-        $ca = $this->criteria;
-        $can = $this->candidate;
+        $auth = Auth::guard('webjudge')->user()->user_id;
+        $ca = User::find($auth)->criteria;
+        $pn = User::find($auth)->portion;
+        $can = User::find($auth)->candidate;
 
         foreach ($rr as $rrs){
             $this->xa = 1;
@@ -186,19 +244,11 @@ class ShowScoring extends Component
                 foreach ($ca as $cas){
 
                     if ($pns->id == $cas->portion_id){
-                        if ($cas->isLink == 1 and $cas->portionLink == $this->linkID[$lam]){
                             $this->sa = 1;
-                            $this->rmm[$re] *= '.'.$cas->percentage;
-                            $equal += $this->rmm[$re];
-                            $lam++;
-                            $re++;
-                        }
-                        else{
-                            $this->sa = 1;
-                            $this->rmm[$re] *= '.'.$cas->percentage;
+                            $this->rmm[$re] *= $cas->percentage / 100;
                             $equal += $this->rmm[$re];
                             $re++;
-                        }
+
                     }
 
                 }
@@ -212,47 +262,7 @@ class ShowScoring extends Component
         }
 
 
-
-
-
-            $qr = Judge::find(Auth::guard('webjudge')->user()->id)->rating;
-            $rex = 0;
-
-            foreach ($pn as $pns){
-
-                foreach ($ca as $cas){
-
-                    if ($cas->isLink ==1 and $pns->id == $cas->portion_id){
-
-                        foreach ($can as $cans) {
-
-                            foreach ($qr as $qrs) {
-
-                                if ($qrs->portion_id == $cas->portionLink and $qrs->candidate_number == $cans->candidate_number) {
-                                    $urt += $qrs->rating;
-                                    $gad++;
-                                }
-
-                            }
-                            $gad--;
-                            $this->linkInput[$hyp][$ugh] = $urt / $gad;
-                            $urt = 0;
-                            $gad = 1;
-                            $hyp++;
-
-                        }
-
-                        $ugh++;
-                        $hyp = 1;
-
-                    }
-
-
-                }
-
-            }
-
-        }
+    }
 
 
     public function dataScore($data,$x){
@@ -311,11 +321,6 @@ class ShowScoring extends Component
        else{
            $this->iy=0;
        }
-
-
-
-
-
 
     }
 
