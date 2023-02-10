@@ -4,10 +4,9 @@
     <span style="font-size:30px;cursor:pointer; width: 5%; text-align: center;padding-top: 20px;" onclick="openNav()">&#9776; </span>
     <div class="container-fluid" style="background-color: darkblue; height: 94px;">
         <h1 style="color: white; margin-left: 38%; margin-top: 15px; position: absolute">Event Tabulation</h1>
-        <button type="button" class="btn btn-success" onclick="location.href='/admin/result'" style="width: 8%; margin-top: 50px; height: 40px;">Result</button>
     </div>
 </div>
-
+@livewire('delete-score')
 <div id="mySidenav" class="sidenav">
     <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
     <div style=" height: 94px; width: 80%; padding-left: 10px; color: white;">

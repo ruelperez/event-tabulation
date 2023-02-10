@@ -32,52 +32,102 @@
 
                 <tbody>
                 @php $lm=0; $final_average=0; @endphp
-                @foreach($candidate as $candidates)
-                    <tr style="text-align: center" id="candidate_row{{$counter}}{{$final_average_id}}">
-                        <td>
-                            <b>{{$candidates->candidate_number}}</b>
-                        </td>
-                        <td>
-                            <img src="{{ asset('storage/'.$candidates->photo) }}" height="70" width="70">
-                        </td>
-                        <td style="width:300px; font-size: 15px;">
-                            <b>{{ucwords(ucwords($candidates->full_name))}}</b> <br> <p style="font-size: 0.8em; ">{{ucwords($candidates->origin)}}</p>
-                        </td>
-                        @php $rg=1; @endphp
-                        @foreach($judge as $judges)
-                            @php $lm=0; @endphp
+
+                @if($portions->numberOfTopCandidate > 0 and count($rankData) != 0)
+                    @foreach($rankData as $candidates)
+                        <tr style="text-align: center" id="candidate_row{{$counter}}{{$final_average_id}}">
                             <td>
-                                @foreach($rating as $ratings)
-                                    @php $lm=0; @endphp
-                                    @if($candidates->candidate_number == $ratings->candidate_number)
-                                        @if($ratings->portion_id == $portions->id)
-                                            @if($ratings->judge_id == $judges->id)
-                                                @foreach($criteria as $criterias)
-                                                    @if($criterias->id == $ratings->criteria_id)
-                                                        @if($criterias->isLink == 1)
-                                                        @elseif($ratings->isSubmit == 0)
-                                                            @php $lm = 1; break; @endphp
+                                <b>{{$candidates->candidate_number}}</b>
+                            </td>
+                            <td>
+                                <img src="{{ asset('storage/'.$candidates->photo) }}" height="70" width="70">
+                            </td>
+                            <td style="width:300px; font-size: 15px;">
+                                <b>{{ucwords(ucwords($candidates->full_name))}}</b> <br> <p style="font-size: 0.8em; ">{{ucwords($candidates->origin)}}</p>
+                            </td>
+                            @php $rg=1; @endphp
+                            @foreach($judge as $judges)
+                                @php $lm=0; @endphp
+                                <td>
+                                    @foreach($rating as $ratings)
+                                        @php $lm=0; @endphp
+                                        @if($candidates->candidate_number == $ratings->candidate_number)
+                                            @if($ratings->portion_id == $portions->id)
+                                                @if($ratings->judge_id == $judges->id)
+                                                    @foreach($criteria as $criterias)
+                                                        @if($criterias->id == $ratings->criteria_id)
+                                                            @if($criterias->isLink == 1)
+                                                            @elseif($ratings->isSubmit == 0)
+                                                                @php $lm = 1; break; @endphp
+                                                            @endif
+                                                            @php  $total = $criterias->percentage  * $ratings->rating / 100;
+                                                              $final += $total;
+                                                            @endphp
                                                         @endif
-                                                        @php  $total = $criterias->percentage  * $ratings->rating / 100;
-                                                          $final += $total;
-                                                        @endphp
-                                                    @endif
-                                                @endforeach
+                                                    @endforeach
+                                                @endif
                                             @endif
                                         @endif
-                                    @endif
-                                @endforeach
-                                {{$final}}
+                                    @endforeach
+                                    {{$final}}
+                                </td>
+                                @php $rg++; $final_average += $final; $final = 0; @endphp
+                            @endforeach
+                            @php $rg--; $final_average /= $rg; $lm=0; @endphp
+                            <td id="final_average{{$counter}}{{$final_average_id++}}">
+                                @php echo number_format((float)$final_average, 2, '.', ''); @endphp
                             </td>
-                            @php $rg++; $final_average += $final; $final = 0; @endphp
-                        @endforeach
-                        @php $rg--; $final_average /= $rg; $lm=0; @endphp
-                        <td id="final_average{{$counter}}{{$final_average_id++}}">
-                            @php echo number_format((float)$final_average, 2, '.', ''); @endphp
-                        </td>
-                    </tr>
-                    @php $final_average = 0; $u++; @endphp
-                @endforeach
+                        </tr>
+                        @php $final_average = 0; $u++; @endphp
+                    @endforeach
+                @else
+                    @foreach($candidate as $candidates)
+                        <tr style="text-align: center" id="candidate_row{{$counter}}{{$final_average_id}}">
+                            <td>
+                                <b>{{$candidates->candidate_number}}</b>
+                            </td>
+                            <td>
+                                <img src="{{ asset('storage/'.$candidates->photo) }}" height="70" width="70">
+                            </td>
+                            <td style="width:300px; font-size: 15px;">
+                                <b>{{ucwords(ucwords($candidates->full_name))}}</b> <br> <p style="font-size: 0.8em; ">{{ucwords($candidates->origin)}}</p>
+                            </td>
+                            @php $rg=1; @endphp
+                            @foreach($judge as $judges)
+                                @php $lm=0; @endphp
+                                <td>
+                                    @foreach($rating as $ratings)
+                                        @php $lm=0; @endphp
+                                        @if($candidates->candidate_number == $ratings->candidate_number)
+                                            @if($ratings->portion_id == $portions->id)
+                                                @if($ratings->judge_id == $judges->id)
+                                                    @foreach($criteria as $criterias)
+                                                        @if($criterias->id == $ratings->criteria_id)
+                                                            @if($criterias->isLink == 1)
+                                                            @elseif($ratings->isSubmit == 0)
+                                                                @php $lm = 1; break; @endphp
+                                                            @endif
+                                                            @php  $total = $criterias->percentage  * $ratings->rating / 100;
+                                                              $final += $total;
+                                                            @endphp
+                                                        @endif
+                                                    @endforeach
+                                                @endif
+                                            @endif
+                                        @endif
+                                    @endforeach
+                                    {{$final}}
+                                </td>
+                                @php $rg++; $final_average += $final; $final = 0; @endphp
+                            @endforeach
+                            @php $rg--; $final_average /= $rg; $lm=0; @endphp
+                            <td id="final_average{{$counter}}{{$final_average_id++}}">
+                                @php echo number_format((float)$final_average, 2, '.', ''); @endphp
+                            </td>
+                        </tr>
+                        @php $final_average = 0; $u++; @endphp
+                    @endforeach
+                @endif
                 </tbody>
             </table>
             @php $average_id = $final_average_id - 1; @endphp

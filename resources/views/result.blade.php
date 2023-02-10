@@ -60,7 +60,7 @@
     <span style="font-size:30px;cursor:pointer; width: 5%; text-align: center;padding-top: 20px;" onclick="openNav()">&#9776; </span>
     <div class="container-fluid" style="background-color: darkblue; height: 94px; margin-bottom: 30px;">
         <h2 style="color: white; margin-left: 38%; margin-top: 15px; position: absolute; font-style: italic"></h2>
-        <button type="button" class="btn btn-success" onclick="location.href='/admin/home'" style="width: 8%; margin-top: 50px; height: 40px;">Back Home</button>
+        <button type="button" class="btn btn-success" onclick="location.href='/admin/home'" style="width: 15%; margin-top: 50px; height: 40px;">Back Home</button>
     </div>
 </div>
 
@@ -878,7 +878,13 @@
 
                     let rn =  document.getElementById('final_average'+qwe+mas);
                     if (rn.innerHTML ==  common[qwe+'_'+yg]){
-                        rn.style.backgroundColor = "yellow";
+                        if (rn.innerHTML == 0){
+                            document.getElementById('candidate_row'+qwe+mas).remove();
+                        }
+                        else{
+                            rn.style.backgroundColor = "yellow";
+                        }
+
                     }
 
 
