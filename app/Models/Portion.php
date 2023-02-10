@@ -23,5 +23,9 @@ class Portion extends Model
         return $this->hasMany(Rating::class);
     }
 
+    public function toplist(){
+        return $this->hasMany(Toplist::class);
+    }
+
     use HasFactory;
 }

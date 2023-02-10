@@ -8,13 +8,15 @@ use App\Models\Event;
 use App\Models\Judge;
 use App\Models\Portion;
 use App\Models\Rating;
+use App\Models\Toplist;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 
 class ShowScoring extends Component
 {
-    public $event, $vt=1, $judge_profile, $try,$candidate, $portion, $criteria, $ids = 1, $judge_id, $candidate_id = [], $tot, $total_data, $rmm, $bbm = 0, $islocked=[], $iy=0, $linkInput=[],
+    public $event, $vt=1, $judge_profile, $try,$candidate, $portion, $criteria, $ids = 1, $judge_id, $candidate_id = [], $tot, $total_data, $rmm, $bbm = 0, $islocked=[], $iy=0, $linkInput=[], $rank,
             $criteria_id = [], $rtg, $rating=[], $x=1, $total=[], $pass, $num=1, $ber=1, $r, $datas, $u=1, $z=1, $rtt=[], $xa = 1, $sa = 0, $rateData, $submitted=0, $tns, $alas = 0, $linkID =[];
 
     public function render()
@@ -41,6 +43,7 @@ class ShowScoring extends Component
         }
         else{
             $this->top();
+            $this->limit_candidate();
             $this->displayScoreData();
         }
 
@@ -129,11 +132,11 @@ class ShowScoring extends Component
             }
         }
 
-        //$this->displayScoreData();
 
     }
 
     public function top(){
+
         $auth = Auth::guard('webjudge')->user()->user_id;
         $ca = User::find($auth)->criteria;
         $pn = User::find($auth)->portion;
@@ -198,6 +201,129 @@ class ShowScoring extends Component
 
     }
 
+    public function limit_candidate(){
+
+        $auth = Auth::guard('webjudge')->user()->user_id;
+        $jg = User::find($auth)->judge;
+        $rating = Rating::all();
+        $ca = User::find($auth)->criteria;
+        $pn = User::find($auth)->portion;
+        $can = User::find($auth)->candidate;
+        $allJudge = Judge::all();
+        $nu = 0;
+        $to = 0;
+        $y = 0;
+
+        foreach ($jg as $jgt){
+            $rew[] = $jgt->id;
+        }
+
+        for ($yu = 0; $yu<count($rew); $yu++){
+            $sed[] = Judge::find($rew[$yu])->rating;
+        }
+
+        $countJudge = count($jg);
+
+
+        foreach ($can as $cans) {
+
+            foreach ($pn as $pns){
+
+                foreach ($jg as $jgs){
+
+                    foreach ($ca as $cas) {
+
+                        if ($cas->portion_id == $pns->id and $cas->isLink == 1) {
+
+                            foreach ($rating as $ratings) {
+                                if ($ratings->criteria_id == $cas->id and $ratings->judge_id == $jgs->id and $ratings->candidate_number == $cans->candidate_number) {
+                                    $tu = $ratings->rating * $cas->percentage / 100;
+                                    $to += $tu;
+                                    $ps = $pns->id;
+                                    $y = 1;
+
+                                }
+                            }
+
+                        }
+
+                    }
+
+                }
+
+            }
+           if ($y == 1){
+               $topList[] = $to / $countJudge;
+               $topcan[] = $cans->id;
+               $toppor[] = $ps;
+               $to = 0;
+           }
+
+        }
+
+        if ($y == 1){
+
+            $tpli = Portion::find($toppor[0])->toplist;
+
+            $kl = 0;
+            for ($nh = 0; $nh<count($sed); $nh++){
+
+                if (count($sed[$nh]) > 0){
+                    $kl++;
+                }
+
+            }
+
+            if ($kl >= count($jg)){
+                $io = 0;
+                foreach ($tpli as $tplis){
+                    $tplis->portion_id = $toppor[$io];
+                    $tplis->candidate_id = $topcan[$io];
+                    $tplis->result = $topList[$io];
+                    $tplis->save();
+                    $io++;
+                }
+
+            }
+            elseif (count($tpli) == 0) {
+
+                for ($ha = 0; $ha<count($topcan); $ha++){
+                    Toplist::create([
+                        'portion_id' => $toppor[$ha],
+                        'candidate_id' => $topcan[$ha],
+                        'result' => $topList[$ha],
+                    ]);
+                }
+            }
+            else{
+
+                $io = 0;
+                foreach ($tpli as $tplis){
+                    $tplis->portion_id = $toppor[$io];
+                    $tplis->candidate_id = $topcan[$io];
+                    $tplis->result = $topList[$io];
+                    $tplis->save();
+                    $io++;
+                }
+
+            }
+
+            $list = DB::table('toplists')->orderBy('result','desc')->get();
+
+            foreach ($list as $lists){
+                $ran[] = $lists->id;
+            }
+
+            for ($n = 0; $n<count($ran); $n++){
+                $rank_data[] = Toplist::find($ran[$n])->candidate;
+            }
+            $this->rank = $rank_data;
+            //$this->lado++;
+
+        }
+
+    }
+
 
     public function displayScoreData(){
         $this->rmm = [];
@@ -239,22 +365,80 @@ class ShowScoring extends Component
 
         foreach ($pn as $pns){
 
-            foreach ($can as $cans){
-                $lam = 0;
-                foreach ($ca as $cas){
+            if ($pns->numberOfTopCandidate > 0){
 
-                    if ($pns->id == $cas->portion_id){
+                if (count($this->rank) != 0){
+                    $kk = 1;
+                    foreach ($this->rank as $cans){
+                        if ($kk <= $pns->numberOfTopCandidate){
+
+                            foreach ($ca as $cas){
+
+                                if ($pns->id == $cas->portion_id){
+                                    $this->sa = 1;
+                                    $this->rmm[$re] *= $cas->percentage / 100;
+                                    $equal += $this->rmm[$re];
+                                    $re++;
+
+                                }
+
+                            }
+                            $this->total_data[$dh] = $equal;
+                            $equal = 0;
+                            $dh = $re;
+                            $kk++;
+                        }
+
+                    }
+
+                }
+                else{
+                    $kk = 1;
+                    foreach ($can as $cans){
+                        if ($kk <= $pns->numberOfTopCandidate){
+
+                            foreach ($ca as $cas){
+
+                                if ($pns->id == $cas->portion_id){
+                                    $this->sa = 1;
+                                    $this->rmm[$re] *= $cas->percentage / 100;
+                                    $equal += $this->rmm[$re];
+                                    $re++;
+
+                                }
+
+                            }
+                            $this->total_data[$dh] = $equal;
+                            $equal = 0;
+                            $dh = $re;
+                            $kk++;
+
+                        }
+
+                    }
+
+                }
+
+            }
+            else{
+                foreach ($can as $cans){
+
+                    foreach ($ca as $cas){
+
+                        if ($pns->id == $cas->portion_id){
                             $this->sa = 1;
                             $this->rmm[$re] *= $cas->percentage / 100;
                             $equal += $this->rmm[$re];
                             $re++;
 
-                    }
+                        }
 
+                    }
+                    $this->total_data[$dh] = $equal;
+                    $equal = 0;
+                    $dh = $re;
                 }
-                $this->total_data[$dh] = $equal;
-                $equal = 0;
-                $dh = $re;
+
             }
 
 

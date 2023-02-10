@@ -149,8 +149,12 @@ class ShowPortion extends Component
             foreach ($delP as $delPs){
                 Criteria::find($delPs->id)->delete();
             }
-            //$delP->delete();
+            $pn = Portion::find($id)->rating;
+            foreach ($pn as $pns){
+                $pns->delete();
+            }
             Portion::find($id)->delete();
+
             session()->flash('success',"Deleted Successfully!!");
         }
         catch(\Exception $e){

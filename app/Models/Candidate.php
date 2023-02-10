@@ -16,5 +16,9 @@ class Candidate extends Model
         'origin',
         'photo'
     ];
+
+    public function toplist(){
+        return $this->hasMany(Toplist::class);
+    }
     use HasFactory;
 }
