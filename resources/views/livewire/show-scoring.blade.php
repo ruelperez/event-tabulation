@@ -28,7 +28,7 @@
         <ul class="list-group" style="width: 100%; margin-top: 40px;" >
             @php $vp = 1; $sp = 1; @endphp
             @foreach($portion as $portions)
-                <li wire:ignore.self class="list-group-item btn" style="background-color: @if($sp == 1) aquamarine @else none @endif ; @if($alas == $portions->id)   @endif" id="style{{$sp}}" wire:click="ptnClick({{$portions->id}})" onclick="portionFetch({{$sp++}})">
+                <li wire:ignore.self class="list-group-item btn" style="background-color: @if($sp == 1) aquamarine @else none @endif ; @if($alas == $portions->id) display: none;  @endif" id="style{{$sp}}" wire:click="ptnClick({{$portions->id}})" onclick="portionFetch({{$sp++}})">
                     {{ucwords($portions->title)}}
                 </li>
                 <input type="text" value="{{$vp++}}"  hidden>
