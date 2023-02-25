@@ -71,7 +71,7 @@
                 </td>
 
                 <td>
-                    <a href="{{url('admin/result', ['por_name' => $data->title, 'por_id' => $data->id])}}" style="cursor: pointer;">Result</a>
+                    <a href="{{url('admin/result', ['por_event' => $data->event_id, 'por_id' => $data->id])}}" style="cursor: pointer;">Result</a>
                 </td>
             </tr>
 

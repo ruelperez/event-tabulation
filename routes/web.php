@@ -29,7 +29,7 @@ Route::prefix('admin')->middleware(['auth','isAdmin'])->group(function (){
 
     Route::get('/result/{eventID}', [\App\Http\Controllers\Score_resultController::class, 'getPortion']);
 
-    Route::get('/result/{por_name}/{por_id}', function ($por_name,$por_id){
+    Route::get('/result/{por_event}/{por_id}', function ($por_event,$por_id){
         return view('result', ['porID' => $por_id]);
     });
 });

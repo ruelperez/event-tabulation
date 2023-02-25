@@ -62,7 +62,7 @@
                             @php $cnt = 1; @endphp
                             @foreach($rank as $candidates)
                                 @if($cnt <= $portions->numberOfTopCandidate)
-                                    <tr>
+                                    <tr @if($candidates->event_id == $IDevent) @else style="display: none;"@endif>
                                         <th style="text-align: center; width: 200px; font-size: 20px; padding-top: 23px;" id="we">{{$candidates->candidate_number}}</th>
                                         <td><img src="{{ asset('storage/'.$candidates->photo) }}" height="70" width="70"/></td>
                                         <td style="width:600px; font-size: 15px;"><b>{{ucwords($candidates->full_name)}}</b> <br> <p style="font-size: 0.8em; ">{{ucwords($candidates->origin)}}</p></td>
@@ -92,7 +92,7 @@
                         @php $cnt = 1; @endphp
                         @foreach($candidate as $candidates)
                             @if($cnt <= $portions->numberOfTopCandidate)
-                                <tr>
+                                <tr @if($candidates->event_id == $IDevent) @else style="display: none;"@endif>
                                     <th style="text-align: center; width: 200px; font-size: 20px; padding-top: 23px;" id="we">{{$candidates->candidate_number}}</th>
                                     <td><img src="{{ asset('storage/'.$candidates->photo) }}" height="70" width="70"/></td>
                                     <td style="width:600px; font-size: 15px;"><b>{{ucwords($candidates->full_name)}}</b> <br> <p style="font-size: 0.8em; ">{{ucwords($candidates->origin)}}</p></td>

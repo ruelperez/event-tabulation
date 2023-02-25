@@ -14,9 +14,10 @@ use Illuminate\Support\Facades\DB;
 class Score_resultController extends Controller
 {
     public function getData($porID){
-        $portion = User::find(auth()->user()->id)->portion;
-        $judge = User::find(auth()->user()->id)->judge;
-        $candidate = User::find(auth()->user()->id)->candidate;
+        $portion = Portion::find($porID);
+
+        $judge = Event::find($portion->event_id)->judge;
+        $candidate = Event::find($portion->event_id)->candidate;
         $rating = Rating::all();
         $criteria = Criteria::all();
         $toplist = DB::table('toplists')->orderBy('result','desc')->get();
@@ -43,7 +44,8 @@ class Score_resultController extends Controller
         $table_id = 1;
         $counter =1;
         $u = 1;
-        return view('resultScore.result_score', ['por_ID' => $porID, 'rankData' => $rank_data, 'u' => $u, 'counter' => $counter, 'table_id' => $table_id, 'final_average_id' => $final_average_id, 'final_average' => $final_average, 'final' => $final, 'portion' => $portion, 'judge' => $judge, 'candidate' => $candidate, 'rating' => $rating, 'criteria' => $criteria]);
+
+        return view('resultScore.result_score', ['rankData' => $rank_data, 'u' => $u, 'counter' => $counter, 'table_id' => $table_id, 'final_average_id' => $final_average_id, 'final_average' => $final_average, 'final' => $final, 'portion' => $portion, 'judge' => $judge, 'candidate' => $candidate, 'rating' => $rating, 'criteria' => $criteria]);
     }
 
     public function getPortion($eventID){

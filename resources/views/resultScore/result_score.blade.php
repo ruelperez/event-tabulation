@@ -1,20 +1,20 @@
     @php $cnt = 1; @endphp
-    @foreach($portion as $portions)
+
         @foreach($criteria as $criterias)
-            @if($criterias->portion_id == $portions->id)
-                @if($portions->numberOfTopCandidate > 0 )
-                    <input type="text" hidden id="link{{$cnt}}" value="{{$portions->numberOfTopCandidate}}" >
+            @if($criterias->portion_id == $portion->id)
+                @if($portion->numberOfTopCandidate > 0 )
+                    <input type="text" hidden id="link{{$cnt}}" value="{{$portion->numberOfTopCandidate}}" >
                 @endif
             @endif
         @endforeach
-    <button type="button" onclick="printTable({{$table_id}})" class="btn btn-primary" style="margin-left: 80%;width: 7%; @if($por_ID == $portions->id) @else display: none; @endif">Print</button>  <button type="button" onclick="saveImage({{$table_id}})" class="btn btn-warning" style="width: 7%; @if($por_ID == $portions->id) @else display: none; @endif">Save</button>
+    <button type="button" onclick="printTable({{$table_id}})" class="btn btn-primary" style="margin-left: 80%;width: 7%;">Print</button>  <button type="button" onclick="saveImage({{$table_id}})" class="btn btn-warning" style="width: 7%;">Save</button>
     <a id="save-image{{$table_id}}" >
-        <div  id="table{{$table_id}}" style="@if($por_ID == $portions->id) @else display: none; @endif">
+        <div  id="table{{$table_id}}">
             <table class="table table-bordered" style="margin-top: 15px;">
                 <thead>
                 <tr style="text-align: center">
                     <td colspan="3">
-                        <b style="font-size: 25px;">{{ucwords($portions->title)}}</b>
+                        <b style="font-size: 25px;">{{ucwords($portion->title)}}</b>
                     </td>
                     @foreach($judge as $judges)
                         <td>
@@ -33,7 +33,7 @@
                 <tbody>
                 @php $lm=0; $final_average=0; @endphp
 
-                @if($portions->numberOfTopCandidate > 0 and count($rankData) != 0)
+                @if($portion->numberOfTopCandidate > 0 and count($rankData) != 0)
                     @foreach($rankData as $candidates)
                         <tr style="text-align: center" id="candidate_row{{$counter}}{{$final_average_id}}">
                             <td>
@@ -99,7 +99,7 @@
                                     @foreach($rating as $ratings)
                                         @php $lm=0; @endphp
                                         @if($candidates->candidate_number == $ratings->candidate_number)
-                                            @if($ratings->portion_id == $portions->id)
+                                            @if($ratings->portion_id == $portion->id)
                                                 @if($ratings->judge_id == $judges->id)
                                                     @foreach($criteria as $criterias)
                                                         @if($criterias->id == $ratings->criteria_id)
@@ -142,7 +142,6 @@
                         <b>{{ucwords($judges->full_name)}}</b> <br> <p style="font-size: 0.9em; ">Judge# {{$judges->judge_number}}</p>
                     </div>
 
-                @endforeach
                 </div>
 
         </div>
