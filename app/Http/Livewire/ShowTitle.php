@@ -32,12 +32,7 @@ class ShowTitle extends Component
     }
 
     public function submit(){
-        $evnt = User::find(auth()->user()->id)->event;
-        if (count($evnt) >= "1"){
-            $this->name = "";
-            session()->flash('evntError',"Failed, Only one event is allowed, You can EDIT the data");
-            return;
-        }
+
         $this->validate([
             'name' => 'required',
         ]);

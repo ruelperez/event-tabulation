@@ -9,7 +9,7 @@
             <div class="modal-body">
                 <form wire:submit.prevent="submit">
                     @csrf
-                    <div class="mb-3" hidden >
+                    <div class="mb-3"  hidden>
                         <input type="text" class="form-control" wire:model="event_id" placeholder="Event Title Number" required>
                     </div>
                     <div class="mb-3" hidden>

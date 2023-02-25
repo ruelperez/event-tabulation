@@ -56,6 +56,7 @@
     </style>
 </head>
 <body onload="table()">
+
 <div class="d-flex">
     <span style="font-size:30px;cursor:pointer; width: 5%; text-align: center;padding-top: 20px;" onclick="openNav()">&#9776; </span>
     <div class="container-fluid" style="background-color: darkblue; height: 94px; margin-bottom: 30px;">
@@ -75,7 +76,7 @@
     </div>
 {{--    @livewire('portion-click')--}}
 </div>
-
+<input type="text" id="ty" value="{{$porID}}" hidden>
 <script type="text/javascript">
   setInterval(function (){
         table();
@@ -95,7 +96,8 @@
             document.getElementById("table").innerHTML = this.responseText;
             ert();
         }
-        xhttp.open("GET", "/live-result");
+        let porID = document.getElementById('ty').value;
+        xhttp.open("GET", "/live-result/"+porID);
         xhttp.send();
 
     }

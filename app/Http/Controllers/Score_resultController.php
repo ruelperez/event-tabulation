@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Criteria;
+use App\Models\Event;
+use App\Models\Portion;
 use App\Models\Rating;
 use App\Models\Toplist;
 use App\Models\User;
@@ -11,8 +13,7 @@ use Illuminate\Support\Facades\DB;
 
 class Score_resultController extends Controller
 {
-    public function getData(){
-
+    public function getData($porID){
         $portion = User::find(auth()->user()->id)->portion;
         $judge = User::find(auth()->user()->id)->judge;
         $candidate = User::find(auth()->user()->id)->candidate;
@@ -42,6 +43,12 @@ class Score_resultController extends Controller
         $table_id = 1;
         $counter =1;
         $u = 1;
-        return view('resultScore.result_score', [ 'rankData' => $rank_data, 'u' => $u, 'counter' => $counter, 'table_id' => $table_id, 'final_average_id' => $final_average_id, 'final_average' => $final_average, 'final' => $final, 'portion' => $portion, 'judge' => $judge, 'candidate' => $candidate, 'rating' => $rating, 'criteria' => $criteria]);
+        return view('resultScore.result_score', ['por_ID' => $porID, 'rankData' => $rank_data, 'u' => $u, 'counter' => $counter, 'table_id' => $table_id, 'final_average_id' => $final_average_id, 'final_average' => $final_average, 'final' => $final, 'portion' => $portion, 'judge' => $judge, 'candidate' => $candidate, 'rating' => $rating, 'criteria' => $criteria]);
+    }
+
+    public function getPortion($eventID){
+        $rt = Event::find($eventID)->portion;
+
+        return view('selectResult', ['portion_data' => $rt]);
     }
 }

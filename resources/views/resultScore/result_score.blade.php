@@ -7,9 +7,9 @@
                 @endif
             @endif
         @endforeach
-    <button type="button" onclick="printTable({{$table_id}})" class="btn btn-primary" style="margin-left: 80%;width: 7%;">Print</button>  <button type="button" onclick="saveImage({{$table_id}})" class="btn btn-warning" style="width: 7%;">Save</button>
-    <a id="save-image{{$table_id}}">
-        <div  id="table{{$table_id}}">
+    <button type="button" onclick="printTable({{$table_id}})" class="btn btn-primary" style="margin-left: 80%;width: 7%; @if($por_ID == $portions->id) @else display: none; @endif">Print</button>  <button type="button" onclick="saveImage({{$table_id}})" class="btn btn-warning" style="width: 7%; @if($por_ID == $portions->id) @else display: none; @endif">Save</button>
+    <a id="save-image{{$table_id}}" >
+        <div  id="table{{$table_id}}" style="@if($por_ID == $portions->id) @else display: none; @endif">
             <table class="table table-bordered" style="margin-top: 15px;">
                 <thead>
                 <tr style="text-align: center">

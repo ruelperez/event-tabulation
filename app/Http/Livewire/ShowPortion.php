@@ -12,13 +12,15 @@ class ShowPortion extends Component
     public $show, $title, $user_id, $event_id, $porID, $bb =1, $dd, $checkbox, $numberOfTopCandidate,
             $show_cri, $show_portion, $title_cri, $percentage_cri, $portionID_selectInput, $portion_id, $criID;
 
+    public function mount($eventNUM){
+        $this->event_id = $eventNUM;
+    }
+
     public function render()
     {
         $this->user_id = auth()->user()->id;
         $this->show_cri = User::find(auth()->user()->id)->criteria;
         $this->show_portion = User::find(auth()->user()->id)->portion;
-
-        $this->eventID();
         $this->user_id = auth()->user()->id;
         $this->show = User::find(auth()->user()->id)->portion;
         return view('livewire.show-portion');
@@ -87,29 +89,10 @@ class ShowPortion extends Component
 
     }
 
-    public function eventID(){
-        $datas = User::find(auth()->user()->id)->event;
-        if (count($datas) == 0){
-            $this->event_id = null;
-        }
-        else{
-            foreach ($datas as $data){
-                $this->event_id = $data->id;
-            }
-        }
-
-    }
-
     public function submit(){
         if ($this->numberOfTopCandidate == null){
             $this->numberOfTopCandidate = 0;
         }
-        $prtn = User::find(auth()->user()->id)->event;
-        if (count($prtn) == "0"){
-            $this->title = "";
-            session()->flash('portionError','Failed! (Register first an Event Title)');
-            return;
-        };
 
         $this->validate([
         'event_id' => 'required',
@@ -198,10 +181,10 @@ class ShowPortion extends Component
             $cri->portion_id = $this->portion_id;
             $cri->percentage = $this->percentage_cri;
             $cri->save();
-            session()->flash('criteriaSave',"Successfully Registered");
+            session()->flash('criteriaSave',"Successfully Modified");
         }
         catch (\Exception $e){
-            session()->flash('criteriaUnsave',"Failed to Register");
+            session()->flash('criteriaUnsave',"Failed to Modify");
         }
     }
 

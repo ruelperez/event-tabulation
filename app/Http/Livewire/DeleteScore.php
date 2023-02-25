@@ -9,6 +9,14 @@ use Livewire\Component;
 
 class DeleteScore extends Component
 {
+    public $eventID;
+
+    public function mount($eventNUM){
+        $this->eventID = $eventNUM;
+
+    }
+
+
     public function render()
     {
         return view('livewire.delete-score');

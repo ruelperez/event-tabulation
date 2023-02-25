@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\UserController;
+use App\Http\Livewire\AdminHome;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -19,11 +20,17 @@ Route::get('/', function () {
 });
 //['auth','isAdmin']
 Route::prefix('admin')->middleware(['auth','isAdmin'])->group(function (){
-    Route::get('/home', function (){
+    Route::get('/event', function (){
         return view('home');
     });
-    Route::get('/result', function (){
-        return view('result');
+    Route::get('/registration/{id}', function ($id){
+        return view('registration', ['eventNUM'=>$id]);
+    });
+
+    Route::get('/result/{eventID}', [\App\Http\Controllers\Score_resultController::class, 'getPortion']);
+
+    Route::get('/result/{por_name}/{por_id}', function ($por_name,$por_id){
+        return view('result', ['porID' => $por_id]);
     });
 });
 
@@ -59,5 +66,6 @@ Route::post('/reg-judges', [\App\Http\Controllers\JudgeController::class, 'store
 Route::post('/reg-candidate', [\App\Http\Controllers\CandidateController::class, 'store']);
 Route::post('/criteria', [\App\Http\Controllers\CriteriaController::class, 'store']);
 Route::post('/rating/store', [\App\Http\Controllers\RatingController::class, 'store']);
-Route::get('/live-result', [\App\Http\Controllers\Score_resultController::class, 'getData']);
+Route::get('/live-result/{porID}', [\App\Http\Controllers\Score_resultController::class, 'getData']);
+
 //Route::get('/live-result', [\App\Http\Controllers\Score_resultController::class, 'getData']);

@@ -28,7 +28,7 @@
         <ul class="list-group" style="width: 100%; margin-top: 40px;" >
             @php $vp = 1; $sp = 1; @endphp
             @foreach($portion as $portions)
-                <li wire:ignore.self class="list-group-item btn" style="background-color: @if($sp == 1) aquamarine @else none @endif ; @if($alas == $portions->id) display: none;  @endif" id="style{{$sp}}" wire:click="ptnClick({{$portions->id}})" onclick="portionFetch({{$sp++}})">
+                <li wire:ignore.self class="list-group-item btn" style=" @if($portions->event_id == $IDevent) @else display: none; @endif background-color: @if($sp == 1) aquamarine @else none @endif ; @if($alas == $portions->id) display: none;  @endif" id="style{{$sp}}" wire:click="ptnClick({{$portions->id}})" onclick="portionFetch({{$sp++}})">
                     {{ucwords($portions->title)}}
                 </li>
                 <input type="text" value="{{$vp++}}"  hidden>
@@ -121,7 +121,7 @@
                     @endif
                 @else
                     @foreach($candidate as $candidates)
-                        <tr>
+                        <tr @if($candidates->event_id == $IDevent) @else style="display: none;"@endif>
                             <th style="text-align: center; width: 200px; font-size: 20px; padding-top: 23px;" id="we">{{$candidates->candidate_number}}</th>
                             <td><img src="{{ asset('storage/'.$candidates->photo) }}" height="70" width="70"/></td>
                             <td style="width:600px; font-size: 15px;"><b>{{ucwords($candidates->full_name)}}</b> <br> <p style="font-size: 0.8em; ">{{ucwords($candidates->origin)}}</p></td>

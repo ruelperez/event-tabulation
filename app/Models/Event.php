@@ -27,5 +27,9 @@ class Event extends Model
         return $this->hasMany(Candidate::class);
     }
 
+    public function portion(){
+        return $this->hasMany(Portion::class);
+    }
+
     use HasFactory;
 }

@@ -7,13 +7,15 @@
             @php $d=0; @endphp
             @foreach($show as $shows)
                 @include('components.modal_portion_edit')
-                <ul class="list-group">
-                    <li class="list-group-item">
-                        #{{$shows->id}} - {{strtoupper($shows->title)}}
-                        <img src="{{url('/image/edit.png')}}" width="20" height="20" wire:click="edit_por({{$shows->id}})" data-bs-toggle="modal" data-bs-target="#editPortion{{$d}}" style="cursor: pointer;position: absolute;right: 45px;">
-                        <img src="{{url('/image/delete.png')}}" width="20" height="20" onclick="deleteTitles({{$shows->id}})" style="cursor: pointer; position: absolute;right: 10px;">
-                    </li>
-                </ul>
+                @if($event_id == $shows->event_id)
+                    <ul class="list-group">
+                        <li class="list-group-item">
+                            #{{$shows->id}} - {{strtoupper($shows->title)}}
+                            <img src="{{url('/image/edit.png')}}" width="20" height="20" wire:click="edit_por({{$shows->id}})" data-bs-toggle="modal" data-bs-target="#editPortion{{$d}}" style="cursor: pointer;position: absolute;right: 45px;">
+                            <img src="{{url('/image/delete.png')}}" width="20" height="20" onclick="deleteTitles({{$shows->id}})" style="cursor: pointer; position: absolute;right: 10px;">
+                        </li>
+                    </ul>
+                @endif
             @endforeach
         @else
             @include('components.modal_portion')
@@ -29,31 +31,33 @@
             @foreach($show as $shows)
                 @php $total=0; @endphp
                 @include('components.modal_criteria')
-                <table class="table table-bordered border-primary" style="width: 30%; display: inline-block; margin-top: 10px;">
-                    <thead>
-                        <tr style="text-align: center;">
-                            <th colspan="2" style="padding: 10px 30px;">{{ucwords($shows->title)}}</th>
-                            <th colspan="2" data-bs-toggle="modal" data-bs-target="#criteria{{$n++}}" wire:click="table({{$shows->id}})" style="cursor: pointer; font-size: 25px;">+</th>
-                        </tr>
-                    </thead>
+                @if($event_id == $shows->event_id)
+                    <table class="table table-bordered border-primary" style="width: 30%; display: inline-block; margin-top: 10px;">
+                        <thead>
+                            <tr style="text-align: center;">
+                                <th colspan="2" style="padding: 10px 30px;">{{ucwords($shows->title)}}</th>
+                                <th colspan="2" data-bs-toggle="modal" data-bs-target="#criteria{{$n++}}" wire:click="table({{$shows->id}})" style="cursor: pointer; font-size: 25px;">+</th>
+                            </tr>
+                        </thead>
 
-                    @foreach($show_cri as $shows_cri)
-                        @include('components.modal_edit_criteria')
-                        @if($shows->id == $shows_cri->portion_id)
+                        @foreach($show_cri as $shows_cri)
+                            @include('components.modal_edit_criteria')
+                            @if($shows->id == $shows_cri->portion_id)
+                            <tr>
+                                <td>{{ucfirst($shows_cri->title)}}</td>
+                                <td>{{ucfirst($shows_cri->percentage.'%')}}</td>
+                                <td><img src="{{url('/image/edit.png')}}" width="18" height="18" wire:click="edit_cri({{$shows_cri->id}},{{$shows->id}})" data-bs-toggle="modal" data-bs-target="#editCriteria{{$m++}}" style="cursor: pointer"></td>
+                                <td><img src="{{url('/image/delete.png')}}" width="20" height="20" wire:click="delete_cri({{$shows_cri->id}})" style="cursor: pointer;"></td>
+                            </tr>
+                                @php $total += $shows_cri->percentage @endphp
+                            @endif
+                        @endforeach
                         <tr>
-                            <td>{{ucfirst($shows_cri->title)}}</td>
-                            <td>{{ucfirst($shows_cri->percentage.'%')}}</td>
-                            <td><img src="{{url('/image/edit.png')}}" width="18" height="18" wire:click="edit_cri({{$shows_cri->id}},{{$shows->id}})" data-bs-toggle="modal" data-bs-target="#editCriteria{{$m++}}" style="cursor: pointer"></td>
-                            <td><img src="{{url('/image/delete.png')}}" width="20" height="20" wire:click="delete_cri({{$shows_cri->id}})" style="cursor: pointer;"></td>
+                            <td>Total</td>
+                            <td colspan="3" style="text-align: center"><h5>{{$total}}%</h5></td>
                         </tr>
-                            @php $total += $shows_cri->percentage @endphp
-                        @endif
-                    @endforeach
-                    <tr>
-                        <td>Total</td>
-                        <td colspan="3" style="text-align: center"><h5>{{$total}}%</h5></td>
-                    </tr>
-                </table>
+                    </table>
+               @endif
             @endforeach
 
     </div>

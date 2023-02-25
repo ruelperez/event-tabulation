@@ -16,12 +16,14 @@ class ShowJudge extends Component
 
     public $show, $image, $user_id, $judge_number, $event_id, $full_name, $username, $password, $password_confirmation, $is_chairman, $photo;
 
+    public function mount($eventNUM){
+        $this->event_id = $eventNUM;
+    }
+
+
     public function render()
     {
-        $datas = User::find(auth()->user()->id)->event;
-        foreach ($datas as $data){
-            $this->event_id = $data->id;
-        }
+
         $this->user_id = auth()->user()->id;
         $this->show = User::find(auth()->user()->id)->judge;
 
@@ -41,20 +43,18 @@ class ShowJudge extends Component
 
 
     public function submit(){
-        $evnt = User::find(auth()->user()->id)->event;
-        if (count($evnt) == "0"){
-            $this->reset_form();
-            session()->flash('regError','Failed! Register first an Event Title');
-            return;
-        };
+        $jg = Event::find($this->event_id)->judge;
+        if (count($jg) > 0){
 
-        $active = User::find(auth()->user()->id)->judge;
-        foreach ($active as $actives){
-            if ($actives->judge_number == $this->judge_number){
-                session()->flash('regError', 'Input unique candidate number');
-                return;
+            foreach ($jg as $jgs){
+                if ($jgs->judge_number == $this->judge_number){
+                    session()->flash('regError', 'Input unique candidate number');
+                    return;
+                }
             }
+
         }
+
         $this->validate([
             'judge_number' => 'required|integer',
             'full_name' => 'required',

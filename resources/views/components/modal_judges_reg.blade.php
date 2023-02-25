@@ -8,7 +8,7 @@
             </div>
             <div class="modal-body">
                 <form wire:submit.prevent="submit">
-                    <div class="mb-3" hidden >
+                    <div class="mb-3"  hidden>
                         <input type="text" class="form-control" wire:model="user_id">
                     </div>
                     <div class="mb-3" hidden >

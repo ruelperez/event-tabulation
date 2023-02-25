@@ -14,29 +14,28 @@ class ShowCandidate extends Component
 {
     public $show, $image, $user_id, $event_id, $full_name, $candidate_number, $can_num, $origin, $anti=1, $IDs;
 
+    public function mount($eventNUM){
+        $this->event_id = $eventNUM;
+    }
+
     public function render()
     {
-
         $this->user_id = auth()->user()->id;
-        $this->eventID();
         $this->show = User::find(auth()->user()->id)->candidate;
         return view('livewire.show-candidate');
     }
 
     public function submit(){
-        $evnt = User::find(auth()->user()->id)->event;
-        if (count($evnt) == "0"){
-            $this->resetInput();
-            session()->flash('dataError','Failed! (Register first an Event Title)');
-            return;
-        };
+        $jg = Event::find($this->event_id)->candidate;
+        if (count($jg) > 0){
 
-        $active = User::find(auth()->user()->id)->candidate;
-        foreach ($active as $actives){
-            if ($actives->candidate_number == $this->candidate_number){
-                session()->flash('idInputError', 'Input unique candidate number');
-                return;
+            foreach ($jg as $jgs){
+                if ($jgs->candidate_number == $this->candidate_number){
+                    session()->flash('idInputError', 'Input unique candidate number');
+                    return;
+                }
             }
+
         }
 
         $this->validate([
@@ -70,13 +69,6 @@ class ShowCandidate extends Component
         $this->candidate_number = "";
         $this->origin = "";
         $this->image = "";
-    }
-
-    public function eventID(){
-        $event = User::find(auth()->user()->id)->event;
-        foreach ($event as $events){
-            $this->event_id = $events->id;
-        }
     }
 
     public function storeImage(){
