@@ -24,7 +24,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-danger" wire:click="deleteAll">Proceed</button>
+                    <button type="button" class="btn btn-danger" wire:click="deleteAll({{$eventID}})">Proceed</button>
                 </div>
             </div>
         </div>

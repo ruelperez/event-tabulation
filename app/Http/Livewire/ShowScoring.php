@@ -26,8 +26,8 @@ class ShowScoring extends Component
         $this->judge_id = Auth::guard('webjudge')->user();
         $auth = Auth::guard('webjudge')->user()->user_id;
         $this->event = User::find($auth)->event;
-        $this->candidate = User::find($auth)->candidate;
-        $this->portion = User::find($auth)->portion;
+        $this->candidate = Event::find($this->IDevent)->candidate;
+        $this->portion = Event::find($this->IDevent)->portion;
         $this->criteria = User::find($auth)->criteria;
         $sed = Judge::find(Auth::guard('webjudge')->user()->id)->rating;
         $drd = User::find($auth)->criteria;
@@ -139,8 +139,8 @@ class ShowScoring extends Component
 
         $auth = Auth::guard('webjudge')->user()->user_id;
         $ca = User::find($auth)->criteria;
-        $pn = User::find($auth)->portion;
-        $can = User::find($auth)->candidate;
+        $pn = Event::find($this->IDevent)->portion;
+        $can = Event::find($this->IDevent)->candidate;
         $rst = 0;
 
         foreach ($pn as $pns){
@@ -207,8 +207,8 @@ class ShowScoring extends Component
         $jg = User::find($auth)->judge;
         $rating = Rating::all();
         $ca = User::find($auth)->criteria;
-        $pn = User::find($auth)->portion;
-        $can = User::find($auth)->candidate;
+        $pn = Event::find($this->IDevent)->portion;
+        $can = Event::find($this->IDevent)->candidate;
         $allJudge = Judge::all();
         $nu = 0;
         $to = 0;
@@ -339,8 +339,8 @@ class ShowScoring extends Component
         $rr = Judge::find(Auth::guard('webjudge')->user()->id)->rating;
         $auth = Auth::guard('webjudge')->user()->user_id;
         $ca = User::find($auth)->criteria;
-        $pn = User::find($auth)->portion;
-        $can = User::find($auth)->candidate;
+        $pn = Event::find($this->IDevent)->portion;
+        $can = Event::find($this->IDevent)->candidate;
 
         foreach ($rr as $rrs){
             $this->xa = 1;

@@ -32,6 +32,8 @@ Route::prefix('admin')->middleware(['auth','isAdmin'])->group(function (){
     Route::get('/result/{por_event}/{por_id}', function ($por_event,$por_id){
         return view('result', ['porID' => $por_id]);
     });
+
+    Route::get('/live-result/{porID}', [\App\Http\Controllers\Score_resultController::class, 'getData']);
 });
 
 Route::prefix('judge')->middleware(['isJudge'])->group(function (){
@@ -66,6 +68,5 @@ Route::post('/reg-judges', [\App\Http\Controllers\JudgeController::class, 'store
 Route::post('/reg-candidate', [\App\Http\Controllers\CandidateController::class, 'store']);
 Route::post('/criteria', [\App\Http\Controllers\CriteriaController::class, 'store']);
 Route::post('/rating/store', [\App\Http\Controllers\RatingController::class, 'store']);
-Route::get('/live-result/{porID}', [\App\Http\Controllers\Score_resultController::class, 'getData']);
 
 //Route::get('/live-result', [\App\Http\Controllers\Score_resultController::class, 'getData']);

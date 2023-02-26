@@ -35,12 +35,12 @@
 
                 @if($portion->numberOfTopCandidate > 0 and count($rankData) != 0)
                     @foreach($rankData as $candidates)
-                        <tr style="text-align: center" id="candidate_row{{$counter}}{{$final_average_id}}">
+                        <tr style="text-align: center;" id="candidate_row{{$counter}}{{$final_average_id}}">
                             <td>
                                 <b>{{$candidates->candidate_number}}</b>
                             </td>
                             <td>
-                                <img src="{{ asset('storage/'.$candidates->photo) }}" height="70" width="70">
+                                <img src="{{ asset('storage/'.$candidates->photo) }}" height="50" width="50">
                             </td>
                             <td style="width:300px; font-size: 15px;">
                                 <b>{{ucwords(ucwords($candidates->full_name))}}</b> <br> <p style="font-size: 0.8em; ">{{ucwords($candidates->origin)}}</p>
@@ -52,7 +52,7 @@
                                     @foreach($rating as $ratings)
                                         @php $lm=0; @endphp
                                         @if($candidates->candidate_number == $ratings->candidate_number)
-                                            @if($ratings->portion_id == $portions->id)
+                                            @if($ratings->portion_id == $portion->id)
                                                 @if($ratings->judge_id == $judges->id)
                                                     @foreach($criteria as $criterias)
                                                         @if($criterias->id == $ratings->criteria_id)
@@ -87,7 +87,7 @@
                                 <b>{{$candidates->candidate_number}}</b>
                             </td>
                             <td>
-                                <img src="{{ asset('storage/'.$candidates->photo) }}" height="70" width="70">
+                                <img src="{{ asset('storage/'.$candidates->photo) }}" height="50" width="50">
                             </td>
                             <td style="width:300px; font-size: 15px;">
                                 <b>{{ucwords(ucwords($candidates->full_name))}}</b> <br> <p style="font-size: 0.8em; ">{{ucwords($candidates->origin)}}</p>
@@ -136,18 +136,17 @@
             @php $u = 1; $final_average_id = 1; $table_id++; @endphp
 
             <div class="container-fluid" style="background-color: darkblue; text-align: center; color: white; margin-bottom: 30px; height: 40px;padding-top: 8px;">Board of Judges</div>
-                <div style="margin-left: 24%; margin-bottom: 150px;">
+                <div style="margin-left: 10%; margin-bottom: 150px;">
                 @foreach($judge as $judges)
-                    <div style="display: inline-block; margin-right: 20%; ">
+                    <div style="display: inline-block; margin-right: 15%; ">
                         <b>{{ucwords($judges->full_name)}}</b> <br> <p style="font-size: 0.9em; ">Judge# {{$judges->judge_number}}</p>
                     </div>
-
+                @endforeach
                 </div>
 
         </div>
     </a>
         @php $cnt++; @endphp
-    @endforeach
         <input hidden type="text" id="count_average" value="{{$average_id}}">
         <input hidden type="text" id="count_table" value="{{$counter = $counter-1}}">
 

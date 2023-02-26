@@ -15,6 +15,7 @@
                         <td style="text-align: right">
                             <a href="{{url('admin/registration', ['eventNUM' => $shows->id])}}" style="cursor: pointer;">Inspect</a>
                             <img src="{{url('/image/edit.png')}}" width="18" height="18" wire:click="editTitle({{$shows->id}})" data-bs-toggle="modal" data-bs-target="#editTitle_modal" style="cursor: pointer; margin-left: 10px;">
+                            <img src="{{url('/image/delete.png')}}" width="20" height="20" onclick="deleteTitles({{$shows->id}})" style="cursor: pointer; margin-left: 5px;">
 
                         </td>
                     </tr>
@@ -63,4 +64,9 @@
         reader.readAsDataURL(file);
 
     })
+
+    function deleteTitles(id) {
+        if (confirm("Are you sure to delete this item ??"))
+            window.livewire.emit('deleteTitles', id);
+    }
 </script>

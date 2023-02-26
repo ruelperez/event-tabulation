@@ -73,7 +73,7 @@ class ShowTitle extends Component
     }
 
     protected $listeners = [
-        'deleteTitle' => 'destroy',
+        'deleteTitles' => 'destroy',
         'files' => 'file',
 
     ];

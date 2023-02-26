@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use App\Models\Event;
 use App\Models\Judge;
 use App\Models\Rating;
 use App\Models\User;
@@ -22,8 +23,8 @@ class DeleteScore extends Component
         return view('livewire.delete-score');
     }
 
-    public function deleteAll(){
-        $tt = User::find(auth()->user()->id)->judge;
+    public function deleteAll($eventID){
+        $tt = Event::find($eventID)->judge;
         foreach ($tt as $tts){
             $aser[] = $tts->id;
         }

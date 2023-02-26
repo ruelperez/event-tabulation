@@ -60,8 +60,8 @@
 <div class="d-flex">
     <span style="font-size:30px;cursor:pointer; width: 5%; text-align: center;padding-top: 20px;" onclick="openNav()">&#9776; </span>
     <div class="container-fluid" style="background-color: darkblue; height: 94px; margin-bottom: 30px;">
-        <h2 style="color: white; margin-left: 38%; margin-top: 15px; position: absolute; font-style: italic"></h2>
-        <button type="button" class="btn btn-success" onclick="location.href='/admin/home'" style="width: 15%; margin-top: 50px; height: 40px;">Back Home</button>
+{{--        <h2 style="color: white; margin-left: 38%; margin-top: 15px; position: absolute; font-style: italic"></h2>--}}
+        <button type="button" class="btn btn-success" onclick="history.back()" style="width: 10%; margin-top: 50px; height: 40px;">Back</button>
     </div>
 </div>
 
@@ -74,7 +74,7 @@
             <button style="border: none; background-color: black; color:white; padding: 0px;font-size: 13px;">Logout</button>
         </form>
     </div>
-{{--    @livewire('portion-click')--}}
+
 </div>
 <input type="text" id="ty" value="{{$porID}}" hidden>
 <script type="text/javascript">
@@ -97,7 +97,7 @@
             ert();
         }
         let porID = document.getElementById('ty').value;
-        xhttp.open("GET", "/live-result/"+porID);
+        xhttp.open("GET", "/admin/live-result/"+porID);
         xhttp.send();
 
     }

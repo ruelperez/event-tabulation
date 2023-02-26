@@ -55,7 +55,9 @@
                         <select class="form-select" aria-label="Default select example" wire:model="portionID_selectInput">
                             <option selected>Select Portion</option>
                             @foreach($show as $shows)
-                                <option value="{{$shows->id}}">{{$shows->title}}</option>
+                                @if($event_id == $shows->event_id)
+                                    <option value="{{$shows->id}}">{{$shows->title}}</option>
+                                @endif
                             @endforeach
                         </select>
                         <input style="margin-left: 5%;" type="text" class="form-control" wire:model.debounce.500ms="percentage_cri" placeholder="Percentage" required>

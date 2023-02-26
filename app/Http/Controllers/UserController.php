@@ -24,7 +24,7 @@ class UserController extends Controller
 
             auth()->login($user);
 
-            return redirect('/admin/home')->with('message_user', 'welcome!!!');
+            return redirect('/admin/event')->with('message_user', 'welcome!!!');
 
         }
 
