@@ -9,11 +9,12 @@ use Livewire\Component;
 
 class ShowPortion extends Component
 {
-    public $show, $title, $user_id, $event_id, $porID, $bb =1, $dd, $checkbox, $numberOfTopCandidate,
+    public $show, $title, $user_id, $event_id, $porID, $bb =1, $dd, $checkbox, $numberOfTopCandidate, $imbeds,
             $show_cri, $show_portion, $title_cri, $percentage_cri, $portionID_selectInput, $portion_id, $criID;
 
-    public function mount($eventNUM){
+    public function mount($eventNUM,$imbed){
         $this->event_id = $eventNUM;
+        $this->imbeds = $imbed;
     }
 
     public function render()

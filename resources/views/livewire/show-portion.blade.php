@@ -1,5 +1,5 @@
-<div class="row">
-    <div class="col-4 border border-primary" style="margin-top: 30px;">
+<div>
+    <div style=" @if($imbeds == "portion") @else display: none @endif ">
         <div class="bg-primary text-center pt-2" style="width:97%; height: 50px; margin-left: 3%;"><h4>Portion</h4></div>
         <span class="btn" data-bs-toggle="modal" data-bs-target="#portion_modal" class="bi bi-plus-circle-fill" style="font-size: 42px; color: rgb(165, 42, 42);margin-left: 45%;">+</span>
         @include('components.modal_portion')
@@ -23,7 +23,7 @@
         @endif
     </div>
 
-    <div class="col-8 border border-primary" style="margin-top: 30px;">
+    <div style=" @if($imbeds == "criteria") @else display: none @endif ">
         <div class="bg-primary text-center pt-2" style="width:97%; height: 50px;"><h4>Criteria</h4></div>
 
             @php $n=0; $m=0; @endphp

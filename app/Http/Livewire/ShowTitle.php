@@ -3,7 +3,11 @@
 namespace App\Http\Livewire;
 
 
+use App\Models\Candidate;
+use App\Models\Criteria;
 use App\Models\Event;
+use App\Models\Judge;
+use App\Models\Portion;
 use App\Models\User;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -85,7 +89,29 @@ class ShowTitle extends Component
 
     public function destroy($id){
         try {
+            $a = Event::find($id)->portion;
+            $b = Event::find($id)->judge;
+            $c = Event::find($id)->candidate;
+            $d = Event::find($id)->criteria;
+
+            foreach ($a as $as){
+                Portion::find($as->id)->delete();
+            }
+
+            foreach ($b as $bs){
+                Judge::find($bs->id)->delete();
+            }
+
+            foreach ($c as $cs){
+                Candidate::find($cs->id)->delete();
+            }
+
+            foreach ($d as $ds){
+               Criteria::find($ds->id)->delete();
+            }
+
             Event::find($id)->delete();
+           
             session()->flash('deleted',"Deleted Successfully!!");
         }
         catch(\Exception $e){

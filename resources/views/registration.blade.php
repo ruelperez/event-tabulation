@@ -6,7 +6,7 @@
         <h1 style="color: white; margin-left: 38%; margin-top: 15px; position: absolute">Event Tabulation</h1>
     </div>
 </div>
-
+<button type="button" class="btn btn-link" onclick="location.href = '/admin/event';" style="margin-left: 58px;"><b>Back to Event List</b></button>
 <div id="mySidenav" class="sidenav">
     <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
     <div style=" height: 94px; width: 80%; padding-left: 10px; color: white;">
@@ -16,10 +16,10 @@
             <button style="border: none; background-color: black; color:white; padding: 0px;font-size: 13px;">Logout</button>
         </form>
     </div>
-    {{--    @livewire('portion-click')--}}
+
 </div>
 
-@livewire('admin-home',['eventNUM' => $eventNUM])
+    @livewire('admin-home',['eventNUM' => $eventNUM, 'regis' => $regis])
 
 
 <script>

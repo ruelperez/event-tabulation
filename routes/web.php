@@ -23,9 +23,15 @@ Route::prefix('admin')->middleware(['auth','isAdmin'])->group(function (){
     Route::get('/event', function (){
         return view('home');
     });
-    Route::get('/registration/{id}', function ($id){
-        return view('registration', ['eventNUM'=>$id]);
+//    Route::get('/registration/{id}', function ($id){
+//        return view('registration', ['eventNUM'=>$id, 'regis' => "judge"]);
+//    });
+
+    Route::get('/registration/{reg}/{id}', function ($reg,$id){
+        return view('registration', ['regis' => $reg,'eventNUM'=>$id ]);
     });
+
+   // Route::get('/registration/{id}/{reg}', [AdminHome::class, 'click']);
 
     Route::get('/result/{eventID}', [\App\Http\Controllers\Score_resultController::class, 'getPortion']);
 
