@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedSmallInteger('portion_id');
             $table->unsignedSmallInteger('candidate_id');
+            $table->unsignedSmallInteger('event_id');
             $table->double('result');
             $table->timestamps();
         });

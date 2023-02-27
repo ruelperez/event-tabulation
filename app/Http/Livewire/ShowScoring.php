@@ -280,6 +280,7 @@ class ShowScoring extends Component
                     $tplis->portion_id = $toppor[$io];
                     $tplis->candidate_id = $topcan[$io];
                     $tplis->result = $topList[$io];
+                    $tplis->event_id = $this->IDevent;
                     $tplis->save();
                     $io++;
                 }
@@ -292,6 +293,7 @@ class ShowScoring extends Component
                         'portion_id' => $toppor[$ha],
                         'candidate_id' => $topcan[$ha],
                         'result' => $topList[$ha],
+                        'event_id' => $this->IDevent,
                     ]);
                 }
             }
@@ -302,6 +304,7 @@ class ShowScoring extends Component
                     $tplis->portion_id = $toppor[$io];
                     $tplis->candidate_id = $topcan[$io];
                     $tplis->result = $topList[$io];
+                    $tplis->event_id = $this->IDevent;
                     $tplis->save();
                     $io++;
                 }

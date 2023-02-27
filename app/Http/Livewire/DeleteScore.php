@@ -5,6 +5,7 @@ namespace App\Http\Livewire;
 use App\Models\Event;
 use App\Models\Judge;
 use App\Models\Rating;
+use App\Models\Toplist;
 use App\Models\User;
 use Livewire\Component;
 
@@ -24,6 +25,12 @@ class DeleteScore extends Component
     }
 
     public function deleteAll($eventID){
+        $io = Event::find($eventID)->toplist;
+        foreach ($io as $ios){
+            Toplist::find($ios->id)->delete();
+        }
+
+
         $tt = Event::find($eventID)->judge;
         foreach ($tt as $tts){
             $aser[] = $tts->id;
@@ -34,7 +41,7 @@ class DeleteScore extends Component
 
         for ($ki = 0; $ki<count($ju); $ki++){
             if (count($ju[$ki]) == 0){
-                session()->flash('failed',"Something goes wrong while deleting!!");
+                session()->flash('deleted',"Deleted Successfully!!");
             }
             else{
                 foreach ($ju[$ki] as $del){

@@ -11,10 +11,15 @@ class Toplist extends Model
         'candidate_id',
         'portion_id',
         'result',
+        'event_id',
     ];
 
     public function candidate(){
         return $this->belongsTo(Candidate::class);
+    }
+
+    public function event(){
+        return $this->belongsTo(Event::class);
     }
 
     use HasFactory;

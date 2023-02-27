@@ -31,5 +31,9 @@ class Event extends Model
         return $this->hasMany(Portion::class);
     }
 
+    public function toplist(){
+        return $this->hasMany(Toplist::class);
+    }
+
     use HasFactory;
 }

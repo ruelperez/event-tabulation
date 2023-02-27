@@ -6,8 +6,7 @@
         <h1 style="color: white; margin-left: 38%; margin-top: 15px; position: absolute">Event Tabulation</h1>
     </div>
 </div>
-{{--this include the RESULT BUTTON inside livewire('delete-score')--}}
-@livewire('delete-score', ['eventNUM' => $eventNUM])
+
 <div id="mySidenav" class="sidenav">
     <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
     <div style=" height: 94px; width: 80%; padding-left: 10px; color: white;">

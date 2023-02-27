@@ -2,8 +2,9 @@
 
     <div class="row mt-4 ">
         <div class="col-4" style="text-align: center">
-            <img src="{{asset('storage/'.$event_data->photo)}}" style="width: 90%; height: 200px;"> <br>
-            <h4 style="margin-top: 10px; "><b>{{ucwords($event_data->title)}}</b></h4>
+            <h4 style="margin-top: 10px; "><i><b>{{ucwords($event_data->title)}}</b></i></h4>
+            {{--this include the RESULT BUTTON inside livewire('delete-score')--}}
+            @livewire('delete-score', ['eventNUM' => $eventNUM])
 
         </div>
 
