@@ -17,7 +17,7 @@ use Livewire\Component;
 class ShowScoring extends Component
 {
     public $event, $IDevent, $vt=1, $judge_profile, $try,$candidate, $portion, $criteria, $ids = 1, $judge_id, $candidate_id = [], $tot, $total_data, $rmm, $bbm = 0, $islocked=[], $iy=0, $linkInput=[], $rank,
-            $criteria_id = [], $rtg, $rating=[], $x=1, $total=[], $pass, $num=1, $ber=1, $r, $datas, $u=1, $z=1, $rtt=[], $xa = 1, $sa = 0, $rateData, $submitted=0, $tns, $alas = 0, $linkID =[];
+            $criteria_id = [], $rtg, $rating=[], $x=1, $total=[], $pass, $num=1, $ber=1, $r, $datas, $u=1, $z=1, $rtt=[], $xa = 1, $sa = 0, $rateData, $submitted=0, $tns, $alas = [], $linkID =[];
 
     public function render()
     {
@@ -25,7 +25,7 @@ class ShowScoring extends Component
         $this->judge_profile = Auth::guard('webjudge')->user();
         $this->judge_id = Auth::guard('webjudge')->user();
         $auth = Auth::guard('webjudge')->user()->user_id;
-        $this->event = User::find($auth)->event;
+        $this->event = Event::find($this->IDevent);
         $this->candidate = Event::find($this->IDevent)->candidate;
         $this->portion = Event::find($this->IDevent)->portion;
         $this->criteria = User::find($auth)->criteria;
@@ -35,7 +35,7 @@ class ShowScoring extends Component
         $ca = User::find($auth)->criteria;
         foreach ($drd as $drds){
             if ($drds->isLink == 1){
-                $this->alas = $drds->portion_id;
+                $this->alas[] = $drds->portion_id;
             }
 
         }

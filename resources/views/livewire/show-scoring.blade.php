@@ -6,9 +6,9 @@
 {{--@include('components.score_submit_modal')--}}
 <div class="d-flex container-fluid" style="margin-top: 10px;" >
     <div style="width: 50%;">
-        @foreach($event as $events)
-        <img src="{{ asset('storage/'.$events->photo) }}" width="100%"/>
-        @endforeach
+
+        <img src="{{ asset('storage/'.$event->photo) }}" width="100%"/>
+
         <table style="margin-top: 40px;">
             <tr >
                 <td>
@@ -28,7 +28,8 @@
         <ul class="list-group" style="width: 100%; margin-top: 40px;" >
             @php $vp = 1; $sp = 1; @endphp
             @foreach($portion as $portions)
-                <li wire:ignore.self class="list-group-item btn" style=" @if($portions->event_id == $IDevent) @else display: none; @endif background-color: @if($sp == 1) aquamarine @else none @endif ; @if($alas == $portions->id) display: none;  @endif" id="style{{$sp}}" wire:click="ptnClick({{$portions->id}})" onclick="portionFetch({{$sp++}})">
+                @php $juy=0; @endphp
+                <li wire:ignore.self class="list-group-item btn" style=" @if($portions->event_id == $IDevent) @else display: none; @endif background-color: @if($sp == 1) aquamarine @else none @endif ; @for($tg=0; $tg<count($alas); $tg++) @if($alas[$tg] == $portions->id) @php $juy++; @endphp @endif @endfor @if($juy > 0) display: none;  @endif" id="style{{$sp}}" wire:click="ptnClick({{$portions->id}})" onclick="portionFetch({{$sp++}})">
                     {{ucwords($portions->title)}}
                 </li>
                 <input type="text" value="{{$vp++}}"  hidden>
