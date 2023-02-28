@@ -35,5 +35,9 @@ class Event extends Model
         return $this->hasMany(Toplist::class);
     }
 
+    public function criteria(){
+        return $this->hasMany(Criteria::class);
+    }
+
     use HasFactory;
 }

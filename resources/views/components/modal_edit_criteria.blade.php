@@ -7,9 +7,6 @@
             </div>
             <div class="modal-body">
                 <form wire:submit.prevent="submit_editCri">
-                    <div class="mb-3" hidden>
-                        <input type="text" class="form-control" wire:model="user_id">
-                    </div>
                     <div class="mb-3 d-flex" hidden>
                         <input style="margin-left: 5%; width: 800px;" type="text" class="form-control" placeholder="Portion Number" wire:model="portion_id" required hidden>
                     </div>

@@ -1,4 +1,4 @@
-<div>
+<div class="container-fluid">
 
     <div class="row mt-4 ">
         <div class="col-4 border border-primary" style="text-align: center">

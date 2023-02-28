@@ -17,8 +17,11 @@ return new class extends Migration
             $table->id();
             $table->unsignedMediumInteger('portion_id');
             $table->unsignedMediumInteger('user_id');
+            $table->unsignedMediumInteger('event_id');
             $table->string('title');
             $table->integer('percentage');
+            $table->boolean('isLink')->default(false);
+            $table->integer('portionLink')->default(null);
             $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->timestamp('updated_at')->default(DB::raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'));
         });

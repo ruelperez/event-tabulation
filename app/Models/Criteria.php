@@ -14,10 +14,15 @@ class Criteria extends Model
         'percentage',
         'isLink',
         'portionLink',
+        'event_id',
     ];
 
     public function portion(){
         return $this->belongsTo(Portion::class);
+    }
+
+    public function event(){
+        return $this->belongsTo(Event::class);
     }
 
     use HasFactory;

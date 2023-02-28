@@ -88,35 +88,30 @@ class ShowTitle extends Component
     }
 
     public function destroy($id){
-        try {
-            $a = Event::find($id)->portion;
-            $b = Event::find($id)->judge;
-            $c = Event::find($id)->candidate;
-            $d = Event::find($id)->criteria;
+        $a = Event::find($id)->portion;
+        $b = Event::find($id)->judge;
+        $c = Event::find($id)->candidate;
+        $d = Event::find($id)->criteria;
 
-            foreach ($a as $as){
-                Portion::find($as->id)->delete();
-            }
-
-            foreach ($b as $bs){
-                Judge::find($bs->id)->delete();
-            }
-
-            foreach ($c as $cs){
-                Candidate::find($cs->id)->delete();
-            }
-
-            foreach ($d as $ds){
-               Criteria::find($ds->id)->delete();
-            }
-
-            Event::find($id)->delete();
-           
-            session()->flash('deleted',"Deleted Successfully!!");
+        foreach ($a as $as){
+            Portion::find($as->id)->delete();
         }
-        catch(\Exception $e){
-            session()->flash('delete_error',"Something goes wrong while deleting!!");
+
+        foreach ($b as $bs){
+            Judge::find($bs->id)->delete();
         }
+
+        foreach ($c as $cs){
+            Candidate::find($cs->id)->delete();
+        }
+
+        foreach ($d as $ds){
+           Criteria::find($ds->id)->delete();
+        }
+
+        Event::find($id)->delete();
+        session()->flash('deleted',"Deleted Successfully!!");
+
     }
 
     public function editTitle($id){

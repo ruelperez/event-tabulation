@@ -15,6 +15,9 @@
                     <div class="mb-3" >
                         <input type="text" class="form-control" wire:model="user_id" hidden>
                     </div>
+                    <div class="mb-3" >
+                        <input type="text" class="form-control" wire:model="event_id" hidden>
+                    </div>
                     <div class="mb-3 d-flex">
                         <input style="margin-left: 5%; width: 800px;" type="text" class="form-control" placeholder="Portion Number" wire:model="portion_id" required hidden>
                     </div>
@@ -45,6 +48,9 @@
                 <form wire:submit.prevent="submit_linkPortion" @if($dd == $shows->id)  @else hidden @endif>
                     <div class="mb-3" >
                         <input type="text" class="form-control" wire:model="user_id" required hidden>
+                    </div>
+                    <div class="mb-3" >
+                        <input type="text" class="form-control" wire:model="event_id" required hidden>
                     </div>
                     <div class="mb-3 d-flex">
                         <input style="margin-left: 5%; width: 800px;" type="text" class="form-control" placeholder="Portion Number" wire:model="portion_id" required hidden>

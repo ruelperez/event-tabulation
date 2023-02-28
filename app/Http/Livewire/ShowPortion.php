@@ -37,7 +37,8 @@ class ShowPortion extends Component
         $this->validate([
             'portion_id' => 'required|integer',
             'title_cri' => 'required',
-            'percentage_cri' => 'required|integer'
+            'percentage_cri' => 'required|integer',
+            'event_id' => 'required',
         ]);
 
         try {
@@ -48,6 +49,7 @@ class ShowPortion extends Component
                 'percentage' => $this->percentage_cri,
                 'isLink' => false,
                 'portionLink' => 0,
+                'event_id' => $this->event_id,
             ]);
 
             $this->percentage_cri = "";
@@ -68,6 +70,7 @@ class ShowPortion extends Component
             'portion_id' => 'required',
             'portionID_selectInput' => 'required',
             'percentage_cri' => 'required|integer',
+            'event_id' => 'required',
         ]);
 
         try {
@@ -78,6 +81,7 @@ class ShowPortion extends Component
                 'percentage' => $this->percentage_cri,
                 'isLink' => true,
                 'portionLink' => $portion_selectInput->id,
+                'event_id' => $this->event_id,
             ]);
 
             $this->percentage_cri = "";
@@ -178,11 +182,12 @@ class ShowPortion extends Component
 
         try {
             $cri->title = $this->title_cri;
-            $cri->percentage = $this->percentage_cri;
             $cri->portion_id = $this->portion_id;
             $cri->percentage = $this->percentage_cri;
             $cri->save();
             session()->flash('criteriaSave',"Successfully Modified");
+            $this->percentage_cri = "";
+            $this->title_cri = "";
         }
         catch (\Exception $e){
             session()->flash('criteriaUnsave',"Failed to Modify");
@@ -216,7 +221,7 @@ class ShowPortion extends Component
             }
             $new->save();
             $this->title = "";
-            $this->numberOfTopCandidate = "";
+            $this->numberOfTopCandidate = "0";
             session()->flash('portionSave',"Successfully Saved");
         }
         catch (\Exception $e){
