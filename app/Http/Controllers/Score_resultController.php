@@ -51,6 +51,6 @@ class Score_resultController extends Controller
     public function getPortion($eventID){
         $rt = Event::find($eventID)->portion;
 
-        return view('selectResult', ['portion_data' => $rt]);
+        return view('selectResult', ['portion_data' => $rt, 'eventNUM' => $eventID]);
     }
 }

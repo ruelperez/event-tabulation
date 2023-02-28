@@ -6,8 +6,9 @@
         <h1 style="color: white; margin-left: 38%; margin-top: 15px; position: absolute">Event Tabulation</h1>
     </div>
 </div>
-<button type="button" class="btn btn-link" onclick="location.href = '/admin/event';" style="margin-left: 58px;"><b>Back to Event List</b></button>
-<button type="button" class="btn btn-link" onclick="location.href = '/admin/result/{{$eventNUM}}';" style="margin-left: 10px;"><b>Result</b></button>
+<button type="button" class="btn btn-success" onclick="location.href = '/admin/event';" style="margin-left: 70px; margin-top: 15px;"><b>Back to Event List</b></button>
+<button type="button" class="btn btn-warning" onclick="location.href = '/admin/result/{{$eventNUM}}';" style="margin-left: 10px; margin-top: 15px; width: 11%;"><b>Result</b></button>
+
 <div id="mySidenav" class="sidenav">
     <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
     <div style=" height: 94px; width: 80%; padding-left: 10px; color: white;">

@@ -1,9 +1,8 @@
 <div>
-    <button type="button" class="btn btn-success" onclick="location.href='/admin/result/{{$eventID}}'" style="margin-top: 50px;margin-left: 2%;  width: 80%;">Result</button> <br>
-{{--    <button type="button" class="btn btn-success" onclick="location.href='/admin/result'" style="margin-top: 10px;margin-left: 5%;  width: 15%;">Result</button>--}}
-    <button class="btn btn-danger" style="margin-left: 1%;margin-top: 30px; width: 80%;" data-bs-toggle="modal" data-bs-target="#exampleModal">Delete All Scores</button>
+    <button type="button" class="btn btn-success" onclick="history.back()" style="width: 10%; margin-left: 74px; height: 40px;">Back</button>
+    <button class="btn btn-danger" style="margin-left: 1%; width: 10%;" data-bs-toggle="modal" data-bs-target="#exampleModals">Delete All Scores</button>
     <!-- Modal -->
-    <div wire:ignore.self class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div wire:ignore.self class="modal fade" id="exampleModals" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
