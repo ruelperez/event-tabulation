@@ -19,7 +19,7 @@
     {{--    @livewire('portion-click')--}}
 </div>
 
-    <div class="border border-primary" style="margin-left: 20%; width: 60%;">
+    <div class="border border-primary" style="margin-left: 20%; width: 60%; margin-top: 15px;">
         <div class="bg-primary text-center pt-2" style="width:97%; height: 50px; margin-left: 3%; margin-top: 50px;"><h4>Event Title</h4></div>
         <span class="btn" data-bs-toggle="modal" data-bs-target="#title_modal" id="boot-icon" class="bi bi-plus-circle-fill" style="font-size: 42px; color: rgb(165, 42, 42);margin-left: 45%;">+</span>
         @livewire('show-title')

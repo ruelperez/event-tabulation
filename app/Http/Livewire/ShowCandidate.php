@@ -90,6 +90,7 @@ class ShowCandidate extends Component
         ];
 
     public function handleCan($imageData){
+        dd($imageData);
         $this->image = $imageData;
         $this->anti++;
     }
@@ -132,7 +133,7 @@ class ShowCandidate extends Component
             'image' => 'required',
         ]);
 
-        $active = User::find(auth()->user()->id)->candidate;
+        $active = Event::find($this->event_id)->candidate;
         foreach ($active as $actives){
             if ($this->can_num == $this->candidate_number){
                 break;

@@ -14,7 +14,7 @@ use Livewire\Component;
 class ShowJudge extends Component
 {
 
-    public $show, $image, $user_id, $judge_number, $event_id, $full_name, $username, $password, $password_confirmation, $is_chairman, $photo;
+    public $show, $image, $user_id, $judge_number, $event_id, $full_name, $username, $password, $judge_num, $IDs, $password_confirmation, $is_chairman, $photo, $anti=1;
 
     public function mount($eventNUM){
         $this->event_id = $eventNUM;
@@ -95,7 +95,13 @@ class ShowJudge extends Component
     protected $listeners = [
         'deleteJudge' => 'destroy',
         'Upload' => 'handle',
+        'fileJud' => 'handleCan',
     ];
+
+    public function handleCan($imageData){
+        $this->image = $imageData;
+        $this->anti++;
+    }
 
     public function destroy($id){
         try {
@@ -130,6 +136,70 @@ class ShowJudge extends Component
         Storage::disk('public')->put($name, $img);
         return $name;
 
+    }
+
+    public function judgeEdit($id){
+        $judge = Judge::find($id);
+        $this->image = $judge->photo;
+        $this->user_id =  $judge->user_id;
+        $this->event_id = $judge->event_id;
+        $this->full_name = $judge->full_name;
+        $this->judge_number = $judge->judge_number;
+        $this->judge_num = $judge->judge_number;
+        $this->username = $judge->username;
+        $this->IDs = $judge->id;
+    }
+
+    public function submit_judgeEdit(){
+        $this->validate([
+            'judge_number' => 'required|integer',
+            'full_name' => 'required',
+            'username' => 'required',
+            'password' => 'required|confirmed',
+            'password_confirmation' => 'required',
+        ]);
+
+        $active = Event::find($this->event_id)->judge;
+        foreach ($active as $actives){
+            if ($this->judge_number == $this->judge_num){
+                break;
+            }
+            elseif ($actives->judge_number == $this->judge_number and $this->judge_num != $this->judge_number){
+                session()->flash('idInputError', 'Input unique candidate number');
+                return;
+            }
+        }
+
+        if ($this->anti != 1){
+            $pic = $this->storeImage();
+        }
+        else{
+            $pic = $this->image;
+        }
+
+        try {
+            $new = Judge::find($this->IDs);
+            $new->user_id = $this->user_id;
+            $new->event_id = $this->event_id;
+            $new->judge_number = $this->judge_number;
+            $new->full_name = $this->full_name;
+            $new->photo = $pic;
+            $new->username = $this->username;
+            $this->password = bcrypt($this->password);
+            $new->password = $this->password;
+            $new->save();
+            $this->anti = 1;
+            $this->full_name = "";
+            $this->image = "";
+            $this->judge_number = "";
+            $this->username = "";
+            $this->password = "";
+            $this->password_confirmation = "";
+            session()->flash('dataAdded',"Successfully Updated Data");
+        }
+        catch (\Exception $e){
+            session()->flash('dataError',"Something goes wrong while Editing!!");
+        }
     }
 
 }

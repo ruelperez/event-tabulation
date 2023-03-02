@@ -4,7 +4,7 @@
         @foreach($show as $shows)
             @include('components.modal_candidate_reg')
             @if($event_id == $shows->event_id)
-                <ul class="list-group">
+                <ul class="list-group" style="width: 70%; margin-left: 15%;">
                     <li class="list-group-item">
                          <img src="{{ asset('storage/'.$shows->photo) }}" height="50" width="50" style="margin-right: 20px;"/>
                                 #{{$shows->candidate_number}} - {{ucfirst($shows->full_name)}}
@@ -18,7 +18,6 @@
 
     @else
      No data
-        @include('components.modal_candidate_editReg')
     @endif
 
 </div>

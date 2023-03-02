@@ -50,10 +50,10 @@
                 <th colspan="3" style="text-align: center; padding-bottom: 18px; font-size: 25px;">{{ucwords($portions->title)}}</th>
                 @foreach($criteria as $criterias)
                     @if($criterias->portion_id == $portions->id)
-                    <th style="text-align: center; width: 500px;" >{{ucwords($criterias->title)}} <br> ({{($criterias->percentage)}}%)</th>
+                    <th style="text-align: center; width: 500px;" >{{ucwords($criterias->title)}}  ({{($criterias->percentage)}}%) <br> 75-100</th>
                     @endif
                 @endforeach
-                <th style="text-align: center; width: 13%;">Total</th>
+                <th style="text-align: center; width: 13%;">Total <br> 75-100</th>
             </tr>
             </thead>
             <tbody>
@@ -332,7 +332,7 @@
             let candidate = [];
             let criteria = [];
             let portion = [];
-console.log(max);
+
             for (let i=1; i <= max; i++){
                 let a = document.getElementById("candidateID"+i).value;
                 let c = document.getElementById("portionID"+i).value;
