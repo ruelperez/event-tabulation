@@ -1,11 +1,10 @@
 <div>
 
-
+    @include('components.modal_judges_reg')
 @if(count($show) > 0)
         @php $v=0; @endphp
     <div>
         @foreach($show as $shows)
-            @include('components.modal_judges_reg')
             @include('components.modal_edit_judge')
             @if($event_id == $shows->event_id)
                 <ul class="list-group" style="width: 70%; margin-left: 15%;">

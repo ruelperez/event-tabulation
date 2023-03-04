@@ -53,12 +53,27 @@
             .sidenav {padding-top: 15px;}
             .sidenav a {font-size: 18px;}
         }
+
+        @media print {
+            #nav,
+            .container-fluid,
+            #print,
+            #save{
+                display: none;
+            }
+
+            .tb{
+               margin-bottom: 650px;
+            }
+        }
+
+
     </style>
 </head>
-<body onload="table()">
+<body onload="table()" id="body">
 
-<div class="d-flex">
-    <span style="font-size:30px;cursor:pointer; width: 5%; text-align: center;padding-top: 20px;" onclick="openNav()">&#9776; </span>
+<div class="d-flex" id="head">
+    <span style="font-size:30px;cursor:pointer; width: 5%; text-align: center;padding-top: 20px;" onclick="openNav()" id="nav">&#9776; </span>
     <div class="container-fluid" style="background-color: darkblue; height: 94px; margin-bottom: 30px;">
 {{--        <h2 style="color: white; margin-left: 38%; margin-top: 15px; position: absolute; font-style: italic"></h2>--}}
     </div>
@@ -809,6 +824,15 @@
         // console.log(top_Can)
         let fv = 1;
         let hn = 0;
+        let op = 0;
+        let yh = 0;
+        let div_body = document.getElementById('divBody');
+        let tbl = document.getElementById('tbl');
+        let n = document.getElementById('count_award').value;
+        let zs = document.getElementById('quantityToRate').value;
+        let ty = 0;
+        let gy=0;
+
         for (let i = 1; i<=count_table; i++){
 
             for(let t = 1; t<=count_can; t++){
@@ -827,14 +851,252 @@
 
                 let rn = rank[t+'_'+i];
                 let row_select = document.getElementById('candidate_row'+i+rn);
-                if (top_Can > 0 && top_Can >= fv){
-                    row_select.style.backgroundColor = "pink";
-                    fv++;
+
+                a();
+
+                function a(){
+                    if (n > gy){
+                        row_select.style.backgroundColor = "#AFEEEE";
+                        let g = document.getElementById('img'+i+rn).src;
+                        let z = document.getElementById('award'+gy).value;
+                        let gh = document.getElementById('fullname'+i+rn).innerText;
+                        let h = document.getElementById('origin'+i+rn).innerText;
+
+                        let w = row_select.cells[0].innerText;
+                        let sa = document.getElementById('divBody');
+                        let p = document.createElement("div");
+                        p.style.backgroundColor = "#AFEEEE";
+                        p.style.width = "40%";
+                        p.style.marginLeft = "30%";
+                        p.style.marginBottom = "15px";
+                        let s = document.createElement("img");
+                        let sp = document.createElement("h2");
+                        let ss = document.createElement("h3");
+                        let pp = document.createElement("h4");
+                        let hp = document.createElement("h5");
+                        let uj = document.createElement("div");
+
+                        uj.style.width = "94%";
+                        uj.style.height = "20px";
+                        uj.style.marginLeft = "3%";
+                        uj.style.marginBottom = "15px";
+                        uj.style.backgroundColor = "darkblue";
+
+                        hp.style.textTransform = "capitalize";
+                        hp.style.textAlign = "center";
+                        hp.innerHTML = h;
+                        pp.style.textTransform = "capitalize";
+                        pp.style.textAlign = "center";
+                        pp.innerHTML = gh;
+                        ss.innerHTML = "Candidate #"+ w;
+                        ss.style.textTransform = "capitalize";
+                        ss.style.textAlign = "center";
+                        sp.innerHTML = z;
+                        sp.style.textTransform = "capitalize";
+                        sp.style.textAlign = "center";
+                        s.style.width = "30%";
+                        s.style.height = "30%";
+                        s.style.borderRadius = "50%";
+                        s.style.marginLeft = "35%";
+                        s.style.marginBottom = "10px";
+                        s.src = g;
+                        p.appendChild(sp);
+                        p.appendChild(s);
+                        p.appendChild(ss);
+                        p.appendChild(pp);
+                        p.appendChild(hp);
+                        sa.appendChild(p);
+                        sa.appendChild(uj);
+                        gy++;
+
+                    }
                 }
-                else if(top_Can == 0 && hn == 0){
-                    row_select.style.backgroundColor = "pink";
-                    hn++;
+
+                b();
+                function b(){
+                    if (top_Can > ty ){
+                        row_select.style.backgroundColor = "#AFEEEE";
+                        let gh = document.getElementById('fullname'+i+rn).innerText;
+                        let g = document.getElementById('img'+i+rn).src;
+                        let w = row_select.cells[0].innerText;
+
+                        let s = document.createElement("img");
+                        let sa = document.getElementById('divBody');
+                        let p = document.createElement("div");
+                        let ss = document.createElement("h2");
+                        let pp = document.createElement("h3");
+                        let uj = document.createElement("div");
+
+
+                        s.style.width = "30%";
+                        s.style.height = "120px";
+                        s.style.marginLeft = "35%";
+                        s.style.marginBottom = "5px";
+                        s.style.borderRadius= "50%"
+                        s.src = g;
+
+                        p.style.width = "40%";
+                        p.style.marginLeft = "30%";
+                        p.style.marginBottom = "70px";
+                        p.style.borderRadius= "50%"
+
+
+
+                        pp.style.textTransform = "capitalize";
+                        pp.style.textAlign = "center";
+                        pp.innerHTML = gh;
+                        ss.innerHTML = "Candidate #"+ w;
+                        ss.style.textTransform = "capitalize";
+                        ss.style.textAlign = "center";
+
+                        p.appendChild(s);
+                        p.appendChild(ss);
+                        p.appendChild(pp);
+                        sa.appendChild(p);
+                        ty++;
+                    }
                 }
+
+                c();
+                function c(){
+                    if (top_Can == 0 && zs == 0 && n == 0 && yh == 0 ){
+                        row_select.style.backgroundColor = "#AFEEEE";
+                        yh++;
+                    }
+                }
+
+                ds();
+                function ds(){
+                    if (top_Can == 0 && zs > 0 && n == 0 && hn == 0){
+                        row_select.style.backgroundColor = "#AFEEEE";
+                        hn++;
+                    }
+                }
+
+
+
+
+                // if (top_Can == 0 && zs == 0 && n > op){
+                //     row_select.style.backgroundColor = "#AFEEEE";
+                //         let g = document.getElementById('img'+i+rn).src;
+                //         let z = document.getElementById('award'+op).value;
+                //         let gh = document.getElementById('fullname'+i+rn).innerText;
+                //         let h = document.getElementById('origin'+i+rn).innerText;
+                //
+                //         let w = row_select.cells[0].innerText;
+                //         let sa = document.getElementById('divBody');
+                //         let p = document.createElement("div");
+                //         p.style.backgroundColor = "#AFEEEE";
+                //         p.style.width = "40%";
+                //         p.style.marginLeft = "30%";
+                //         p.style.marginBottom = "100px";
+                //         let s = document.createElement("img");
+                //         let sp = document.createElement("h1");
+                //         let ss = document.createElement("h2");
+                //         let pp = document.createElement("h3");
+                //         let hp = document.createElement("h4");
+                //         hp.style.textTransform = "capitalize";
+                //         hp.style.textAlign = "center";
+                //         hp.innerHTML = h;
+                //         pp.style.textTransform = "capitalize";
+                //         pp.style.textAlign = "center";
+                //         pp.innerHTML = gh;
+                //         ss.innerHTML = "Candidate #"+ w;
+                //         ss.style.textTransform = "capitalize";
+                //         ss.style.textAlign = "center";
+                //         sp.innerHTML = z;
+                //         sp.style.textTransform = "capitalize";
+                //         sp.style.textAlign = "center";
+                //         s.style.width = "30%";
+                //         s.style.height = "30%";
+                //         s.style.borderRadius = "50%";
+                //         s.style.marginLeft = "35%";
+                //         s.style.marginBottom = "30px";
+                //         s.src = g;
+                //         p.appendChild(sp);
+                //         p.appendChild(s);
+                //         p.appendChild(ss);
+                //         p.appendChild(pp);
+                //         p.appendChild(hp);
+                //         sa.appendChild(p);
+                //     op++;
+                //
+                // }
+                // else if (top_Can == 0 && zs == 0 && n == 0 && yh == 0){
+                //     row_select.style.backgroundColor = "#AFEEEE";
+                //     yh++;
+                // }
+                // else if (top_Can > 0 && zs == 0 && top_Can >= fv){
+                //     row_select.style.backgroundColor = "#AFEEEE";
+                //     fv++;
+                //
+                //     let sa = document.getElementById('divBody');
+                //     let p = document.createElement("div");
+                //     let fr = document.createElement("h4");
+                //     let fs = document.createElement("h3");
+                //     let io = row_select.cells[0].innerText;
+                //     let gh = document.getElementById('fullname'+i+rn).innerText;
+                //     fs.style.textTransform = "capitalize";
+                //     fs.style.textAlign = "center";
+                //     fs.innerHTML = "Candidate #"+io;
+                //     fr.style.textTransform = "capitalize";
+                //     fr.style.textAlign = "center";
+                //     fr.innerHTML = gh;
+                //     p.appendChild(fs);
+                //     p.appendChild(fr);
+                //     sa.appendChild(p);
+                //
+                // }
+                // else if(top_Can == 0 && zs > 0 && n > hn){
+                //     row_select.style.backgroundColor = "aquamarine";
+                //     let g = document.getElementById('img'+i+rn).src;
+                //     let z = document.getElementById('award'+hn).value;
+                //     let gh = document.getElementById('fullname'+i+rn).innerText;
+                //     let h = document.getElementById('origin'+i+rn).innerText;
+                //
+                //     let w = row_select.cells[0].innerText;
+                //     let sa = document.getElementById('divBody');
+                //     let p = document.createElement("div");
+                //     p.style.backgroundColor = "#AFEEEE";
+                //     p.style.width = "40%";
+                //     p.style.marginLeft = "30%";
+                //     p.style.marginBottom = "100px";
+                //     let s = document.createElement("img");
+                //     let sp = document.createElement("h1");
+                //     let ss = document.createElement("h2");
+                //     let pp = document.createElement("h3");
+                //     let hp = document.createElement("h4");
+                //     hp.style.textTransform = "capitalize";
+                //     hp.style.textAlign = "center";
+                //     hp.innerHTML = h;
+                //     pp.style.textTransform = "capitalize";
+                //     pp.style.textAlign = "center";
+                //     pp.innerHTML = gh;
+                //     ss.innerHTML = "Candidate #"+ w;
+                //     ss.style.textTransform = "capitalize";
+                //     ss.style.textAlign = "center";
+                //     sp.innerHTML = z;
+                //     sp.style.textTransform = "capitalize";
+                //     sp.style.textAlign = "center";
+                //     s.style.width = "30%";
+                //     s.style.height = "30%";
+                //     s.style.borderRadius = "50%";
+                //     s.style.marginLeft = "35%";
+                //     s.style.marginBottom = "30px";
+                //     s.src = g;
+                //     p.appendChild(sp);
+                //     p.appendChild(s);
+                //     p.appendChild(ss);
+                //     p.appendChild(pp);
+                //     p.appendChild(hp);
+                //     sa.appendChild(p);
+                //     hn++;
+                // }
+                // else if(top_Can == 0 && zs > 0 && n == 0 && ty==0){
+                //     row_select.style.backgroundColor = "aquamarine";
+                //     ty++;
+                // }
+
                 let node = document.createElement("td");
                 let textnode = document.createTextNode(t+scr);
                 node.appendChild(textnode);

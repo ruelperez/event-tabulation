@@ -29,9 +29,8 @@
             @php $vp = 1; $sp = 1; @endphp
             @foreach($portion as $portions)
                 @php $juy=0; @endphp
-                <li wire:ignore.self class="list-group-item btn" style=" @if($portions->event_id == $IDevent) @else display: none; @endif background-color: @if($sp == 1) aquamarine @else none @endif ; " id="style{{$sp}}" wire:click="ptnClick({{$portions->id}})" onclick="portionFetch({{$sp++}})">
+                <li wire:ignore.self class="list-group-item btn" style=" @if($portions->event_id == $IDevent) @else display: none; @endif background-color: @if($sp == 1) aquamarine @else none @endif ; @for($tg=0; $tg<count($alas); $tg++) @if($alas[$tg] == $portions->id) @php $juy++; @endphp @endif @endfor @if($juy > 0) display: none;  @endif" id="style{{$sp}}" wire:click="ptnClick({{$portions->id}})" onclick="portionFetch({{$sp++}})">
                     {{ucwords($portions->title)}}
-{{--                    @for($tg=0; $tg<count($alas); $tg++) @if($alas[$tg] == $portions->id) @php $juy++; @endphp @endif @endfor @if($juy > 0) display: none;  @endif--}}
                 </li>
                 <input type="text" value="{{$vp++}}"  hidden>
             @endforeach

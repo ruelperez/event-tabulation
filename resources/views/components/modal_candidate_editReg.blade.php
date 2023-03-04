@@ -1,4 +1,6 @@
-<div wire:ignore.self class="modal fade" id="can_reg" tabindex="-1" aria-labelledby="insertModalLabel" aria-hidden="true">
+
+{{--edit candidate--}}
+<div wire:ignore.self class="modal fade" id="editCandidate{{$v}}" tabindex="-1" aria-labelledby="insertModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -6,7 +8,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form wire:submit.prevent="submit" style="margin-top: 10px;">
+                <form wire:submit.prevent="edit_submit" style="margin-top: 10px;">
                     <div class="mb-3" hidden>
                         <input type="text" class="form-control" wire:model="event_id" placeholder="Event Title Number">
                     </div>
@@ -27,10 +29,13 @@
                         <input type="text" class="form-control" wire:model="origin" placeholder="Address" required>
                     </div>
                     <div class="mb-3">
-                        <img src={{$image}} width="200">
-
+                        @if($anti == 1)
+                            <img src="{{asset('storage/'.$image)}}" width="200">
+                        @else
+                            <img src={{$image}} width="200">
+                        @endif
                         <label>Photo</label>
-                        <input type="file" id="image" wire:change="$emit('fileChoosen')" class="form-control">
+                        <input type="file" id="editcan{{$v}}" wire:change="$emit('editCandidate',{{$v}})" class="form-control">
                     </div>
                     <div class="modal-footer">
                         @if(session()->has('dataAdded'))

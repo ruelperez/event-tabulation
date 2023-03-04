@@ -90,7 +90,6 @@ class ShowCandidate extends Component
         ];
 
     public function handleCan($imageData){
-        dd($imageData);
         $this->image = $imageData;
         $this->anti++;
     }

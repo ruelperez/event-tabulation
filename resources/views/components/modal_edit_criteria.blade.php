@@ -1,4 +1,4 @@
-<div wire:ignore.self class="modal" tabindex="-1" role="dialog" id="editCriteria{{$m}}">
+<div wire:ignore.self class="modal" tabindex="-1" role="dialog" id="editCriteria{{$shows_cri->id}}{{$shows->id}}">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -28,7 +28,7 @@
                                 {{ session('criteriaUnsave') }}
                             </div>
                         @endif
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" wire:click="close_m">Close</button>
                         <button type="submit" class="btn btn-primary" >Submit</button>
                     </div>
                 </form>

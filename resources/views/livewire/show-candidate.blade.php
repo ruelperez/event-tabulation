@@ -1,8 +1,9 @@
 <div>
+    @include('components.modal_candidate_reg')
     @if(count($show) > 0)
         @php $v=0; @endphp
         @foreach($show as $shows)
-            @include('components.modal_candidate_reg')
+            @include('components.modal_candidate_editReg')
             @if($event_id == $shows->event_id)
                 <ul class="list-group" style="width: 70%; margin-left: 15%;">
                     <li class="list-group-item">

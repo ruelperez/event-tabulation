@@ -7,10 +7,10 @@
                 @endif
             @endif
         @endforeach
-    <button type="button" onclick="printTable({{$table_id}})" class="btn btn-primary" style="margin-left: 80%;width: 7%;">Print</button>  <button type="button" onclick="saveImage({{$table_id}})" class="btn btn-warning" style="width: 7%;">Save</button>
+    <button id="save" type="button" onclick="saveImage({{$table_id}})" class="btn btn-warning" style="width: 7%; margin-left: 89%">Save</button>
     <a id="save-image{{$table_id}}" >
-        <div  id="table{{$table_id}}">
-            <table class="table table-bordered" style="margin-top: 15px;">
+        <div  id="table{{$table_id}}" class="tb">
+            <table class="table table-bordered" style="margin-top: 15px;" id="tbl">
                 <thead>
                 <tr style="text-align: center">
                     <td colspan="3">
@@ -41,10 +41,10 @@
                                     <b>{{$candidates->candidate_number}}</b>
                                 </td>
                                 <td>
-                                    <img src="{{ asset('storage/'.$candidates->photo) }}" height="50" width="50">
+                                    <img src="{{ asset('storage/'.$candidates->photo) }}" height="50" width="50" id="img{{$counter}}{{$final_average_id}}">
                                 </td>
                                 <td style="width:300px; font-size: 15px;">
-                                    <b>{{ucwords(ucwords($candidates->full_name))}}</b> <br> <p style="font-size: 0.8em; ">{{ucwords($candidates->origin)}}</p>
+                                    <b id="fullname{{$counter}}{{$final_average_id}}">{{ucwords(ucwords($candidates->full_name))}}</b> <br> <p style="font-size: 0.8em; " id="origin{{$counter}}{{$final_average_id}}">{{ucwords($candidates->origin)}}</p>
                                 </td>
                                 @php $rg=1; @endphp
                                 @foreach($judge as $judges)
@@ -82,6 +82,11 @@
                             @php $final_average = 0; $u++; @endphp
                         @endforeach
                         <input type="text" hidden id="top_CAN" value="{{$portion->numberOfTopCandidate}}">
+                        <input type="text" hidden id="quantityToRate" value="{{$quantity}}">
+                        <input type="text" hidden id="count_award" value="{{count($award)}}">
+                        @for($ng=0; $ng<count($award); $ng++)
+                            <input type="text" hidden id="award{{$ng}}" value="{{$award[$ng]}}">
+                        @endfor
                     @else
                         @foreach($candidate as $candidates)
                             <tr style="text-align: center;" id="candidate_row{{$counter}}{{$final_average_id}}">
@@ -89,10 +94,10 @@
                                     <b>{{$candidates->candidate_number}}</b>
                                 </td>
                                 <td>
-                                    <img src="{{ asset('storage/'.$candidates->photo) }}" height="50" width="50">
+                                    <img src="{{ asset('storage/'.$candidates->photo) }}" height="50" width="50" id="img{{$counter}}{{$final_average_id}}">
                                 </td>
                                 <td style="width:300px; font-size: 15px;">
-                                    <b>{{ucwords(ucwords($candidates->full_name))}}</b> <br> <p style="font-size: 0.8em; ">{{ucwords($candidates->origin)}}</p>
+                                    <b id="fullname{{$counter}}{{$final_average_id}}">{{ucwords(ucwords($candidates->full_name))}}</b> <br> <p style="font-size: 0.8em; " id="origin{{$counter}}{{$final_average_id}}">{{ucwords($candidates->origin)}}</p>
                                 </td>
                                 @php $rg=1; @endphp
                                 @foreach($judge as $judges)
@@ -130,6 +135,11 @@
                             @php $final_average = 0; $u++; @endphp
                         @endforeach
                         <input type="text" hidden id="top_CAN" value="{{$portion->numberOfTopCandidate}}">
+                        <input type="text" hidden id="quantityToRate" value="{{$quantity}}">
+                        <input type="text" hidden id="count_award" value="{{count($award)}}">
+                        @for($ng=0; $ng<count($award); $ng++)
+                            <input type="text" hidden id="award{{$ng}}" value="{{$award[$ng]}}">
+                        @endfor
 
                     @endif
                 @else
@@ -139,10 +149,10 @@
                                 <b>{{$candidates->candidate_number}}</b>
                             </td>
                             <td>
-                                <img src="{{ asset('storage/'.$candidates->photo) }}" height="50" width="50">
+                                <img src="{{ asset('storage/'.$candidates->photo) }}" height="50" width="50" id="img{{$counter}}{{$final_average_id}}">
                             </td>
                             <td style="width:300px; font-size: 15px;">
-                                <b>{{ucwords(ucwords($candidates->full_name))}}</b> <br> <p style="font-size: 0.8em; ">{{ucwords($candidates->origin)}}</p>
+                                <b id="fullname{{$counter}}{{$final_average_id}}">{{ucwords(ucwords($candidates->full_name))}}</b> <br> <p style="font-size: 0.8em; " id="origin{{$counter}}{{$final_average_id}}">{{ucwords($candidates->origin)}}</p>
                             </td>
                             @php $rg=1; @endphp
                             @foreach($judge as $judges)
@@ -180,6 +190,14 @@
                         @php $final_average = 0; $u++; @endphp
                     @endforeach
                     <input type="text" hidden id="top_CAN" value="{{$portion->numberOfTopCandidate}}">
+                    <input type="text" hidden id="quantityToRate" value="{{$quantity}}">
+                    <input type="text" hidden id="count_award" value="{{count($award)}}">
+                    @for($ng=0; $ng<count($award); $ng++)
+                        <input type="text" hidden id="award{{$ng}}" value="{{$award[$ng]}}">
+                    @endfor
+
+
+
                 @endif
                 </tbody>
             </table>
@@ -198,9 +216,14 @@
                 </div>
 
         </div>
-    </a>
+
         @php $cnt++; @endphp
         <input hidden type="text" id="count_average" value="{{$average_id}}">
         <input hidden type="text" id="count_table" value="{{$counter = $counter-1}}">
 
 
+    <div id="divBody" style="width: 100%;">
+
+    </div>
+
+    </a>

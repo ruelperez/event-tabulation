@@ -35,7 +35,7 @@ class ShowPortion extends Component
 
     public function submit_cri(){
         $this->validate([
-            'portion_id' => 'required|integer',
+            'portion_id' => 'required',
             'title_cri' => 'required',
             'percentage_cri' => 'required|integer',
             'event_id' => 'required',
@@ -187,6 +187,7 @@ class ShowPortion extends Component
 
     public function submit_editCri(){
         $this->validate(['title_cri' => 'required']);
+
         $cri = Criteria::find($this->criID);
 
         try {
@@ -255,7 +256,9 @@ class ShowPortion extends Component
         $this->dd = 0;
     }
 
-    public function submit_portion_edit(){
-
+    public function close_m(){
+        $this->portion_id = "";
+        $this->title_cri = "";
+        $this->percentage_cri = "";
     }
 }

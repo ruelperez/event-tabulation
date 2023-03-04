@@ -18,6 +18,9 @@
                 <li wire:ignore.self class="list-group-item btn" style="@if($regis == "criteria") background-color: aquamarine; @endif" onclick="location.href = '/admin/registration/criteria/{{$eventNUM}}';">
                     Criteria
                 </li>
+                <li wire:ignore.self class="list-group-item btn" style="@if($regis == "award") background-color: aquamarine; @endif" onclick="location.href = '/admin/registration/award/{{$eventNUM}}';">
+                    Award
+                </li>
 
             </ul>
 {{--            <h4 style="margin-top: 10px; "><i><b>{{ucwords($event_data->title)}}</b></i></h4>--}}
@@ -38,11 +41,18 @@
                 @livewire('show-judge', ['eventNUM' => $eventNUM])
             </div>
 
-            <div style=" @if($regis == 'candidate') @else display: none @endif ">
+            <div style=" @if($regis == 'candidate') @else display: none @endif; ">
                 <div class="bg-primary text-center pt-2" style="width:100%; height: 50px;"><h4>Candidate Registration</h4></div>
                 <span class="btn" data-bs-toggle="modal" data-bs-target="#can_reg" class="bi bi-plus-circle-fill" style="font-size: 42px; color: rgb(165, 42, 42);margin-left: 45%;">+</span>
                 @include('components.message_candidate')
                 @livewire('show-candidate', ['eventNUM' => $eventNUM])
+            </div>
+
+            <div style=" @if($regis == 'award') @else display: none @endif ">
+                <div class="bg-primary text-center pt-2" style="width:100%; height: 50px;"><h4>Title Award</h4></div>
+{{--                <span class="btn" data-bs-toggle="modal" data-bs-target="#award_reg" class="bi bi-plus-circle-fill" style="font-size: 42px; color: rgb(165, 42, 42);margin-left: 45%;">+</span>--}}
+{{--                @include('components.message_award')--}}
+                @livewire('title-award', ['eventNUM' => $eventNUM])
             </div>
 
             @include('components.message_portion')

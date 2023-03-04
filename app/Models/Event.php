@@ -42,5 +42,9 @@ class Event extends Model
         return $this->hasMany(Criteria::class);
     }
 
+    public function award(){
+        return $this->hasMany(Award::class);
+    }
+
     use HasFactory;
 }

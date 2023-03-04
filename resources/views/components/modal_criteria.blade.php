@@ -1,5 +1,5 @@
 
-<div wire:ignore.self class="modal" tabindex="-1" role="dialog" id="criteria{{$n}}" >
+<div wire:ignore.self class="modal" tabindex="-1" role="dialog" id="criteria" >
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -83,7 +83,7 @@
                             </div>
                         @endif
 
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" wire:click="close_m">Close</button>
                         <button type="submit" class="btn btn-primary" >Submit</button>
                     </div>
                 </form>

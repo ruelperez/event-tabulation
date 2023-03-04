@@ -36,5 +36,9 @@ class Portion extends Model
         return $this->hasMany(Extra_toplist::class);
     }
 
+    public function award(){
+        return $this->hasMany(Award::class);
+    }
+
     use HasFactory;
 }

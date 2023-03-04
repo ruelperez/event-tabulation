@@ -21,6 +21,7 @@ class Score_resultController extends Controller
         $criteria = Criteria::all();
         $toplist = DB::table('toplists')->orderBy('result','desc')->get();
         $rank_data = [];
+        $ard = [];
 
         if ($portion->numberOfTopCandidate > 0){
 
@@ -43,7 +44,12 @@ class Score_resultController extends Controller
 
         }
 
+        $award = Portion::find($porID)->award;
+        foreach ($award as $awards){
+            $ard[]= $awards->award_name;
+        }
 
+        $toRate = Portion::find($porID)->numberOfCandidateToRate;
         $final = 0;
         $final_average = 0;
         $final_average_id = 1;
@@ -51,7 +57,7 @@ class Score_resultController extends Controller
         $counter =1;
         $u = 1;
 
-        return view('resultScore.result_score', ['rankData' => $rank_data, 'u' => $u, 'counter' => $counter, 'table_id' => $table_id, 'final_average_id' => $final_average_id, 'final_average' => $final_average, 'final' => $final, 'portion' => $portion, 'judge' => $judge, 'candidate' => $candidate, 'rating' => $rating, 'criteria' => $criteria]);
+        return view('resultScore.result_score', ['quantity' => $toRate, 'award' => $ard, 'rankData' => $rank_data, 'u' => $u, 'counter' => $counter, 'table_id' => $table_id, 'final_average_id' => $final_average_id, 'final_average' => $final_average, 'final' => $final, 'portion' => $portion, 'judge' => $judge, 'candidate' => $candidate, 'rating' => $rating, 'criteria' => $criteria]);
     }
 
     public function getPortion($eventID){

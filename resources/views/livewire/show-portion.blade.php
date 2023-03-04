@@ -26,27 +26,26 @@
     <div style=" @if($imbeds == "criteria") @else display: none @endif ">
         <div class="bg-primary text-center pt-2" style="width:97%; height: 50px;"><h4>Criteria</h4></div>
 
-            @php $n=0; $m=0; @endphp
-
+            @php $m=0; @endphp
+        @include('components.modal_criteria')
             @foreach($show as $shows)
                 @php $total=0; @endphp
-                @include('components.modal_criteria')
                 @if($event_id == $shows->event_id)
                     <table class="table table-bordered border-primary" style="width: 47%; margin-right: 10px; margin-left: 15px; display: inline-block; margin-top: 10px;">
                         <thead>
                             <tr style="text-align: center;">
                                 <th colspan="2" style="padding: 10px 30px; background-color: whitesmoke">{{ucwords($shows->title)}}</th>
-                                <th colspan="2" data-bs-toggle="modal" data-bs-target="#criteria{{$n++}}" wire:click="table({{$shows->id}})" style="cursor: pointer; font-size: 25px;">+</th>
+                                <th colspan="2" data-bs-toggle="modal" data-bs-target="#criteria" wire:click="table({{$shows->id}})" style="cursor: pointer; font-size: 25px;">+</th>
                             </tr>
                         </thead>
 
                         @foreach($show_cri as $shows_cri)
-                            @include('components.modal_edit_criteria')
                             @if($shows->id == $shows_cri->portion_id)
+                                @include('components.modal_edit_criteria')
                             <tr>
                                 <td style="width: 300px;">{{ucfirst($shows_cri->title)}}</td>
                                 <td style="width: 100px;">{{ucfirst($shows_cri->percentage.'%')}}</td>
-                                <td><img src="{{url('/image/edit.png')}}" width="18" height="18" wire:click="edit_cri({{$shows_cri->id}},{{$shows->id}})" data-bs-toggle="modal" data-bs-target="#editCriteria{{$m++}}" style="cursor: pointer"></td>
+                                <td><img src="{{url('/image/edit.png')}}" width="18" height="18" wire:click="edit_cri({{$shows_cri->id}},{{$shows->id}})" data-bs-toggle="modal" data-bs-target="#editCriteria{{$shows_cri->id}}{{$shows->id}}" style="cursor: pointer"></td>
                                 <td><img src="{{url('/image/delete.png')}}" width="20" height="20" wire:click="delete_cri({{$shows_cri->id}})" style="cursor: pointer;"></td>
                             </tr>
                                 @php $total += $shows_cri->percentage @endphp
