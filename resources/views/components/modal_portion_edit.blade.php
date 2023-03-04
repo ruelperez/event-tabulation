@@ -20,9 +20,15 @@
                     </div>
 
                     @if($numberOfTopCandidate != 0)
-                        <label>Number of Candidate to be Rate</label> <br>
-                        <label>Top</label> <input type="text" wire:model="numberOfTopCandidate">
+                        <label>Number of Top List</label> <br>
+                        <input type="text" wire:model="numberOfTopCandidate">
                         @error('numberOfTopCandidate') <span style="color: red; margin-left: 45%;">{{ $message}}</span> @enderror
+                    @endif
+
+                    @if($numberOfCandidate != 0)
+                        <label>Number of Candidate to be Rate</label> <br>
+                        <input type="text" wire:model="numberOfCandidate">
+                        @error('numberOfCandidate') <span style="color: red; margin-left: 45%;">{{ $message}}</span> @enderror
                     @endif
 
                     <div class="modal-footer">

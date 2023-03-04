@@ -3,6 +3,7 @@
 namespace App\Http\Livewire;
 
 use App\Models\Event;
+use App\Models\Extra_toplist;
 use App\Models\Judge;
 use App\Models\Rating;
 use App\Models\Toplist;
@@ -30,6 +31,16 @@ class DeleteScore extends Component
             Toplist::find($ios->id)->delete();
         }
 
+        $a = Event::find($eventID)->toplist;
+        $b = Event::find($eventID)->extra_toplist;
+
+        foreach ($a as $as){
+            Toplist::find($as->id)->delete();
+        }
+
+        foreach ($b as $bs){
+            Extra_toplist::find($bs->id)->delete();
+        }
 
         $tt = Event::find($eventID)->judge;
         foreach ($tt as $tts){

@@ -11,6 +11,7 @@ class Portion extends Model
         'event_id',
         'user_id',
         'title',
+        'numberOfCandidateToRate',
         'numberOfTopCandidate',
         'description'
     ];
@@ -29,6 +30,10 @@ class Portion extends Model
 
     public function event(){
         return $this->belongsTo(Event::class);
+    }
+
+    public function extra_toplist(){
+        return $this->hasMany(Extra_toplist::class);
     }
 
     use HasFactory;

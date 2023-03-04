@@ -6,8 +6,10 @@ namespace App\Http\Livewire;
 use App\Models\Candidate;
 use App\Models\Criteria;
 use App\Models\Event;
+use App\Models\Extra_toplist;
 use App\Models\Judge;
 use App\Models\Portion;
+use App\Models\Toplist;
 use App\Models\User;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -92,6 +94,8 @@ class ShowTitle extends Component
         $b = Event::find($id)->judge;
         $c = Event::find($id)->candidate;
         $d = Event::find($id)->criteria;
+        $e = Event::find($id)->toplist;
+        $f = Event::find($id)->extra_toplist;
 
         foreach ($a as $as){
             Portion::find($as->id)->delete();
@@ -107,6 +111,14 @@ class ShowTitle extends Component
 
         foreach ($d as $ds){
            Criteria::find($ds->id)->delete();
+        }
+
+        foreach ($e as $es){
+            Toplist::find($es->id)->delete();
+        }
+
+        foreach ($f as $fs){
+            Extra_toplist::find($fs->id)->delete();
         }
 
         Event::find($id)->delete();

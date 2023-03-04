@@ -20,11 +20,19 @@
                         <input type="text" class="form-control" id="id_title" placeholder="Portion Name" wire:model="title" required>
                     </div>
 
+                    <input type="checkbox" value="2" wire:model="checkTop">
+                    <label> Number of Top List</label><br>
+                    @if($checkTop == 2)
+                        <input type="text" wire:model="numberOfTopCandidate">
+                        @error('numberOfTopCandidate') <span style="color: red; margin-left: 45%;">{{ $message}}</span> @enderror
+                        <br>
+                    @endif
+
                     <input type="checkbox" value="1" wire:model="checkbox">
-                    <label> Number of top candidate to be rate</label><br>
+                    <label> Number of candidate to be rate</label><br>
                     @if($checkbox == 1)
-                    <label>Top</label> <input type="text" wire:model="numberOfTopCandidate">
-                    @error('numberOfTopCandidate') <span style="color: red; margin-left: 45%;">{{ $message}}</span> @enderror
+                    <input type="text" wire:model="numberOfCandidate">
+                    @error('numberOfCandidate') <span style="color: red; margin-left: 45%;">{{ $message}}</span> @enderror
                     @endif
 
                     <div class="modal-footer">

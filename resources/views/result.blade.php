@@ -63,7 +63,7 @@
 {{--        <h2 style="color: white; margin-left: 38%; margin-top: 15px; position: absolute; font-style: italic"></h2>--}}
     </div>
 </div>
-<button type="button" class="btn btn-success" onclick="history.back()" style="width: 10%; margin-left: 65px; height: 40px;">Back</button>
+
 <div id="mySidenav" class="sidenav">
     <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
     <div style=" height: 94px; width: 80%; padding-left: 10px; color: white;">
@@ -805,6 +805,10 @@
         let za =1;
         let scr;
         let cge = [];
+        let top_Can = document.getElementById('top_CAN').value;
+        // console.log(top_Can)
+        let fv = 1;
+        let hn = 0;
         for (let i = 1; i<=count_table; i++){
 
             for(let t = 1; t<=count_can; t++){
@@ -823,6 +827,14 @@
 
                 let rn = rank[t+'_'+i];
                 let row_select = document.getElementById('candidate_row'+i+rn);
+                if (top_Can > 0 && top_Can >= fv){
+                    row_select.style.backgroundColor = "pink";
+                    fv++;
+                }
+                else if(top_Can == 0 && hn == 0){
+                    row_select.style.backgroundColor = "pink";
+                    hn++;
+                }
                 let node = document.createElement("td");
                 let textnode = document.createTextNode(t+scr);
                 node.appendChild(textnode);

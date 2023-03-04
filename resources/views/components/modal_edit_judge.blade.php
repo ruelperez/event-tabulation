@@ -61,7 +61,7 @@
                                 {{ session('dataError') }}
                             </div>
                         @endif
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" wire:click="reset_form">Close</button>
                         <button type="submit" class="btn btn-primary" >Submit</button>
                     </div>
                 </form>

@@ -29,8 +29,9 @@
             @php $vp = 1; $sp = 1; @endphp
             @foreach($portion as $portions)
                 @php $juy=0; @endphp
-                <li wire:ignore.self class="list-group-item btn" style=" @if($portions->event_id == $IDevent) @else display: none; @endif background-color: @if($sp == 1) aquamarine @else none @endif ; @for($tg=0; $tg<count($alas); $tg++) @if($alas[$tg] == $portions->id) @php $juy++; @endphp @endif @endfor @if($juy > 0) display: none;  @endif" id="style{{$sp}}" wire:click="ptnClick({{$portions->id}})" onclick="portionFetch({{$sp++}})">
+                <li wire:ignore.self class="list-group-item btn" style=" @if($portions->event_id == $IDevent) @else display: none; @endif background-color: @if($sp == 1) aquamarine @else none @endif ; " id="style{{$sp}}" wire:click="ptnClick({{$portions->id}})" onclick="portionFetch({{$sp++}})">
                     {{ucwords($portions->title)}}
+{{--                    @for($tg=0; $tg<count($alas); $tg++) @if($alas[$tg] == $portions->id) @php $juy++; @endphp @endif @endfor @if($juy > 0) display: none;  @endif--}}
                 </li>
                 <input type="text" value="{{$vp++}}"  hidden>
             @endforeach
@@ -39,7 +40,7 @@
 
     </div>
 
-    @php $r=1; $l=1; $jk=1;  @endphp
+    @php $r=1; $l=1; $jk=1; $jas=0; $dp=0; @endphp
     @foreach($portion as $portions)
 
     <form wire:ignore.self id="formFetch{{$r}}" style="margin-left: 20px;display: @if($r == 1) block @else none  @endif ">
@@ -57,12 +58,10 @@
             </tr>
             </thead>
             <tbody>
-                @if($portions->numberOfTopCandidate > 0)
+                @if($portions->numberOfCandidateToRate > 0)
                     @if($rank != null )
                         @if(isset($rank))
-                            @php $cnt = 1; @endphp
-                            @foreach($rank as $candidates)
-                                @if($cnt <= $portions->numberOfTopCandidate)
+                            @foreach($litop[$dp] as $candidates)
                                     <tr>
                                         <th style="text-align: center; width: 200px; font-size: 20px; padding-top: 23px;" id="we">{{$candidates->candidate_number}}</th>
                                         <td><img src="{{ asset('storage/'.$candidates->photo) }}" height="70" width="70"/></td>
@@ -85,14 +84,13 @@
                                         <input type="text" hidden value="{{$z++}}">
                                         <input type="text" hidden value="{{$u=1}}">
                                     </tr>
-                                    @php $cnt++; @endphp
-                                @endif
                             @endforeach
+                            @php $jas++; $dp++; @endphp
                         @endif
                     @else
                         @php $cnt = 1; @endphp
                         @foreach($candidate as $candidates)
-                            @if($cnt <= $portions->numberOfTopCandidate)
+                            @if($cnt <= $portions->numberOfCandidateToRate)
                                 <tr>
                                     <th style="text-align: center; width: 200px; font-size: 20px; padding-top: 23px;" id="we">{{$candidates->candidate_number}}</th>
                                     <td><img src="{{ asset('storage/'.$candidates->photo) }}" height="70" width="70"/></td>

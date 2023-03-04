@@ -14,6 +14,9 @@ class Event extends Model
         'user_id',
     ];
 
+    public function extra_toplist(){
+        return $this->hasMany(Extra_toplist::class);
+    }
 
     public function judge(){
         return $this->hasMany(Judge::class);

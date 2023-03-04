@@ -8,6 +8,7 @@ use App\Models\User;
 use http\Env\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use Illuminate\Validation\Rule;
 use Intervention\Image\ImageManagerStatic;
 use Livewire\Component;
 
@@ -58,8 +59,8 @@ class ShowJudge extends Component
         $this->validate([
             'judge_number' => 'required|integer',
             'full_name' => 'required',
-            'username' => 'required',
-            'password' => 'required|confirmed',
+            'username' => ['required', Rule::unique('judges','username')],
+            'password' => 'required|confirmed|min:5',
             'password_confirmation' => 'required'
         ]);
 

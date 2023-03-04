@@ -15,24 +15,30 @@ class Score_resultController extends Controller
 {
     public function getData($porID){
         $portion = Portion::find($porID);
-
         $judge = Event::find($portion->event_id)->judge;
         $candidate = Event::find($portion->event_id)->candidate;
         $rating = Rating::all();
         $criteria = Criteria::all();
         $toplist = DB::table('toplists')->orderBy('result','desc')->get();
+        $rank_data = [];
 
-        if (count($toplist) <= 0){
-            $rank_data = 0;
-        }
-        else{
+        if ($portion->numberOfTopCandidate > 0){
 
-            foreach ($toplist as $toplists){
-                $ran[] = $toplists->id;
+            if (count($toplist) <= 0){
+                $rank_data = 0;
             }
+            else{
 
-            for ($n = 0; $n<count($ran); $n++){
-                $rank_data[] = Toplist::find($ran[$n])->candidate;
+                foreach ($toplist as $toplists){
+                    if ($toplists->portion_id == $porID){
+                        $ran[] = $toplists->id;
+                    }
+                }
+
+                for ($n = 0; $n<count($ran); $n++){
+                    $rank_data[] = Toplist::find($ran[$n])->candidate;
+                }
+
             }
 
         }

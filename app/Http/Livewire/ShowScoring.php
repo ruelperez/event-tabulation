@@ -5,6 +5,7 @@ namespace App\Http\Livewire;
 use App\Models\Candidate;
 use App\Models\Criteria;
 use App\Models\Event;
+use App\Models\Extra_toplist;
 use App\Models\Judge;
 use App\Models\Portion;
 use App\Models\Rating;
@@ -16,7 +17,7 @@ use Livewire\Component;
 
 class ShowScoring extends Component
 {
-    public $event, $IDevent, $vt=1, $judge_profile, $try,$candidate, $portion, $criteria, $ids = 1, $judge_id, $candidate_id = [], $tot, $total_data, $rmm, $bbm = 0, $islocked=[], $iy=0, $linkInput=[], $rank,
+    public $event, $IDevent, $vt=1, $judge_profile, $try,$candidate, $portion, $litop, $criteria, $ids = 1, $judge_id, $candidate_id = [], $tot, $total_data, $limit, $rmm, $bbm = 0, $islocked=[], $iy=0, $linkInput=[], $rank,
             $criteria_id = [], $rtg, $rating=[], $x=1, $total=[], $pass, $num=1, $ber=1, $r, $datas, $u=1, $z=1, $rtt=[], $xa = 1, $sa = 0, $rateData, $submitted=0, $tns, $alas = [], $linkID =[];
 
     public function render()
@@ -123,7 +124,7 @@ class ShowScoring extends Component
 
             foreach ($rt as $rts){
                $rts->judge_id = $judgeID;
-                $rts->portion_id = $portion[$y];
+               $rts->portion_id = $portion[$y];
                $rts->rating = $rating[$y];
                $rts->candidate_number = $candidate[$y];
                $rts->criteria_id = $criteria[$y];
@@ -191,28 +192,30 @@ class ShowScoring extends Component
                     }
 
                     $saved = [];
+                    $cria = [];
 
                 }
 
             }
         }
 
-
-
     }
 
     public function limit_candidate(){
 
         $auth = Auth::guard('webjudge')->user()->user_id;
-        $jg = User::find($auth)->judge;
+        $jg = Event::find($this->IDevent)->judge;
         $rating = Rating::all();
-        $ca = User::find($auth)->criteria;
+        $ca = Event::find($this->IDevent)->criteria;
         $pn = Event::find($this->IDevent)->portion;
+        $prt = Event::find($this->IDevent)->portion;
         $can = Event::find($this->IDevent)->candidate;
         $allJudge = Judge::all();
         $nu = 0;
         $to = 0;
         $y = 0;
+        $mk = 0;
+        $cn = 0;
 
         foreach ($jg as $jgt){
             $rew[] = $jgt->id;
@@ -224,59 +227,66 @@ class ShowScoring extends Component
 
         $countJudge = count($jg);
 
+        foreach ($prt as $prts){
 
-        foreach ($can as $cans) {
+            if ($prts->numberOfTopCandidate > 0){
+                $prs[] = $prts->id;
+            }
 
-            foreach ($pn as $pns){
+            foreach ($can as $cans) {
 
-                foreach ($jg as $jgs){
+                foreach ($pn as $pns){
 
-                    foreach ($ca as $cas) {
+                    if ($prts->id == $pns->id){
 
-                        if ($cas->portion_id == $pns->id and $cas->isLink == 1) {
+                        foreach ($jg as $jgs){
 
-                            foreach ($rating as $ratings) {
-                                if ($ratings->criteria_id == $cas->id and $ratings->judge_id == $jgs->id and $ratings->candidate_number == $cans->candidate_number) {
-                                    $tu = $ratings->rating * $cas->percentage / 100;
-                                    $to += $tu;
-                                    $ps = $pns->id;
-                                    $y = 1;
+                            foreach ($ca as $cas) {
+
+                                if ($cas->portion_id == $pns->id and $cas->isLink == 1) {
+
+                                    foreach ($rating as $ratings) {
+                                        if ($ratings->criteria_id == $cas->id and $ratings->judge_id == $jgs->id and $ratings->candidate_number == $cans->candidate_number) {
+                                            $tu = $ratings->rating * $cas->percentage / 100;
+                                            $to += $tu;
+                                            $ps = $pns->id;
+                                            $y = 1;
+
+                                        }
+                                    }
 
                                 }
+
                             }
 
                         }
+
+                        if ($y == 1){
+
+                            $topList[] = $to / $countJudge;
+                            $topcan[] = $cans->id;
+                            $toppor[] = $ps;
+                            $to = 0;
+                            $y=0;
+                            $cn=1;
+                        }
+
 
                     }
 
                 }
 
             }
-           if ($y == 1){
-               $topList[] = $to / $countJudge;
-               $topcan[] = $cans->id;
-               $toppor[] = $ps;
-               $to = 0;
-           }
 
         }
 
-        if ($y == 1){
+        if ($cn == 1){
 
-            $tpli = Portion::find($toppor[0])->toplist;
+            $topDATA = Event::find($this->IDevent)->toplist;
 
-            $kl = 0;
-            for ($nh = 0; $nh<count($sed); $nh++){
-
-                if (count($sed[$nh]) > 0){
-                    $kl++;
-                }
-
-            }
-
-            if ($kl >= count($jg)){
+            if (count($topDATA) != 0){
                 $io = 0;
-                foreach ($tpli as $tplis){
+                foreach ($topDATA as $tplis){
                     $tplis->portion_id = $toppor[$io];
                     $tplis->candidate_id = $topcan[$io];
                     $tplis->result = $topList[$io];
@@ -286,8 +296,7 @@ class ShowScoring extends Component
                 }
 
             }
-            elseif (count($tpli) == 0) {
-
+            else{
                 for ($ha = 0; $ha<count($topcan); $ha++){
                     Toplist::create([
                         'portion_id' => $toppor[$ha],
@@ -297,33 +306,39 @@ class ShowScoring extends Component
                     ]);
                 }
             }
-            else{
+            $list = DB::table('toplists')->orderBy('result','desc')->get();
+            $qp = Event::find($this->IDevent)->toplist;
 
-                $io = 0;
-                foreach ($tpli as $tplis){
-                    $tplis->portion_id = $toppor[$io];
-                    $tplis->candidate_id = $topcan[$io];
-                    $tplis->result = $topList[$io];
-                    $tplis->event_id = $this->IDevent;
-                    $tplis->save();
-                    $io++;
+            foreach ($list as $lists){
+                if ($this->IDevent == $lists->event_id){
+                    $tpl_data[] = $lists->id;
+                }
+            }
+
+            for ($nas=0; $nas<count($prs); $nas++){
+
+                for ($mq=0; $mq<count($tpl_data); $mq++){
+                    $tl = Toplist::find($tpl_data[$mq]);
+                    if ($tl->portion_id == $prs[$nas]){
+                        $top_list[$nas][] = $tl->id;
+                    }
                 }
 
             }
 
-            $list = DB::table('toplists')->orderBy('result','desc')->get();
+            for ($n = 0; $n<count($top_list); $n++){
 
-            foreach ($list as $lists){
-                $ran[] = $lists->id;
+                for ($tr=0; $tr<count($top_list[$n]); $tr++){
+
+                    $rank_data[$n][$tr] = Toplist::find($top_list[$n][$tr])->candidate;
+                }
+
             }
 
-            for ($n = 0; $n<count($ran); $n++){
-                $rank_data[] = Toplist::find($ran[$n])->candidate;
-            }
             $this->rank = $rank_data;
-            //$this->lado++;
 
         }
+
 
     }
 
@@ -344,6 +359,14 @@ class ShowScoring extends Component
         $ca = User::find($auth)->criteria;
         $pn = Event::find($this->IDevent)->portion;
         $can = Event::find($this->IDevent)->candidate;
+        $jm = [];
+        $mh = [];
+        $can_id = [];
+        $can_num = [];
+        $pr_id = [];
+        $jm = [];
+
+
 
         foreach ($rr as $rrs){
             $this->xa = 1;
@@ -365,40 +388,100 @@ class ShowScoring extends Component
                 $ptnId[] = $cas->portion_id;
             }
         }
-
+        $ge=0;
+        $hr=0;
         foreach ($pn as $pns){
 
-            if ($pns->numberOfTopCandidate > 0){
+            if ($pns->numberOfCandidateToRate > 0){
 
                 if (count($this->rank) != 0){
-                    $kk = 1;
-                    foreach ($this->rank as $cans){
-                        if ($kk <= $pns->numberOfTopCandidate){
 
-                            foreach ($ca as $cas){
+                    $fq=0;
+                    foreach ($this->rank[$ge] as $rnk){
 
-                                if ($pns->id == $cas->portion_id){
-                                    $this->sa = 1;
-                                    $this->rmm[$re] *= $cas->percentage / 100;
-                                    $equal += $this->rmm[$re];
-                                    $re++;
+                        if ($pns->numberOfCandidateToRate > $fq){
+                            $can_id[] = $rnk->id;
+                            $can_num[] = $rnk->candidate_number;
+                            $pr_id[] = $pns->id;
+                            $fq++;
+                        }
+                    }
+                    $th = Portion::find($pns->id)->extra_toplist;
 
-                                }
+                    if (count($th) > 0){
+                        $cv=0;
+                       foreach ($th as $ths){
+                           $ths->candidate_id = $can_id[$cv];
+                           $ths->candidate_number = $can_num[$cv];
+                           $ths->portion_id = $pr_id[$cv];
+                           $ths->judge_id = Auth::guard('webjudge')->user()->id;
+                           $ths->event_id = $this->IDevent;
+                           $cv++;
+                           $ths->save();
+                       }
 
-                            }
-                            $this->total_data[$dh] = $equal;
-                            $equal = 0;
-                            $dh = $re;
-                            $kk++;
+                    }
+                    else{
+
+                        for ($mn=0; $mn<count($can_id); $mn++){
+
+                            Extra_toplist::create([
+                                'portion_id' => $pr_id[$mn],
+                                'event_id' => $this->IDevent,
+                                'candidate_id' => $can_id[$mn],
+                                'candidate_number' => $can_num[$mn],
+                                'judge_id' => Auth::guard('webjudge')->user()->id,
+                            ]);
+
                         }
 
                     }
+
+                    $list = DB::table('extra_toplists')->orderBy('candidate_number','asc')->get();
+
+                    foreach ($list as $lists){
+                        if ($lists->portion_id == $pns->id){
+                            $mh[] = $lists->candidate_id;
+                        }
+                    }
+
+                    for ($mm=0; $mm<count($mh); $mm++){
+                        $jm[$hr][] = Candidate::find($mh[$mm]);
+                    }
+
+                    $this->litop[$hr] = $jm[$hr];
+
+                    foreach ($this->litop[$hr] as $cans){
+
+                        foreach ($ca as $cas){
+
+                            if ($pns->id == $cas->portion_id){
+                                $this->sa = 1;
+                                $this->rmm[$re] *= $cas->percentage / 100;
+                                $equal += $this->rmm[$re];
+                                $re++;
+
+                            }
+
+                        }
+                        $this->total_data[$dh] = $equal;
+                        $equal = 0;
+                        $dh = $re;
+
+                    }
+                    $hr++;
+                    $jm = [];
+                    $mh = [];
+                    $can_id = [];
+                    $can_num = [];
+                    $pr_id = [];
+                    $ge++;
 
                 }
                 else{
                     $kk = 1;
                     foreach ($can as $cans){
-                        if ($kk <= $pns->numberOfTopCandidate){
+                        if ($kk <= $pns->numberOfCandidateToRate){
 
                             foreach ($ca as $cas){
 

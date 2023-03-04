@@ -9,7 +9,7 @@ use Livewire\Component;
 
 class ShowPortion extends Component
 {
-    public $show, $title, $user_id, $event_id, $porID, $bb =1, $dd, $checkbox, $numberOfTopCandidate, $imbeds,
+    public $show, $title, $user_id, $event_id, $porID, $bb =1, $dd, $checkbox, $numberOfTopCandidate, $imbeds, $checkTop, $numberOfCandidate,
             $show_cri, $show_portion, $title_cri, $percentage_cri, $portionID_selectInput, $portion_id, $criID;
 
     public function mount($eventNUM,$imbed){
@@ -99,11 +99,16 @@ class ShowPortion extends Component
             $this->numberOfTopCandidate = 0;
         }
 
+        if ($this->numberOfCandidate == null){
+            $this->numberOfCandidate = 0;
+        }
+
         $this->validate([
         'event_id' => 'required',
         'user_id' => 'required',
         'title' => 'required',
-        'numberOfTopCandidate' => 'required|integer'
+        'numberOfTopCandidate' => 'required|integer',
+        'numberOfCandidate' => 'required|integer',
         ]);
 
         try {
@@ -113,9 +118,13 @@ class ShowPortion extends Component
                 'event_id' => $this->event_id,
                 'title' => $this->title,
                 'numberOfTopCandidate' => $this->numberOfTopCandidate,
+                'numberOfCandidateToRate' => $this->numberOfCandidate,
             ]);
             $this->title = "";
             $this->numberOfTopCandidate = "";
+            $this->checkbox = "";
+            $this->checkTop = "";
+            $this->numberOfCandidate = "";
             session()->flash('portionSave',"Successfully Registered");
         }
         catch (\Exception $e){
@@ -201,6 +210,7 @@ class ShowPortion extends Component
         $this->event_id = $por->event_id;
         $this->porID = $por->id;
         $this->numberOfTopCandidate = $por->numberOfTopCandidate;
+        $this->numberOfCandidate = $por->numberOfCandidateToRate;
     }
 
     public function submitEdit(){
@@ -209,6 +219,7 @@ class ShowPortion extends Component
             'user_id' => 'required',
             'title' => 'required',
             'numberOfTopCandidate' => 'integer',
+            'numberOfCandidate' => 'integer',
         ]);
 
         try {
@@ -219,9 +230,13 @@ class ShowPortion extends Component
             if ($this->numberOfTopCandidate != 0){
                 $new->numberOfTopCandidate = $this->numberOfTopCandidate;
             }
+            if ($this->numberOfCandidate != 0){
+                $new->numberOfCandidateToRate = $this->numberOfCandidate;
+            }
             $new->save();
             $this->title = "";
             $this->numberOfTopCandidate = "0";
+            $this->numberOfCandidate = "0";
             session()->flash('portionSave',"Successfully Saved");
         }
         catch (\Exception $e){

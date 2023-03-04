@@ -34,7 +34,6 @@ class JudgeController extends Controller
     }
 
     public function process(Request $request){
-dd('haha');
 
         $validated = $request->validate([
             "username" => 'required',
