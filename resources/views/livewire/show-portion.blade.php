@@ -27,10 +27,11 @@
         <div class="bg-primary text-center pt-2" style="width:97%; height: 50px;"><h4>Criteria</h4></div>
 
             @php $m=0; @endphp
-        @include('components.modal_criteria')
+
             @foreach($show as $shows)
                 @php $total=0; @endphp
                 @if($event_id == $shows->event_id)
+                @include('components.modal_criteria')
                     <table class="table table-bordered border-primary" style="width: 47%; margin-right: 10px; margin-left: 15px; display: inline-block; margin-top: 10px;">
                         <thead>
                             <tr style="text-align: center;">
