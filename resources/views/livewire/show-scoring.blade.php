@@ -19,7 +19,7 @@
                     <h5 style="margin-left: 10px;">{{ucwords($judge_profile->full_name)}}</h5>
                     <form action="/judge/logout" method="POST">
                         @csrf
-                        <button style="border: none; background-color: white; color: blue; margin-left: 10px;">Logout</button>
+                        <button style="border: none; background-color: white; color: blue; margin-left: 5px;">Logout</button>
                     </form>
                 </td>
             </tr>
