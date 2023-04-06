@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use App\Models\AdditionalPortion;
 use App\Models\Candidate;
 use App\Models\Criteria;
 use App\Models\Event;
@@ -17,7 +18,7 @@ use Livewire\Component;
 
 class ShowScoring extends Component
 {
-    public $event, $IDevent, $vt=1, $judge_profile, $try,$candidate, $portion, $litop, $criteria, $ids = 1, $judge_id, $candidate_id = [], $tot, $total_data, $limit, $rmm, $bbm = 0, $islocked=[], $iy=0, $linkInput=[], $rank,
+    public $event, $IDevent, $vt=1, $judge_profile, $try,$candidate, $portion, $litop, $criteria, $ids = 1, $judge_id, $ko, $candidate_id = [], $tot, $total_data, $limit, $rmm, $bbm = 0, $islocked=[], $iy=0, $linkInput=[], $rank,
             $criteria_id = [], $rtg, $rating=[], $x=1, $total=[], $pass, $num=1, $ber=1, $r, $datas, $u=1, $z=1, $rtt=[], $xa = 1, $sa = 0, $rateData, $submitted=0, $tns, $alas = [], $linkID =[];
 
     public function render()
@@ -47,6 +48,13 @@ class ShowScoring extends Component
             $this->top();
             $this->limit_candidate();
             $this->displayScoreData();
+        }
+
+        if (count($this->portion) == 0){
+            $addingPo = Event::find($this->IDevent)->additional_portion;
+            foreach ($addingPo as $ad){
+                AdditionalPortion::find($ad->id)->delete();
+            }
         }
 
         return view('livewire.show-scoring');
@@ -92,12 +100,11 @@ class ShowScoring extends Component
     ];
 
     public function scoreRate($rating,$candidate,$criteria,$portion){
-//        dd($rating);
+
         $judgeID = Auth::guard('webjudge')->user()->id;
         $count = count($rating)-1;
         $rt = Judge::find($judgeID)->rating;
         $y = 1;
-
         $e = 1;
 
         foreach ($rt as $rts){
@@ -116,10 +123,25 @@ class ShowScoring extends Component
                     'criteria_id' => $criteria[$i],
                     'portion_id' => $portion[$i],
                 ]);
+                $this->ko++;
+            }
+            $rg = Judge::find($judgeID)->rating;
+            if (count($rg) == 0){
+                $addingPo = Event::find($this->IDevent)->additional_portion;
+                foreach ($addingPo as $ad){
+                    AdditionalPortion::find($ad->id)->delete();
+                }
 
+            }
+            elseif (count($rg) > 0){
+                AdditionalPortion::create([
+                    'numberOfArrayRating' => $this->ko,
+                    'event_id' => $this->IDevent,
+                ]);
             }
 
         }
+
         elseif ($e == 0){
 
             foreach ($rt as $rts){
@@ -131,6 +153,37 @@ class ShowScoring extends Component
                $rts->save();
                 $y++;
             }
+
+            $addingPor = Event::find($this->IDevent)->additional_portion;
+            foreach ($addingPor as $ads){
+                $cont = $ads->numberOfArrayRating;
+            }
+
+            if ($cont < count($rating)-1){
+
+                $cont++;
+               while ($cont <= count($rating)-1){
+                   Rating::create([
+                       'judge_id' => $judgeID,
+                       'rating' => $rating[$cont],
+                       'candidate_number' => $candidate[$cont],
+                       'criteria_id' => $criteria[$cont],
+                       'portion_id' => $portion[$cont],
+                   ]);
+                   $cont++;
+               }
+                foreach ($addingPor as $ads){
+                    $ads->numberOfArrayRating = count($rating)-1;
+                    $ads->save();
+                }
+            }
+            elseif ($cont > count($rating)-1){
+                foreach ($addingPor as $ads){
+                    $ads->numberOfArrayRating = count($rating)-1;
+                    $ads->save();
+                }
+            }
+
         }
 
 
@@ -513,9 +566,12 @@ class ShowScoring extends Component
 
                         if ($pns->id == $cas->portion_id){
                             $this->sa = 1;
-                            $this->rmm[$re] *= $cas->percentage / 100;
-                            $equal += $this->rmm[$re];
-                            $re++;
+                            if (isset($this->rmm[$re])){
+                                $this->rmm[$re] *= $cas->percentage / 100;
+                                $equal += $this->rmm[$re];
+                                $re++;
+                            }
+
 
                         }
 

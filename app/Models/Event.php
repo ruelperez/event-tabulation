@@ -46,5 +46,9 @@ class Event extends Model
         return $this->hasMany(Award::class);
     }
 
+    public function additional_portion(){
+        return $this->hasMany(AdditionalPortion::class);
+    }
+
     use HasFactory;
 }

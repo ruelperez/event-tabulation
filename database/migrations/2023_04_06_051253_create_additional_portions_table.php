@@ -13,8 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('criterias', function (Blueprint $table) {
-            $table->integer('portionLink')->default(null)->after('isLink');
+        Schema::create('additional_portions', function (Blueprint $table) {
+            $table->id();
+            $table->integer('numberOfArrayRating');
+            $table->unsignedMediumInteger('event_id');
+            $table->timestamps();
         });
     }
 
@@ -25,8 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('criterias', function (Blueprint $table) {
-            //
-        });
+        Schema::dropIfExists('additional_portions');
     }
 };
