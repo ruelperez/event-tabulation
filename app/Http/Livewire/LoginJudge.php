@@ -22,7 +22,6 @@ class LoginJudge extends Component
             'password' => 'required',
         ]);
 
-        Auth::guard('webjudge')->attempt($validated);
         if (Auth::guard('webjudge')->attempt($validated)){
             return $this->redirect('/judge/scoring-page');
         }

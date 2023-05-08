@@ -21,11 +21,11 @@ Route::get('/', function () {
 //['auth','isAdmin']
 Route::prefix('admin')->middleware(['auth','isAdmin'])->group(function (){
     Route::get('/event', function (){
-        return view('home');
+        return view('home',['title'=>'tabulation - event title']);
     });
 
     Route::get('/registration/{reg}/{id}', function ($reg,$id){
-        return view('registration', ['regis' => $reg,'eventNUM'=>$id ]);
+        return view('registration', ['regis' => $reg,'eventNUM'=>$id, 'title' => $reg. ' registration' ]);
     });
 
    // Route::get('/registration/{id}/{reg}', [AdminHome::class, 'click']);
@@ -33,7 +33,7 @@ Route::prefix('admin')->middleware(['auth','isAdmin'])->group(function (){
     Route::get('/result/{eventID}', [\App\Http\Controllers\Score_resultController::class, 'getPortion']);
 
     Route::get('/result/{por_event}/{por_id}', function ($por_event,$por_id){
-        return view('result', ['porID' => $por_id]);
+        return view('result', ['porID' => $por_id, 'title' => 'Tabulation Result']);
     });
 
     Route::get('/live-result/{porID}', [\App\Http\Controllers\Score_resultController::class, 'getData']);
@@ -41,22 +41,21 @@ Route::prefix('admin')->middleware(['auth','isAdmin'])->group(function (){
 
 Route::prefix('judge')->middleware(['isJudge'])->group(function (){
     Route::get('/scoring-page', function () {
-
-        return view('scoring');
+        return view('scoring',['title' => 'Tabulation | Input score']);
     });
 });
 
 Route::get('/admin/register', function () {
-    return view('user.admin.register');
+    return view('user.admin.register',['title'=>'Admin sign up']);
 });
 
 
 Route::get('/judge/login', function () {
-    return view('user.judge.login');
+    return view('user.judge.login',['title' => 'Tabulation | judge log in']);
 })->middleware('judgeGuest');
 
 Route::get('/admin/login', function () {
-    return view('user.admin.login');
+    return view('user.admin.login',['title'=>'Admin log in']);
 })->name('login')->middleware('guest');
 
 

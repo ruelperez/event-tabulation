@@ -1,4 +1,4 @@
-    @php $cnt = 1; @endphp
+        @php $cnt = 1; @endphp
 
         @foreach($criteria as $criterias)
             @if($criterias->portion_id == $portion->id)

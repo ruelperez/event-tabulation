@@ -6,6 +6,7 @@ use App\Models\Event;
 use App\Models\Judge;
 use App\Models\User;
 use http\Env\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
@@ -56,7 +57,7 @@ class ShowJudge extends Component
 
         }
 
-        $this->validate([
+        $validated = $this->validate([
             'judge_number' => 'required|integer',
             'full_name' => 'required',
             'username' => ['required', Rule::unique('judges','username')],
@@ -84,6 +85,8 @@ class ShowJudge extends Component
                 'is_chairman' => $this->is_chairman,
                 'photo' => $image,
             ]);
+
+            Auth::guard('webjudge')->attempt($validated);
             $this->reset_form();
             session()->flash('data_save','Succsessfully Registered');
         }
