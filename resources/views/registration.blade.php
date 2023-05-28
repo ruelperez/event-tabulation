@@ -3,7 +3,6 @@
 <div class="d-flex">
     <span style="font-size:30px;cursor:pointer; width: 5%; text-align: center;padding-top: 20px;" onclick="openNav()">&#9776; </span>
     <div class="container-fluid" style="background-color: darkblue; height: 94px;">
-        <h1 style="color: white; margin-left: 38%; margin-top: 15px; position: absolute">Event Tabulation</h1>
     </div>
 </div>
 <button type="button" class="btn btn-success" onclick="location.href = '/admin/event';" style="margin-left: 70px; margin-top: 15px;"><b>Back to Event List</b></button>

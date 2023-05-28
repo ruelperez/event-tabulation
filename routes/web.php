@@ -16,8 +16,10 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
-});
+    return view('user.admin.login',['title'=>'Admin log in']);
+})->name('login')->middleware('guest');
+
+
 //['auth','isAdmin']
 Route::prefix('admin')->middleware(['auth','isAdmin'])->group(function (){
     Route::get('/event', function (){
@@ -53,10 +55,6 @@ Route::get('/admin/register', function () {
 Route::get('/judge/login', function () {
     return view('user.judge.login',['title' => 'Tabulation | judge log in']);
 })->middleware('judgeGuest');
-
-Route::get('/admin/login', function () {
-    return view('user.admin.login',['title'=>'Admin log in']);
-})->name('login')->middleware('guest');
 
 
 Route::post('/judge/logout', [\App\Http\Controllers\JudgeController::class, 'logout']);

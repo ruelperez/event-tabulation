@@ -44,7 +44,6 @@ class ShowTitle extends Component
         ]);
 
         $image = $this->storeImage();
-
         try {
             $new = Event::create([
                 'title' => $this->name,
