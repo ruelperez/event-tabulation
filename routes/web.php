@@ -50,6 +50,11 @@ Route::get('/admin/register', function () {
     return view('user.admin.register');
 });
 
+Route::get('/tieds', function () {
+    dd('bbbbb');
+    return view('user.admin.register');
+});
+
 
 Route::get('/judge/login', function () {
     return view('user.judge.login');

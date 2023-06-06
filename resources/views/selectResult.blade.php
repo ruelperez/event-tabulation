@@ -76,6 +76,10 @@
                 <td>
                     <a href="{{url('admin/result', ['por_event' => $data->event_id, 'por_id' => $data->id])}}" target="_blank" style="cursor: pointer;">Result</a>
                 </td>
+
+                <td>
+                    <button onclick="tied()">unlock</button>
+                </td>
             </tr>
 
         @endforeach
@@ -93,7 +97,6 @@
     </div>
 
 </div>
-
 <script type="text/javascript">
     function openNav() {
         document.getElementById("mySidenav").style.width = "250px";
