@@ -23,7 +23,9 @@ Route::prefix('admin')->middleware(['auth','isAdmin'])->group(function (){
     Route::get('/event', function (){
         return view('home');
     });
-
+    Route::get('/judge/assignment/{reg}/{id}', function ($reg,$id){
+        return view('registration', ['regis' => $reg,'eventNUM'=>$id ]);
+    });
     Route::get('/registration/{reg}/{id}', function ($reg,$id){
         return view('registration', ['regis' => $reg,'eventNUM'=>$id ]);
     });
@@ -37,6 +39,10 @@ Route::prefix('admin')->middleware(['auth','isAdmin'])->group(function (){
     });
 
     Route::get('/live-result/{porID}', [\App\Http\Controllers\Score_resultController::class, 'getData']);
+
+    Route::get('/judge-assignment', function (){
+        return view('judge-assignment');
+    });
 });
 
 Route::prefix('judge')->middleware(['isJudge'])->group(function (){

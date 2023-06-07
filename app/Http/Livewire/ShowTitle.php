@@ -96,6 +96,10 @@ class ShowTitle extends Component
         $d = Event::find($id)->criteria;
         $e = Event::find($id)->toplist;
         $f = Event::find($id)->extra_toplist;
+        $cc = \App\Models\Assignment::where('event_id', $id)->get();
+        foreach ($cc as $cs){
+            \App\Models\Assignment::find($cs->id)->delete();
+        }
 
         foreach ($a as $as){
             Portion::find($as->id)->delete();

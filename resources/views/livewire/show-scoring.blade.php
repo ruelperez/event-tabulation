@@ -50,10 +50,11 @@
                 <th colspan="3" style="text-align: center; padding-bottom: 18px; font-size: 25px;">{{ucwords($portions->title)}}</th>
                 @foreach($criteria as $criterias)
                     @if($criterias->portion_id == $portions->id)
-                    <th style="text-align: center; width: 500px;" >{{ucwords($criterias->title)}}  ({{($criterias->percentage)}}%) <br> 75-100</th>
+                    <th style="text-align: center; width: 500px;" >{{ucwords($criterias->title)}}  ({{($criterias->percentage)}}%) <br>
+                        {{$min}}-{{$max}}</th>
                     @endif
                 @endforeach
-                <th style="text-align: center; width: 13%;">Total <br> 75-100</th>
+                <th style="text-align: center; width: 13%;">Total <br> {{$min}}-{{$max}}</th>
             </tr>
             </thead>
             <tbody>
@@ -160,6 +161,8 @@
 
     <input type="text" id="maxX" value="{{$x-1}}" hidden>
     <input type="text" id="maxCan" value="{{$z-1}}" hidden>
+    <input type="text" id="min_rate" value="{{$min}}" hidden>
+    <input type="text" id="max_rate" value="{{$max}}" hidden>
     </div>
 
 {{--    @livewire('show-result')--}}
@@ -169,12 +172,14 @@
         function totalValue(start,end){
             let as = document.getElementById("total"+start).value;
             let s =  document.getElementById("total"+start);
-            if (as > 100){
-                s.value = 100;
+            let minr = document.getElementById("min_rate").value;
+            let maxr = document.getElementById("max_rate").value;
+            if (as > Number(maxr)){
+                s.value = Number(maxr);
                 as = s.value;
             }
-            else if (as < 75){
-                s.value = 75;
+            else if (as < Number(minr)){
+                s.value = Number(minr);
                 as = s.value;
             }
             for (let b=start; b <= end; b++){
@@ -235,6 +240,9 @@
             let percentage = document.getElementById("percent"+num).value;
             let rateVal = document.getElementById("scoreID"+num).value;
             let rate = document.getElementById("scoreID"+num).value;
+            let minr = document.getElementById("min_rate").value;
+            let maxr = document.getElementById("max_rate").value;
+
             if (rate != 0){
                 rateVal *= percentage;
                 rate = Number(total) - Number(rateVal);
@@ -244,17 +252,19 @@
 
             }
             else{
+
                 return;
             }
 
             let product = document.getElementById("total"+candidate).value;
             var i = document.getElementById("scoreID"+num);
-            if (rate > 100){
-                rate = 100;
+
+            if (rate > Number(maxr)){
+                rate = Number(maxr);
                 i.value = rate;
             }
-            else if (rate < 75){
-                rate = 75;
+            else if (rate < Number(minr)){
+                rate = Number(minr);
                 i.value = rate;
             }
             let compute = rate * percentage;
@@ -267,12 +277,14 @@
             let total = document.getElementById("total"+candidate);
             let product = document.getElementById("total"+candidate).value;
             let i = document.getElementById("scoreID"+num);
-            if (rate > 100){
-                i.value = 100;
+            let minr = document.getElementById("min_rate").value;
+            let maxr = document.getElementById("max_rate").value;
+            if (rate > Number(maxr)){
+                i.value = Number(maxr);
                 rate = i.value;
             }
-            else if (rate < 75){
-                i.value = 75;
+            else if (rate < Number(minr)){
+                i.value = Number(minr);
                 rate = i.value;
             }
 

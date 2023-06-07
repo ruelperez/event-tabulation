@@ -17,12 +17,17 @@ use Livewire\Component;
 
 class ShowScoring extends Component
 {
-    public $event, $IDevent, $vt=1, $judge_profile, $try,$candidate, $portion, $litop, $criteria, $ids = 1, $judge_id, $candidate_id = [], $tot, $total_data, $limit, $rmm, $bbm = 0, $islocked=[], $iy=0, $linkInput=[], $rank,
+    public $event, $IDevent, $vt=1, $judge_profile, $try,$candidate, $min, $max, $portion, $litop, $criteria, $ids = 1, $judge_id, $candidate_id = [], $tot, $total_data, $limit, $rmm, $bbm = 0, $islocked=[], $iy=0, $linkInput=[], $rank,
             $criteria_id = [], $rtg, $rating=[], $x=1, $total=[], $pass, $num=1, $ber=1, $r, $datas, $u=1, $z=1, $rtt=[], $xa = 1, $sa = 0, $rateData, $submitted=0, $tns, $alas = [], $linkID =[];
 
     public function render()
     {
         $this->IDevent = Judge::find(Auth::guard('webjudge')->user()->id)->event_id;
+        $dds = \App\Models\MinMaxRating::where('event_id',$this->IDevent)->get();
+        foreach ($dds as $ds){
+            $this->min = $ds->min;
+            $this->max = $ds->max;
+        }
         $this->judge_profile = Auth::guard('webjudge')->user();
         $this->judge_id = Auth::guard('webjudge')->user();
         $auth = Auth::guard('webjudge')->user()->user_id;

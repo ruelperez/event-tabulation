@@ -3,7 +3,6 @@
 <div class="d-flex">
     <span style="font-size:30px;cursor:pointer; width: 5%; text-align: center;padding-top: 20px;" onclick="openNav()">&#9776; </span>
     <div class="container-fluid" style="background-color: darkblue; height: 94px;">
-        <h1 style="color: white; margin-left: 38%; margin-top: 15px; position: absolute">Event Tabulation</h1>
     </div>
 </div>
 
@@ -18,7 +17,7 @@
     </div>
     {{--    @livewire('portion-click')--}}
 </div>
-
+<button type="button" class="btn btn-secondary" onclick="location.href = '/admin/judge-assignment/'" style="margin-top: 2%; width: 15%; margin-left: 65%;">Judge Assignment</button>
     <div class="border border-primary" style="margin-left: 20%; width: 60%; margin-top: 15px;">
         <div class="bg-primary text-center pt-2" style="width:97%; height: 50px; margin-left: 3%; margin-top: 50px;"><h4>Event Title</h4></div>
         <span class="btn" data-bs-toggle="modal" data-bs-target="#title_modal" id="boot-icon" class="bi bi-plus-circle-fill" style="font-size: 42px; color: rgb(165, 42, 42);margin-left: 45%;">+</span>

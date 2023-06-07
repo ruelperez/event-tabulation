@@ -17,7 +17,9 @@ class Event extends Model
     public function extra_toplist(){
         return $this->hasMany(Extra_toplist::class);
     }
-
+    public function min_max_rating(){
+        return $this->hasMany(MinMaxRating::class);
+    }
     public function judge(){
         return $this->hasMany(Judge::class);
     }

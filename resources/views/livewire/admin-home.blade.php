@@ -6,6 +6,9 @@
             <h4 style="margin-top: 10px;"><i>{{strtoupper($event_data->title)}}</i></h4>
 
             <ul class="list-group" style="width: 100%; margin-top: 30px;" >
+                <li  class="list-group-item btn" style="@if($regis == "min_max_rating") background-color: aquamarine; @endif"  onclick="location.href = '/admin/registration/min_max_rating/{{$eventNUM}}';">
+                    Min/Max Rating
+                </li>
                 <li  class="list-group-item btn" style="@if($regis == "judge") background-color: aquamarine; @endif"  onclick="location.href = '/admin/registration/judge/{{$eventNUM}}';">
                     Judges
                 </li>
@@ -30,6 +33,12 @@
         </div>
 
         <div class="col-8 border border-primary">
+
+            <div style=" @if($regis == 'min_max_rating') @else display: none @endif; ">
+                <div class="bg-primary text-center pt-2" style="width:100%; height: 50px;"><h4>Min / Max Rating</h4></div>
+                @livewire('min-max-rating', ['eventNUM' => $eventNUM])
+            </div>
+
             <div style=" @if($regis == 'judge') @else display: none @endif ">
                 <div class="bg-primary text-center pt-2" style="width:100%; height: 50px;"><h4>Judges
                         Registration</h4></div>

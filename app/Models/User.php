@@ -62,5 +62,8 @@ class User extends Authenticatable
     public function criteria(){
         return $this->hasMany(Criteria::class);
     }
+    public function min_max_rating(){
+        return $this->hasMany(MinMaxRating::class);
+    }
 
 }
