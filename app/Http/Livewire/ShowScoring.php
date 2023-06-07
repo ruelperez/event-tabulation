@@ -22,7 +22,6 @@ class ShowScoring extends Component
 
     public function render()
     {
-        $this->IDevent = Judge::find(Auth::guard('webjudge')->user()->id)->event_id;
         $dds = \App\Models\MinMaxRating::where('event_id',$this->IDevent)->get();
         foreach ($dds as $ds){
             $this->min = $ds->min;
@@ -55,6 +54,10 @@ class ShowScoring extends Component
         }
 
         return view('livewire.show-scoring');
+    }
+
+    public function mount($eventID){
+        $this->IDevent = $eventID;
     }
 
     public function submit(){
