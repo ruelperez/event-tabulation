@@ -46,9 +46,12 @@ Route::prefix('admin')->middleware(['auth','isAdmin'])->group(function (){
 });
 
 Route::prefix('judge')->middleware(['isJudge'])->group(function (){
-    Route::get('/scoring-page', function () {
+    Route::get('/scoring-page/{eventID}', function ($id) {
+        return view('scoring',['eventID' => $id]);
+    });
 
-        return view('scoring');
+    Route::get('/event', function () {
+        return view('event');
     });
 });
 

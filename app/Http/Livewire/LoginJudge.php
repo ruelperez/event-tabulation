@@ -24,7 +24,7 @@ class LoginJudge extends Component
 
         Auth::guard('webjudge')->attempt($validated);
         if (Auth::guard('webjudge')->attempt($validated)){
-            return $this->redirect('/judge/scoring-page');
+            return $this->redirect('/judge/event');
         }
         else{
             session()->flash('loginError', 'Login Failed, Wrong Username/Password');
