@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('ratings', function (Blueprint $table) {
             $table->id();
+            $table->unsignedSmallInteger('event_id');
             $table->unsignedSmallInteger('judge_id');
             $table->unsignedSmallInteger('candidate_number');
             $table->unsignedMediumInteger('criteria_id');

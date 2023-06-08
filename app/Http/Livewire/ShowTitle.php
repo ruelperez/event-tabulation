@@ -3,12 +3,14 @@
 namespace App\Http\Livewire;
 
 
+use App\Models\Award;
 use App\Models\Candidate;
 use App\Models\Criteria;
 use App\Models\Event;
 use App\Models\Extra_toplist;
 use App\Models\Judge;
 use App\Models\Portion;
+use App\Models\Rating;
 use App\Models\Toplist;
 use App\Models\User;
 use Illuminate\Support\Facades\Storage;
@@ -90,42 +92,17 @@ class ShowTitle extends Component
     }
 
     public function destroy($id){
-        $a = Event::find($id)->portion;
-        $b = Event::find($id)->judge;
-        $c = Event::find($id)->candidate;
-        $d = Event::find($id)->criteria;
-        $e = Event::find($id)->toplist;
-        $f = Event::find($id)->extra_toplist;
-        $cc = \App\Models\Assignment::where('event_id', $id)->get();
-        foreach ($cc as $cs){
-            \App\Models\Assignment::find($cs->id)->delete();
-        }
-
-        foreach ($a as $as){
-            Portion::find($as->id)->delete();
-        }
-
-        foreach ($b as $bs){
-            Judge::find($bs->id)->delete();
-        }
-
-        foreach ($c as $cs){
-            Candidate::find($cs->id)->delete();
-        }
-
-        foreach ($d as $ds){
-           Criteria::find($ds->id)->delete();
-        }
-
-        foreach ($e as $es){
-            Toplist::find($es->id)->delete();
-        }
-
-        foreach ($f as $fs){
-            Extra_toplist::find($fs->id)->delete();
-        }
-
+        Award::where('event_id', $id)->delete();
+        \App\Models\Assignment::where('event_id', $id)->delete();
+        Portion::where('event_id', $id)->delete();
+        Judge::where('event_id', $id)->delete();
+        Candidate::where('event_id', $id)->delete();
+        Criteria::where('event_id', $id)->delete();
+        Toplist::where('event_id', $id)->delete();
+        Extra_toplist::where('event_id', $id)->delete();
         Event::find($id)->delete();
+        \App\Models\MinMaxRating::where('event_id', $id)->delete();
+        Rating::where('event_id', $id)->delete();
         session()->flash('deleted',"Deleted Successfully!!");
 
     }

@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Livewire\Assignment;
 use App\Models\Criteria;
 use App\Models\Event;
+use App\Models\Judge;
 use App\Models\Portion;
 use App\Models\Rating;
 use App\Models\Toplist;
@@ -13,9 +15,14 @@ use Illuminate\Support\Facades\DB;
 
 class Score_resultController extends Controller
 {
-    public function getData($porID){
+    public function getData($eveID, $porID){
+        $bb = [];
         $portion = Portion::find($porID);
-        $judge = Event::find($portion->event_id)->judge;
+        $jud = \App\Models\Assignment::where('event_id', $eveID)->select('judge_id')->get();
+        foreach ($jud as $js){
+            $bb[] = Judge::find($js->judge_id);
+        }
+        $judge = $bb;
         $candidate = Event::find($portion->event_id)->candidate;
         $rating = Rating::all();
         $criteria = Criteria::all();

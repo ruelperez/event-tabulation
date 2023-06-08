@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect('judge/event');
 });
 //['auth','isAdmin']
 Route::prefix('admin')->middleware(['auth','isAdmin'])->group(function (){
@@ -34,11 +34,11 @@ Route::prefix('admin')->middleware(['auth','isAdmin'])->group(function (){
 
     Route::get('/result/{eventID}', [\App\Http\Controllers\Score_resultController::class, 'getPortion']);
 
-    Route::get('/result/{por_event}/{por_id}', function ($por_event,$por_id){
-        return view('result', ['porID' => $por_id]);
+    Route::get('/result/{eve_id}/{por_id}', function ($eve_id,$por_id){
+        return view('result', ['eveID' => $eve_id, 'porID' => $por_id]);
     });
 
-    Route::get('/live-result/{porID}', [\App\Http\Controllers\Score_resultController::class, 'getData']);
+    Route::get('/live-result/{eveID}/{porID}', [\App\Http\Controllers\Score_resultController::class, 'getData']);
 
     Route::get('/judge-assignment', function (){
         return view('judge-assignment');
@@ -69,9 +69,7 @@ Route::get('/judge/login', function () {
     return view('user.judge.login');
 })->middleware('judgeGuest');
 
-Route::get('/admin/login', function () {
-    return view('user.admin.login');
-})->name('login')->middleware('guest');
+
 
 
 Route::post('/judge/logout', [\App\Http\Controllers\JudgeController::class, 'logout']);
@@ -87,3 +85,6 @@ Route::post('/criteria', [\App\Http\Controllers\CriteriaController::class, 'stor
 Route::post('/rating/store', [\App\Http\Controllers\RatingController::class, 'store']);
 
 //Route::get('/live-result', [\App\Http\Controllers\Score_resultController::class, 'getData']);
+Route::get('/admin/login', function () {
+    return view('user.admin.login');
+})->name('login')->middleware('guest');

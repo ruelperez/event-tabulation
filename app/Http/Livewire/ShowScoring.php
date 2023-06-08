@@ -28,15 +28,21 @@ class ShowScoring extends Component
             $this->max = $ds->max;
         }
         $this->judge_profile = Auth::guard('webjudge')->user();
-        $this->judge_id = Auth::guard('webjudge')->user();
+        $this->judge_id = Auth::guard('webjudge')->user()->id;
         $auth = Auth::guard('webjudge')->user()->user_id;
         $this->event = Event::find($this->IDevent);
         $this->candidate = Event::find($this->IDevent)->candidate;
         $this->portion = Event::find($this->IDevent)->portion;
         $this->criteria = User::find($auth)->criteria;
-        $sed = Judge::find(Auth::guard('webjudge')->user()->id)->rating;
+        $sed = DB::table('ratings')
+            ->where('event_id', $this->IDevent)
+            ->where('judge_id', $this->judge_id)
+            ->get();
         $drd = User::find($auth)->criteria;
-        $this->rtg = Judge::find(Auth::guard('webjudge')->user()->id)->rating;
+        $this->rtg = DB::table('ratings')
+            ->where('event_id', $this->IDevent)
+            ->where('judge_id', $this->judge_id)
+            ->get();
         $ca = User::find($auth)->criteria;
         foreach ($drd as $drds){
             if ($drds->isLink == 1){
@@ -44,6 +50,7 @@ class ShowScoring extends Component
             }
 
         }
+
         if (count($sed) == 0){
 
         }
@@ -103,7 +110,10 @@ class ShowScoring extends Component
 //        dd($rating);
         $judgeID = Auth::guard('webjudge')->user()->id;
         $count = count($rating)-1;
-        $rt = Judge::find($judgeID)->rating;
+        $rt = Rating::where('event_id', $this->IDevent)
+                    ->where('judge_id', $this->judge_id)
+                    ->get();
+
         $y = 1;
 
         $e = 1;
@@ -123,19 +133,20 @@ class ShowScoring extends Component
                     'candidate_number' => $candidate[$i],
                     'criteria_id' => $criteria[$i],
                     'portion_id' => $portion[$i],
+                    'event_id' => $this->IDevent,
                 ]);
 
             }
 
         }
         elseif ($e == 0){
-
             foreach ($rt as $rts){
                $rts->judge_id = $judgeID;
                $rts->portion_id = $portion[$y];
                $rts->rating = $rating[$y];
                $rts->candidate_number = $candidate[$y];
                $rts->criteria_id = $criteria[$y];
+               $rts->event_id = $this->IDevent;
                $rts->save();
                 $y++;
             }
@@ -183,7 +194,7 @@ class ShowScoring extends Component
 
                         $rng = Rating::all();
                         foreach ($rng as $rngs){
-                            if ($rngs->judge_id == $jdg and $rngs->portion_id == $pns->id and $rngs->candidate_number == $cans->candidate_number and $cria[$nm] == $rngs->criteria_id){
+                            if ($rngs->event_id == $this->IDevent and $rngs->judge_id == $jdg and $rngs->portion_id == $pns->id and $rngs->candidate_number == $cans->candidate_number and $cria[$nm] == $rngs->criteria_id){
                                 try {
                                     $rngs->rating = $saved[$nm];
                                     $rngs->save();
@@ -212,26 +223,17 @@ class ShowScoring extends Component
     public function limit_candidate(){
 
         $auth = Auth::guard('webjudge')->user()->user_id;
-        $jg = Event::find($this->IDevent)->judge;
+        $jg = \App\Models\Assignment::where('event_id',$this->IDevent)->get();
         $rating = Rating::all();
         $ca = Event::find($this->IDevent)->criteria;
         $pn = Event::find($this->IDevent)->portion;
         $prt = Event::find($this->IDevent)->portion;
         $can = Event::find($this->IDevent)->candidate;
-        $allJudge = Judge::all();
-        $nu = 0;
         $to = 0;
         $y = 0;
-        $mk = 0;
         $cn = 0;
+        $prs = [];
 
-        foreach ($jg as $jgt){
-            $rew[] = $jgt->id;
-        }
-
-        for ($yu = 0; $yu<count($rew); $yu++){
-            $sed[] = Judge::find($rew[$yu])->rating;
-        }
 
         $countJudge = count($jg);
 
@@ -254,7 +256,7 @@ class ShowScoring extends Component
                                 if ($cas->portion_id == $pns->id and $cas->isLink == 1) {
 
                                     foreach ($rating as $ratings) {
-                                        if ($ratings->criteria_id == $cas->id and $ratings->judge_id == $jgs->id and $ratings->candidate_number == $cans->candidate_number) {
+                                        if ($ratings->event_id == $this->IDevent and $ratings->criteria_id == $cas->id and $ratings->judge_id == $jgs->id and $ratings->candidate_number == $cans->candidate_number) {
                                             $tu = $ratings->rating * $cas->percentage / 100;
                                             $to += $tu;
                                             $ps = $pns->id;
@@ -345,6 +347,8 @@ class ShowScoring extends Component
 
             $this->rank = $rank_data;
 
+
+
         }
 
 
@@ -362,7 +366,6 @@ class ShowScoring extends Component
         $dh = 1;
         $ram = 1;
         $gad = 1;
-        $rr = Judge::find(Auth::guard('webjudge')->user()->id)->rating;
         $auth = Auth::guard('webjudge')->user()->user_id;
         $ca = User::find($auth)->criteria;
         $pn = Event::find($this->IDevent)->portion;
@@ -374,7 +377,10 @@ class ShowScoring extends Component
         $pr_id = [];
         $jm = [];
 
-
+        $rr = DB::table('ratings')
+            ->where('event_id', $this->IDevent)
+            ->where('judge_id', $this->judge_id)
+            ->get();
 
         foreach ($rr as $rrs){
             $this->xa = 1;
@@ -402,7 +408,7 @@ class ShowScoring extends Component
 
             if ($pns->numberOfCandidateToRate > 0){
 
-                if (count($this->rank) != 0){
+                if ($this->rank != null){
 
                     $fq=0;
                     foreach ($this->rank[$ge] as $rnk){
@@ -551,7 +557,7 @@ class ShowScoring extends Component
     public function submitModal($id,$auths){
         $rating = Rating::all();
         foreach ($rating as $ratings){
-            if ($ratings->judge_id == $auths){
+            if ($ratings->judge_id == $auths and $ratings->event_id == $this->IDevent){
                 if ($ratings->portion_id == $id){
                     $ratings->isSubmit = 1;
                     $ratings->save();

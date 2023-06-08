@@ -48,5 +48,9 @@ class Event extends Model
         return $this->hasMany(Award::class);
     }
 
+    public function rating(){
+        return $this->hasMany(Rating::class);
+    }
+
     use HasFactory;
 }

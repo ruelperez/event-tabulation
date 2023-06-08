@@ -3,7 +3,9 @@
 namespace App\Http\Livewire;
 
 use App\Models\Event;
+use App\Models\Extra_toplist;
 use App\Models\Judge;
+use App\Models\Rating;
 use App\Models\User;
 use http\Env\Request;
 use Illuminate\Support\Facades\Storage;
@@ -107,6 +109,9 @@ class ShowJudge extends Component
     public function destroy($id){
         try {
             Judge::find($id)->delete();
+            \App\Models\Assignment::where('judge_id', $id)->delete();
+            Rating::where('judge_id', $id)->delete();
+            Extra_toplist::where('judge_id', $id)->delete();
             session()->flash('success',"Deleted Successfully!!");
         }
         catch(\Exception $e){

@@ -13,6 +13,7 @@ class Rating extends Model
         'criteria_id',
         'rating',
         'portion_id',
+        'event_id',
         'isSubmit',
     ];
 

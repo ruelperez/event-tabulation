@@ -26,6 +26,7 @@ class DeleteScore extends Component
     }
 
     public function deleteAll($eventID){
+
         $io = Event::find($eventID)->toplist;
         foreach ($io as $ios){
             Toplist::find($ios->id)->delete();
@@ -42,32 +43,32 @@ class DeleteScore extends Component
             Extra_toplist::find($bs->id)->delete();
         }
 
-        $tt = Event::find($eventID)->judge;
-        foreach ($tt as $tts){
-            $aser[] = $tts->id;
-        }
-        for ($fr = 0; $fr<count($aser); $fr++){
-            $ju[]=Judge::find($aser[$fr])->rating;
-        }
+//        $tt = Event::find($eventID)->judge;
+//        foreach ($tt as $tts){
+//            $aser[] = $tts->id;
+//        }
+//        for ($fr = 0; $fr<count($aser); $fr++){
+//            $ju[]=Judge::find($aser[$fr])->rating;
+//        }
 
-        for ($ki = 0; $ki<count($ju); $ki++){
-            if (count($ju[$ki]) == 0){
+        $rate = Rating::where('event_id', $this->eventID)->get();
+
+            if (count($rate) == 0){
                 session()->flash('deleted',"Deleted Successfully!!");
             }
             else{
-                foreach ($ju[$ki] as $del){
-                    try {
-                        Rating::find($del->id)->delete();
-                        session()->flash('deleted',"Deleted Successfully!!");
-                    }
-                    catch(\Exception $e){
-                        session()->flash('failed',"Something goes wrong while deleting!!");
-                    }
-
+                try {
+                    Rating::where('event_id', $this->eventID)->delete();
+                    session()->flash('deleted',"Deleted Successfully!!");
                 }
+                catch(\Exception $e){
+                    session()->flash('failed',"Something goes wrong while deleting!!");
+                }
+
+
             }
 
-        }
+
 
     }
 }

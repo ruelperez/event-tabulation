@@ -207,9 +207,9 @@
             @php $u = 1; $final_average_id = 1; $table_id++; @endphp
 
             <div class="container-fluid" style="background-color: darkblue; text-align: center; color: white; margin-bottom: 30px; height: 40px;padding-top: 8px;">Board of Judges</div>
-                <div style="margin-left: 10%; margin-bottom: 150px;">
+                <div style="margin-left: 10%; margin-bottom: 150px; text-align: center">
                 @foreach($judge as $judges)
-                    <div style="display: inline-block; margin-right: 15%; ">
+                    <div style="display: inline-block; margin-right: 20%; margin-top: 10%; ">
                         <b>{{ucwords($judges->full_name)}}</b> <br> <p style="font-size: 0.9em; ">Judge# {{$judges->judge_number}}</p>
                     </div>
                 @endforeach

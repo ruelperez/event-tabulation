@@ -91,6 +91,8 @@
 
 </div>
 <input type="text" id="ty" value="{{$porID}}" hidden>
+<input type="text" id="ts" value="{{$eveID}}" hidden>
+
 <script type="text/javascript">
   setInterval(function (){
         table();
@@ -111,7 +113,8 @@
             ert();
         }
         let porID = document.getElementById('ty').value;
-        xhttp.open("GET", "/admin/live-result/"+porID);
+        let eveID = document.getElementById('ts').value;
+        xhttp.open("GET", "/admin/live-result/"+eveID+"/"+porID);
         xhttp.send();
 
     }
