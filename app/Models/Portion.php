@@ -13,7 +13,8 @@ class Portion extends Model
         'title',
         'numberOfCandidateToRate',
         'numberOfTopCandidate',
-        'description'
+        'description',
+        'isLock',
     ];
 
     public function criteria(){

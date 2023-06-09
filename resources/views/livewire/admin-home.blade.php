@@ -2,7 +2,7 @@
 
     <div class="row mt-4 ">
         <div class="col-4 border border-primary" style="text-align: center">
-            <img src="{{ asset('storage/'.$event_data->photo) }}" width="480">
+            <img src="{{ asset('storage/'.$event_data->photo) }}" width="445">
             <h4 style="margin-top: 10px;"><i>{{strtoupper($event_data->title)}}</i></h4>
 
             <ul class="list-group" style="width: 100%; margin-top: 30px;" >

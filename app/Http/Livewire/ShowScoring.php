@@ -223,7 +223,7 @@ class ShowScoring extends Component
     public function limit_candidate(){
 
         $auth = Auth::guard('webjudge')->user()->user_id;
-        $jg = \App\Models\Assignment::where('event_id',$this->IDevent)->get();
+        $vn = \App\Models\Assignment::where('event_id',$this->IDevent)->select('judge_id')->get();
         $rating = Rating::all();
         $ca = Event::find($this->IDevent)->criteria;
         $pn = Event::find($this->IDevent)->portion;
@@ -233,7 +233,14 @@ class ShowScoring extends Component
         $y = 0;
         $cn = 0;
         $prs = [];
+        $hl = [];
 
+
+        foreach ($vn as $vns){
+            $hl[] = Judge::find($vns->judge_id);
+        }
+
+        $jg = $hl;
 
         $countJudge = count($jg);
 
