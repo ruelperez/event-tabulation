@@ -16,7 +16,7 @@
 <body onload="myFunction()">
 
 
-
+<button type="button" class="btn btn-primary" style="margin-top: 1%; margin-left: 7%; width: 10%;" onclick="location.href = '/judge/event'">Event List</button>
 {{--@include('components.score_submit_modal')--}}
     @livewire('show-scoring', ['eventID' => $eventID])
 

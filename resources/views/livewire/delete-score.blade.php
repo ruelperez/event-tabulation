@@ -1,6 +1,6 @@
 <div>
     <button type="button" class="btn btn-success" onclick="history.back()" style="width: 10%; margin-left: 74px; height: 40px;">Back</button>
-    <button class="btn btn-danger" style="margin-left: 1%; width: 10%;" data-bs-toggle="modal" data-bs-target="#exampleModals">Delete All Scores</button>
+    <button class="btn btn-danger" style="margin-left: 1%; width: 13%;" data-bs-toggle="modal" data-bs-target="#exampleModals">Delete All Scores</button>
     <!-- Modal -->
     <div wire:ignore.self class="modal fade" id="exampleModals" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">

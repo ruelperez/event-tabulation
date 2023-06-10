@@ -10,7 +10,7 @@
     <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
     <div style=" height: 94px; width: 80%; padding-left: 10px; color: white;">
         <h5>{{ucwords(Auth::guard('webjudge')->user()->full_name)}}</h5> <h6>Judge #{{Auth::guard('webjudge')->user()->judge_number}}</h6>
-        <form action="/admin/logout" method="POST">
+        <form action="/judge/logout" method="POST">
             @csrf
             <button style="border: none; background-color: black; color:white; padding: 0px;font-size: 13px;">Logout</button>
         </form>

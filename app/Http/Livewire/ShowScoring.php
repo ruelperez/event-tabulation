@@ -534,7 +534,7 @@ class ShowScoring extends Component
 
                         if ($pns->id == $cas->portion_id){
                             $this->sa = 1;
-                            $this->rmm[$re] *= $cas->percentage / 100;
+                            $this->rmm[$re] += $cas->percentage / 100;
                             $equal += $this->rmm[$re];
                             $re++;
 

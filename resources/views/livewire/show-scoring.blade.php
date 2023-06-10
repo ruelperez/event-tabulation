@@ -182,11 +182,15 @@
                 s.value = Number(minr);
                 as = s.value;
             }
+            let nm = 0;
             for (let b=start; b <= end; b++){
                let val = document.getElementById("scoreID"+b);
-               val.value = as;
+               let ds = document.getElementById("percent"+b);
+               val.value = ds.value * as;
+               nm += Number(val.value);
             }
 
+            as = nm;
             //Update Data
             let max = document.getElementById("maxX").value;
             let rating = [];
@@ -288,10 +292,10 @@
                 rate = i.value;
             }
 
-            let percentage = document.getElementById("percent"+num).value;
-            let compute = rate * percentage;
-            let final = Number(product) + Number(compute);
-            total.value = final;
+            // let percentage = document.getElementById("percent"+num).value;
+            // let compute = rate * percentage;
+            // let final = Number(product) + Number(compute);
+            // total.value = final;
 
             // myFunction();
             // updateData
