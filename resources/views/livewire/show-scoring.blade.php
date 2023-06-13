@@ -136,7 +136,7 @@
                                 @endif
                             @endforeach
                                 <td><input type="text" onchange="totalValue({{$jk}},{{$x-=1}})" @if(isset($total_data[$jk])) value="{{$total_data[$jk]}}" @endif class="form-control" id="total{{$jk}}" style="width: 50%; height: 40px; margin-left: 25%; margin-top: 10px; text-align: center" @if(isset($islocked[$x]) and $islocked[$x] == 1 ) disabled  @endif  @if($iy == 1) disabled @endif></td>
-                                @php $x++; $jk=$x @endphp
+                                @php $x++; $jk=$x; @endphp
 
                                 <input type="text" hidden value="{{$z++}}">
                                 <input type="text" hidden value="{{$u=1}}">
@@ -146,6 +146,7 @@
             </tbody>
         </table>
 {{--        <input type="text" value="{{$x}}" name="maxX" hidden>--}}
+
         <div @if(isset($islocked[$x-=1]) and $islocked[$x] == 1 ) @else onclick="filterForm({{$l}},{{$x}})"  @endif  style="text-align:center; @if(isset($islocked[$x]) and $islocked[$x] == 1 ) @else cursor: pointer;  @endif  padding: 5px; width: 60%; height: 40px; margin-left: 20%; background-color: aquamarine"><b>Submit</b></div>
 
         <button type="button" class="btn btn-primary" id="btnID{{$x}}" data-bs-toggle="modal" data-bs-target="#btnModal{{$x}}" hidden>
@@ -167,41 +168,30 @@
 {{--    @livewire('show-result')--}}
 
     <script>
-// console.log($("#scoreID1").val());
         function totalValue(start,end){
-            let as = document.getElementById("total"+start).value;
-            let s =  document.getElementById("total"+start);
-            let minr = document.getElementById("min_rate").value;
-            let maxr = document.getElementById("max_rate").value;
-            if (as > Number(maxr)){
-                s.value = Number(maxr);
-                as = s.value;
-            }
-            else if (as < Number(minr)){
-                s.value = Number(minr);
-                as = s.value;
-            }
+            let as = $("#total"+start).val();
+            let s = $("#total"+start);
+
             for (let b=start; b <= end; b++){
-               let val = document.getElementById("scoreID"+b);
-               val.value = 0;
-               let ds = document.getElementById("percent"+b);
-                val.value = ds.value * as / 100;
-
+               let val = $("#scoreID"+b);
+               let re = 0;
+               val.val(re);
+               let ds =  $("#percent"+b);
+                val.val(ds.val() * as / 100);
             }
-
 
             //Update Data
-            let max = document.getElementById("maxX").value;
+            let max = $("#maxX").val();
             let rating = [];
             let candi = [];
             let criteria = [];
             let portion = [];
 
             for (let ix=1; ix <= max; ix++){
-                let a = document.getElementById("candidateID"+ix).value;
-                let c = document.getElementById("portionID"+ix).value;
-                let b = document.getElementById("criteriaID"+ix).value;
-                let fa = document.getElementById("scoreID"+ix).value;
+                let a = $("#candidateID"+ix).val();
+                let c = $("#portionID"+ix).val();
+                let b = $("#criteriaID"+ix).val();
+                let fa = $("#scoreID"+ix).val();
 
                 rating[ix] = fa;
                 candi[ix] = a;
@@ -218,8 +208,10 @@
             window.livewire.emit('exit');
         }
 
-        function filterForm(start,end){
+        function filterForm(start,end,cp){
+
             let h = 1;
+            let tot = $("#total"+end);
             for (let i=start; i <= end; i++){
                 let u  = document.getElementById("scoreID"+i).value;
                 if (u == 0){
@@ -229,6 +221,9 @@
             if (h >= 2){
                 alert('PLEASE RATE ALL THE CANDIDATE');
                 return;
+            }
+            else if (tot.val() > 100){
+
             }
             else if (h == 1){
                 let yt = document.getElementById("btnID"+end).click();
@@ -276,37 +271,35 @@
         }
 
         function onBlur(num,candidate){
-            $('')
-            let rate = document.getElementById("scoreID"+num).value;
-            let total = document.getElementById("total"+candidate);
-            let product = document.getElementById("total"+candidate).value;
-            let i = document.getElementById("scoreID"+num);
-            let maxr = document.getElementById("percent"+num).value;
-            if (rate > Number(maxr)){
-                i.value = Number(maxr);
-                rate = i.value;
+
+            let score = $("#scoreID"+num).val();
+            let total = $("#total"+candidate).val();
+            let maxr = $("#percent"+num).val();
+            let rate = $("#scoreID"+num);
+            if (Number(score) > Number(maxr)){
+                rate.val(maxr);
+            }
+            else{
+                rate.val(score);
             }
 
-            // let percentage = document.getElementById("percent"+num).value;
-            // let compute = rate * percentage;
+            let fin = total + rate;
 
-            let fin = total.value + rate
-
-            total.value += fin;
+            total += fin;
 
             // myFunction();
             // updateData
-            let max = document.getElementById("maxX").value;
+            let max = $("#maxX").val();
             let rating = [];
             let candi = [];
             let criteria = [];
             let portion = [];
 
             for (let ix=1; ix <= max; ix++){
-                let a = document.getElementById("candidateID"+ix).value;
-                let c = document.getElementById("portionID"+ix).value;
-                let b = document.getElementById("criteriaID"+ix).value;
-                let fa = document.getElementById("scoreID"+ix).value;
+                let a = $("#candidateID"+ix).val();
+                let c = $("#portionID"+ix).val();
+                let b = $("#criteriaID"+ix).val();
+                let fa = $("#scoreID"+ix).val();
 
                 rating[ix] = fa;
                 candi[ix] = a;
