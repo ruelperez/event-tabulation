@@ -50,8 +50,7 @@
                 <th colspan="3" style="text-align: center; padding-bottom: 18px; font-size: 25px;">{{ucwords($portions->title)}}</th>
                 @foreach($criteria as $criterias)
                     @if($criterias->portion_id == $portions->id)
-                    <th style="text-align: center; width: 500px;" >{{ucwords($criterias->title)}}  ({{($criterias->percentage)}}%) <br>
-                        {{$min}}-{{$max}}</th>
+                    <th style="text-align: center; width: 500px;" >{{ucwords($criterias->title)}}  ({{($criterias->percentage)}}%)</th>
                     @endif
                 @endforeach
                 <th style="text-align: center; width: 13%;">Total <br> {{$min}}-{{$max}}</th>
@@ -131,7 +130,7 @@
                                     <input type="text" hidden id="portionID{{$x}}" value="{{$portions->id}}" name="portion_id[{{$x}}]">
                                     <input type="text" hidden id="candidateID{{$x}}" value="{{$candidates->candidate_number}}" name="candidate_number[{{$x}}]">
                                     <input type="text" hidden id="criteriaID{{$x}}" value="{{$criterias->id}}" name="criteria_id[{{$x}}]">
-                                    <input type="text" hidden id="percent{{$x}}" value="{{"0.".$criterias->percentage}}">
+                                    <input type="text" hidden id="percent{{$x}}" value="{{$criterias->percentage}}">
                                     <input type="text" hidden id="ans{{$x}}" value="{{$jk}}">
                                     <td><input type="text" @if($iy == 1) disabled @endif   @if(isset($rtt[$x])) value="{{$rtt[$x]}}" @endif  @if(isset($islocked[$x]) and $islocked[$x] == 1 ) disabled @endif class="form-control" id="scoreID{{$x}}" name="rating[{{$x}}]" onchange="onBlur({{$x++}},{{$jk}})" style="width: 50%; height: 40px; margin-left: 25%; margin-top: 10px; text-align: center"></td>
                                 @endif
@@ -168,7 +167,7 @@
 {{--    @livewire('show-result')--}}
 
     <script>
-
+// console.log($("#scoreID1").val());
         function totalValue(start,end){
             let as = document.getElementById("total"+start).value;
             let s =  document.getElementById("total"+start);
@@ -182,15 +181,15 @@
                 s.value = Number(minr);
                 as = s.value;
             }
-            let nm = 0;
             for (let b=start; b <= end; b++){
                let val = document.getElementById("scoreID"+b);
-                let ds = document.getElementById("percent"+b);
-                val.value = ds.value * as;
-                nm += Number(val.value);
+               val.value = 0;
+               let ds = document.getElementById("percent"+b);
+                val.value = ds.value * as / 100;
+
             }
 
-            as = nm;
+
             //Update Data
             let max = document.getElementById("maxX").value;
             let rating = [];
@@ -277,26 +276,23 @@
         }
 
         function onBlur(num,candidate){
+            $('')
             let rate = document.getElementById("scoreID"+num).value;
             let total = document.getElementById("total"+candidate);
             let product = document.getElementById("total"+candidate).value;
             let i = document.getElementById("scoreID"+num);
-            let minr = document.getElementById("min_rate").value;
-            let maxr = document.getElementById("max_rate").value;
+            let maxr = document.getElementById("percent"+num).value;
             if (rate > Number(maxr)){
                 i.value = Number(maxr);
                 rate = i.value;
             }
-            else if (rate < Number(minr)){
-                i.value = Number(minr);
-                rate = i.value;
-            }
 
+            // let percentage = document.getElementById("percent"+num).value;
+            // let compute = rate * percentage;
 
-            let percentage = document.getElementById("percent"+num).value;
-            let compute = rate * percentage;
-            let final = Number(product) + Number(compute);
-            total.value = final;
+            let fin = total.value + rate
+
+            total.value += fin;
 
             // myFunction();
             // updateData

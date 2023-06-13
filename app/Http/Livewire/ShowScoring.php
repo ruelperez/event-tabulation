@@ -532,18 +532,11 @@ class ShowScoring extends Component
 
                     foreach ($ca as $cas){
 
-                        if ($pns->id == $cas->portion_id and $this->rmm[$re] > $cas->percentage){
-                            $this->sa = 1;
-                            $this->rmm[$re] *= $cas->percentage / 100;
-                            $equal += $this->rmm[$re];
-                            $re++;
-                        }
-                        elseif($pns->id == $cas->portion_id and $this->rmm[$re] <= $cas->percentage){
+                        if ($pns->id == $cas->portion_id){
                             $this->sa = 1;
                             $equal += $this->rmm[$re];
                             $re++;
                         }
-
                     }
                     $this->total_data[$dh] = $equal;
                     $equal = 0;
