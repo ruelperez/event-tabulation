@@ -39,7 +39,7 @@
 
     </div>
 
-    @php $r=1; $l=1; $jk=1; $jas=0; $dp=0; @endphp
+    @php $r=1; $l=1; $jk=1; $jas=0; $dp=0; $dos = 0; $jd = 0; @endphp
     @foreach($portion as $portions)
 
     <form wire:ignore.self id="formFetch{{$r}}" style="margin-left: 20px;display: @if($r == 1) block @else none  @endif ">
@@ -119,6 +119,7 @@
                     @endif
                 @else
                     @foreach($candidate as $candidates)
+                        @php $jd=0; @endphp
                         <tr>
                             <th style="text-align: center; width: 200px; font-size: 20px; padding-top: 23px;" id="we">{{$candidates->candidate_number}}</th>
                             <td><img src="{{ asset('storage/'.$candidates->photo) }}" height="70" width="70"/></td>
@@ -133,6 +134,7 @@
                                     <input type="text" hidden id="percent{{$x}}" value="{{$criterias->percentage}}">
                                     <input type="text" hidden id="ans{{$x}}" value="{{$jk}}">
                                     <td><input type="text" @if($iy == 1) disabled @endif   @if(isset($rtt[$x])) value="{{$rtt[$x]}}" @endif  @if(isset($islocked[$x]) and $islocked[$x] == 1 ) disabled @endif class="form-control" id="scoreID{{$x}}" name="rating[{{$x}}]" onchange="onBlur({{$x++}},{{$jk}})" style="width: 50%; height: 40px; margin-left: 25%; margin-top: 10px; text-align: center"></td>
+                                    @php $jd++; @endphp
                                 @endif
                             @endforeach
                                 <td><input type="text" onchange="totalValue({{$jk}},{{$x-=1}})" @if(isset($total_data[$jk])) value="{{$total_data[$jk]}}" @endif class="form-control" id="total{{$jk}}" style="width: 50%; height: 40px; margin-left: 25%; margin-top: 10px; text-align: center" @if(isset($islocked[$x]) and $islocked[$x] == 1 ) disabled  @endif  @if($iy == 1) disabled @endif></td>
@@ -141,11 +143,13 @@
                                 <input type="text" hidden value="{{$z++}}">
                                 <input type="text" hidden value="{{$u=1}}">
                         </tr>
+                        @php $dos++; @endphp
                     @endforeach
                 @endif
             </tbody>
         </table>
-{{--        <input type="text" value="{{$x}}" name="maxX" hidden>--}}
+        <input type="text" value="{{$dos}}" id="totalcan" hidden>
+        <input type="text" value="{{$jd}}" id="totalcri" hidden>
 
         <div @if(isset($islocked[$x-=1]) and $islocked[$x] == 1 ) @else onclick="filterForm({{$l}},{{$x}})"  @endif  style="text-align:center; @if(isset($islocked[$x]) and $islocked[$x] == 1 ) @else cursor: pointer;  @endif  padding: 5px; width: 60%; height: 40px; margin-left: 20%; background-color: aquamarine"><b>Submit</b></div>
 
@@ -208,15 +212,43 @@
             window.livewire.emit('exit');
         }
 
-        function filterForm(start,end,cp){
-
+        function filterForm(start,end){
+            let uss = $("#totalcan").val();
+            let zss = $("#totalcri").val();
             let h = 1;
+            let wed = 1;
+            let weds = 0;
+            let oas = [];
             let tot = $("#total"+end);
             for (let i=start; i <= end; i++){
-                let u  = document.getElementById("scoreID"+i).value;
+                let u  = $("#scoreID"+i).val();
                 if (u == 0){
                     h++;
                 }
+            }
+            for (let je=1; je <= uss; je++){
+                for (let jer=1; jer <= zss; jer++){
+                    wed++;
+                    if (jer == 1){
+                        wed--;
+                        oas[je] = wed;
+                        wed++;
+                    }
+
+                }
+            }
+
+            for (let oo=1; oo <=  oas.length; oo++){
+                let tot = $("#total"+oas[oo]).val();
+                if (tot < 75){
+                    alert('THE TOTAL SCORE IN INVALID, MINIMUM IS 75');
+                    return;
+                }
+                else if(tot > 100){
+                    alert('THE TOTAL SCORE IN INVALID, MAXIMUM IS 100');
+                    return;
+                }
+
             }
             if (h >= 2){
                 alert('PLEASE RATE ALL THE CANDIDATE');
@@ -226,7 +258,7 @@
 
             }
             else if (h == 1){
-                let yt = document.getElementById("btnID"+end).click();
+                let yt = $("#btnID"+end).click();
 
             }
 
