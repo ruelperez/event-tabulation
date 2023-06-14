@@ -75,6 +75,7 @@
                                                 <input type="text" hidden id="percent{{$x}}" value="{{"0.".$criterias->percentage}}">
                                                 <input type="text" hidden id="ans{{$x}}" value="{{$jk}}">
                                                 <td><input type="text"  @if(isset($rtt[$x])) value="{{$rtt[$x]}}" @endif  @if(isset($islocked[$x]) and $islocked[$x] == 1 ) disabled @endif class="form-control" id="scoreID{{$x}}" name="rating[{{$x}}]" onchange="onBlur({{$x++}},{{$jk}})" style="width: 50%; height: 40px; margin-left: 25%; margin-top: 10px; text-align: center"></td>
+                                                @php $jd++; @endphp
                                             @endif
                                         @endforeach
                                         <td><input type="text" onchange="totalValue({{$jk}},{{$x-=1}})" @if(isset($total_data[$jk])) value="{{$total_data[$jk]}}" @endif class="form-control" id="total{{$jk}}" style="width: 50%; height: 40px; margin-left: 25%; margin-top: 10px; text-align: center" @if(isset($islocked[$x]) and $islocked[$x] == 1 ) disabled  @endif  @if($iy == 1) disabled @endif></td>
@@ -83,6 +84,7 @@
                                         <input type="text" hidden value="{{$z++}}">
                                         <input type="text" hidden value="{{$u=1}}">
                                     </tr>
+                                    @php $dos++; @endphp
                             @endforeach
                             @php $jas++; $dp++; @endphp
                         @endif
@@ -104,6 +106,7 @@
                                             <input type="text" hidden id="percent{{$x}}" value="{{"0.".$criterias->percentage}}">
                                             <input type="text" hidden id="ans{{$x}}" value="{{$jk}}">
                                             <td><input type="text"  @if(isset($rtt[$x])) value="{{$rtt[$x]}}" @endif  @if(isset($islocked[$x]) and $islocked[$x] == 1 ) disabled @endif class="form-control" id="scoreID{{$x}}" name="rating[{{$x}}]" onchange="onBlur({{$x++}},{{$jk}})" style="width: 50%; height: 40px; margin-left: 25%; margin-top: 10px; text-align: center"></td>
+                                            @php $jd++; @endphp
                                         @endif
                                     @endforeach
                                     <td><input type="text" onchange="totalValue({{$jk}},{{$x-=1}})" @if(isset($total_data[$jk])) value="{{$total_data[$jk]}}" @endif class="form-control" id="total{{$jk}}" style="width: 50%; height: 40px; margin-left: 25%; margin-top: 10px; text-align: center" @if(isset($islocked[$x]) and $islocked[$x] == 1 ) disabled  @endif  @if($iy == 1) disabled @endif></td>
@@ -113,7 +116,7 @@
                                     <input type="text" hidden value="{{$u=1}}">
                                 </tr>
                                 @php $cnt++; @endphp
-
+                                @php $dos++; @endphp
                             @endif
                         @endforeach
                     @endif
@@ -137,7 +140,7 @@
                                     @php $jd++; @endphp
                                 @endif
                             @endforeach
-                                <td><input type="text" onchange="totalValue({{$jk}},{{$x-=1}})" @if(isset($total_data[$jk])) value="{{$total_data[$jk]}}" @endif class="form-control" id="total{{$jk}}" style="width: 50%; height: 40px; margin-left: 25%; margin-top: 10px; text-align: center" @if(isset($islocked[$x]) and $islocked[$x] == 1 ) disabled  @endif  @if($iy == 1) disabled @endif></td>
+                                <td><input type="text" onchange="totalValue({{$jk}},{{$x-=1}})" @if(isset($total_data[$jk])) value="{{$total_data[$jk]}}" @endif class="form-control score-input" id="total{{$jk}}" style="width: 50%; height: 40px; margin-left: 25%; margin-top: 10px; text-align: center" @if(isset($islocked[$x]) and $islocked[$x] == 1 ) disabled  @endif  @if($iy == 1) disabled @endif></td>
                                 @php $x++; $jk=$x; @endphp
 
                                 <input type="text" hidden value="{{$z++}}">
@@ -172,6 +175,7 @@
 {{--    @livewire('show-result')--}}
 
     <script>
+
         function totalValue(start,end){
             let as = $("#total"+start).val();
             let s = $("#total"+start);
@@ -213,6 +217,17 @@
         }
 
         function filterForm(start,end){
+            let min = $("#min_rate").val();
+            let max = $("#max_rate").val();
+            $(document).ready(function() {
+                $('.score-input').each(function() {
+                    if ($(this).val() < Number(min) || $(this).val() > Number(max)) {
+                        $(this).focus();
+                        return false; // Stop iterating through other input fields
+                    }
+                });
+            });
+
             let uss = $("#totalcan").val();
             let zss = $("#totalcri").val();
             let h = 1;
@@ -240,12 +255,12 @@
 
             for (let oo=1; oo <=  oas.length; oo++){
                 let tot = $("#total"+oas[oo]).val();
-                if (tot < 75){
-                    alert('THE TOTAL SCORE IN INVALID, MINIMUM IS 75');
+                if (tot < Number(min)){
+                    alert('THE TOTAL SCORE IN INVALID, MINIMUM IS '+min);
                     return;
                 }
-                else if(tot > 100){
-                    alert('THE TOTAL SCORE IN INVALID, MAXIMUM IS 100');
+                else if(tot > Number(max)){
+                    alert('THE TOTAL SCORE IN INVALID, MAXIMUM IS '+max);
                     return;
                 }
 
@@ -254,7 +269,7 @@
                 alert('PLEASE RATE ALL THE CANDIDATE');
                 return;
             }
-            else if (tot.val() > 100){
+            else if (tot.val() > Number(max)){
 
             }
             else if (h == 1){
@@ -262,45 +277,46 @@
 
             }
 
+
         }
 
-        function onFocus(num,candidate) {
-            let total = document.getElementById("total"+candidate).value;
-            let tot = document.getElementById("total"+candidate);
-            let percentage = document.getElementById("percent"+num).value;
-            let rateVal = document.getElementById("scoreID"+num).value;
-            let rate = document.getElementById("scoreID"+num).value;
-            let minr = document.getElementById("min_rate").value;
-            let maxr = document.getElementById("max_rate").value;
-
-            if (rate != 0){
-                rateVal *= percentage;
-                rate = Number(total) - Number(rateVal);
-                tot.value = rate;
-                return;
-                // onBlur();
-
-            }
-            else{
-
-                return;
-            }
-
-            let product = document.getElementById("total"+candidate).value;
-            var i = document.getElementById("scoreID"+num);
-
-            if (rate > Number(maxr)){
-                rate = Number(maxr);
-                i.value = rate;
-            }
-            else if (rate < Number(minr)){
-                rate = Number(minr);
-                i.value = rate;
-            }
-            let compute = rate * percentage;
-            let final = Number(product) + Number(compute);
-            total.value = final;
-        }
+        // function onFocus(num,candidate) {
+        //     let total = document.getElementById("total"+candidate).value;
+        //     let tot = document.getElementById("total"+candidate);
+        //     let percentage = document.getElementById("percent"+num).value;
+        //     let rateVal = document.getElementById("scoreID"+num).value;
+        //     let rate = document.getElementById("scoreID"+num).value;
+        //     let minr = document.getElementById("min_rate").value;
+        //     let maxr = document.getElementById("max_rate").value;
+        //
+        //     if (rate != 0){
+        //         rateVal *= percentage;
+        //         rate = Number(total) - Number(rateVal);
+        //         tot.value = rate;
+        //         return;
+        //         // onBlur();
+        //
+        //     }
+        //     else{
+        //
+        //         return;
+        //     }
+        //
+        //     let product = document.getElementById("total"+candidate).value;
+        //     var i = document.getElementById("scoreID"+num);
+        //
+        //     if (rate > Number(maxr)){
+        //         rate = Number(maxr);
+        //         i.value = rate;
+        //     }
+        //     else if (rate < Number(minr)){
+        //         rate = Number(minr);
+        //         i.value = rate;
+        //     }
+        //     let compute = rate * percentage;
+        //     let final = Number(product) + Number(compute);
+        //     total.value = final;
+        // }
 
         function onBlur(num,candidate){
 

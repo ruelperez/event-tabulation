@@ -169,7 +169,7 @@
                                                             @elseif($ratings->isSubmit == 0)
                                                                 @php $lm = 1; break; @endphp
                                                             @endif
-                                                            @php  $total = $criterias->percentage  * $ratings->rating / 100;
+                                                            @php  $total = $ratings->rating;
                                                               $final += $total;
                                                             @endphp
                                                         @endif
