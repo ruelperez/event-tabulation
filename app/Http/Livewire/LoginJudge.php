@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use App\Models\Award;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
@@ -16,7 +17,6 @@ class LoginJudge extends Component
     }
 
     public function submit(){
-
         $validated = $this->validate([
             'username' => 'required',
             'password' => 'required',

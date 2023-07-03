@@ -4,12 +4,13 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{ asset('css/bootstrap.css') }}">
     <title>
     </title>
-    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="{{ asset('css/main.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/all.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/fontawesome.min.css') }}">
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
-
     <style>
         body {
             font-family: "Lato", sans-serif;
@@ -1184,9 +1185,11 @@
 
 </div>
 
-
+<script src="{{ asset('css/bootstrap.bundle.min.js') }}"></script>
+<script src="{{ asset('css/bootstrap.min.js') }}"></script>
 <script src="{{asset('js/print.js')}}"></script>
 <script src="{{asset('js/index.js')}}"></script>
 <script src="{{ asset('js/jqueryCdn.js') }}"></script>
 {{--<script src="{{ asset('js/score_result.js')}}"></script>--}}
-@include('partial.footer')
+</body>
+</html>

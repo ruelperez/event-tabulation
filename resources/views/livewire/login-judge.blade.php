@@ -26,7 +26,7 @@
         </div>
 
 
-        <p class="text-center text-muted mt-5 mb-0">Do not have an account? <a href="/admin/home" class="fw-bold text-body"><u>Register here</u></a></p>
+        <p class="text-center text-muted mt-5 mb-0">Do not have an account? <a href="/admin/event" class="fw-bold text-body"><u>Register here</u></a></p>
 
     </form>
 
