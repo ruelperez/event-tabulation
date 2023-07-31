@@ -11,9 +11,9 @@
 ### Installation
 
 1. Clone or download this repository [event-tabulation](https://github.com/ruelperez/event-tabulation.git)
-2. Open the cloned project in your code editor.
-3. Create database name `event_tabulation`
-3. Open terminal and execute the following commands:
+2. Create database name `event_tabulation`
+3. Open the cloned project in your code editor.
+4. Open terminal and execute the following commands:
 
 #### Install Backend dependencies:
     composer install
