@@ -35,3 +35,11 @@
 -   Access <http://127.0.0.1:8000/judge/login> in your web browser.
 -   Login the credential you have Registered on Admin site.
 
+### Technologies Used
+#### Front-end
+- [Laravel Livewire](https://laravel-livewire.com/)
+- [JavaScript](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
+- [Bootstrap](https://getbootstrap.com/docs/5.0/getting-started/introduction/)
+#### Back-end
+- [Laravel](https://laravel.com/)
+- [Laravel Livewire](https://laravel-livewire.com/)
